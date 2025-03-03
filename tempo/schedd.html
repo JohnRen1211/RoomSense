@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/0d66da6825.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="fixed h-full bg-orange-600 group transition-all duration-300 w-16 hover:w-64">
+            <div class="flex flex-col h-full">
+                <ul class="flex flex-col mt-4 space-y-2">
+                    <li><a href="#" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300">
+                        <i class="fas fa-calendar-alt text-2xl"></i>
+                        <span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300">Schedule</span>
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 ml-16 p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-orange-600">SCHEDULE</h1>
+                <button onclick="openModal()" class="bg-orange-600 text-white px-5 py-1 rounded">Add Schedule</button>
+            </div>
+
+            <div class="flex space-x-6">
+                <!-- Room List -->
+                <div class="bg-white shadow-md rounded-lg p-4 w-1/2">
+                    <h2 class="text-lg font-bold">Rooms</h2>
+                    <ul>
+                        <li><button onclick="updateSchedule('ROOM 300')" class="text-blue-600">ROOM 300</button></li>
+                        <li><button onclick="updateSchedule('ROOM 310')" class="text-blue-600">ROOM 310</button></li>
+                        <li><button onclick="updateSchedule('ROOM 311')" class="text-blue-600">ROOM 311</button></li>
+                    </ul>
+                </div>
+
+                <!-- Schedule Display -->
+                <div id="room-schedule" class="bg-white shadow-md rounded-lg p-4 w-2/3">
+                    <p>Select a room to view its schedule.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+        <div class="bg-white p-6 rounded shadow-lg w-96">
+            <h2 class="text-xl font-bold mb-4">Add Schedule</h2>
+            <div id="modalContent">
+                <select id="room" class="w-full mb-2 p-2 border rounded">
+                    <option value="ROOM 300">ROOM 300</option>
+                    <option value="ROOM 310">ROOM 310</option>
+                    <option value="ROOM 311">ROOM 311</option>
+                </select>
+                <input type="text" id="day" placeholder="Day" class="w-full mb-2 p-2 border rounded">
+                <input type="text" id="time" placeholder="Time" class="w-full mb-2 p-2 border rounded">
+                <input type="text" id="section" placeholder="Section" class="w-full mb-2 p-2 border rounded">
+                <input type="text" id="subject" placeholder="Subject" class="w-full mb-2 p-2 border rounded">
+                <input type="text" id="prof" placeholder="Instructor" class="w-full mb-2 p-2 border rounded">
+            </div>
+            <div class="flex justify-end space-x-2 mt-4">
+                <button onclick="closeModal()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+                <button onclick="saveSchedule()" class="px-4 py-2 bg-orange-600 text-white rounded">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script>
+        function openModal() {
+            document.getElementById("modal").classList.remove("hidden");
+        }
+
+        function closeModal() {
+            document.getElementById("modal").classList.add("hidden");
+        }
+
+        function saveSchedule() {
+            let room = document.getElementById("room").value;
+            let day = document.getElementById("day").value;
+            let time = document.getElementById("time").value;
+            let section = document.getElementById("section").value;
+            let subject = document.getElementById("subject").value;
+            let prof = document.getElementById("prof").value;
+
+            if (!day || !time || !section || !subject || !prof) {
+                alert("Please fill all fields");
+                return;
+            }
+
+            let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
+            if (!schedules[room]) {
+                schedules[room] = [];
+            }
+            schedules[room].push({ day, time, section, subject, prof });
+            localStorage.setItem("schedules", JSON.stringify(schedules));
+            
+            closeModal();
+            updateSchedule(room);
+        }
+
+        function updateSchedule(room) {
+            let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
+            let scheduleData = schedules[room] || [];
+            
+            let table = `<table class='w-full border-collapse border border-gray-400 mt-4'>
+                <thead>
+                    <tr class='bg-orange-500 text-white'>
+                        <th class='border border-gray-400 px-4 py-2'>Room</th>
+                        <th class='border border-gray-400 px-4 py-2'>Instructor</th>
+                        <th class='border border-gray-400 px-4 py-2'>Day</th>
+                        <th class='border border-gray-400 px-4 py-2'>Time</th>
+                        <th class='border border-gray-400 px-4 py-2'>Section</th>
+                        <th class='border border-gray-400 px-4 py-2'>Subject</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+            
+            scheduleData.forEach(s => {
+                table += `<tr class='bg-white'>
+                    <td class='border border-gray-400 px-4 py-2'>${room}</td>
+                    <td class='border border-gray-400 px-4 py-2'>${s.prof}</td>
+                    <td class='border border-gray-400 px-4 py-2'>${s.day}</td>
+                    <td class='border border-gray-400 px-4 py-2'>${s.time}</td>
+                    <td class='border border-gray-400 px-4 py-2'>${s.section}</td>
+                    <td class='border border-gray-400 px-4 py-2'>${s.subject}</td>
+                </tr>`;
+            });
+            
+            table += "</tbody></table>";
+            document.getElementById("room-schedule").innerHTML = table;
+        }
+    </script>
+</body>
+</html>

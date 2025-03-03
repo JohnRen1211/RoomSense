@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room 315 Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://kit.fontawesome.com/0d66da6825.js" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+</head>
+<body>
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="fixed h-full bg-orange-600 group transition-all duration-300 w-16 hover:w-64 z-20">
+            <div class="flex flex-col h-full">
+                <a href="#" class="flex items-center p-4 border-b border-b-white">
+                    <img src="./images/CpELogo.jpg" alt="placeholder" class="w-8 h-8 rounded object-cover">
+                    <span class="ml-3 text-lg font-poppins text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">CpE Department</span>
+                </a>
+                <ul class="flex flex-col mt-4 space-y-2">
+                    <li><a href="index.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
+                    <li><a href="Room.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
+                    <li><a href="315.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-temperature-empty text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">315 Details</span></a></li>
+                    <li><a href="Schedule.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
+                    <li><a href="Logs.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="flex-1 ml-16 p-6">
+            <h1 class="text-3xl font-bold text-orange-600 mb-6">Room 315</h1>
+            
+            <div class="flex justify-center gap-6 mt-10">
+                <!-- Temperature Box -->
+                <div class="bg-white p-5 rounded-lg shadow-lg w-1/4 flex flex-col items-center justify-center transition-all duration-300">
+                    <h2 class="text-lg font-bold mb-2 text-orange-600">Temperature</h2>
+                    <span id="temp" class="text-2xl">Loading...</span> °C
+                </div>
+            
+                <!-- Humidity Box -->
+                <div class="bg-white p-5 rounded-lg shadow-lg w-1/4 flex flex-col items-center justify-center transition-all duration-300">
+                    <h2 class="text-lg font-bold mb-2 text-orange-600">Humidity</h2>
+                    <span id="humidity" class="text-2xl">Loading...</span> %
+                </div>
+            </div>
+        </div>
+
+        <!-- JavaScript -->
+        <script>
+            // Firebase Configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyCpx8WLJsKnpKgm5qluMuSJlDAH3cpeLp4",
+                authDomain: "temperature-8a8a0.firebaseapp.com",
+                databaseURL: "https://temperature-8a8a0-default-rtdb.asia-southeast1.firebasedatabase.app",
+                projectId: "temperature-8a8a0",
+                storageBucket: "temperature-8a8a0.firebasestorage.app",
+                messagingSenderId: "438177440674",
+                appId: "1:438177440674:web:3aa6e76082a5a11d30c8fb"
+            };
+
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+ const db = firebase.database();
+
+            // Reference to the temperature and humidity data in Firebase
+            const tempRef = db.ref("Sensor/temperature");
+            const humidityRef = db.ref("Sensor/humidity");
+
+            // Fetch data and update the HTML elements
+            tempRef.on("value", (snapshot) => {
+                const temp = snapshot.val();
+                document.getElementById("temp").textContent = temp !== null ? temp : "N/A";
+            }, (error) => {
+                console.error("Error fetching temperature data:", error);
+                document.getElementById("temp").textContent = "Error";
+            });
+
+            humidityRef.on("value", (snapshot) => {
+                const humidity = snapshot.val();
+                document.getElementById("humidity").textContent = humidity !== null ? humidity : "N/A";
+            }, (error) => {
+                console.error("Error fetching humidity data:", error);
+                document.getElementById("humidity").textContent = "Error";
+            });
+        </script>
+    </div>
+</body>
+</html>

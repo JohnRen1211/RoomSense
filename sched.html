@@ -1,0 +1,316 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Schedule</title>
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <script src="https://kit.fontawesome.com/0d66da6825.js" crossorigin="anonymous"></script>
+        
+    </head>
+
+
+    <body>
+        <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="fixed h-full bg-orange-600 group transition-all duration-300 w-16 hover:w-64">
+            <div class="flex flex-col h-full">
+                <a href="#" class="flex items-center p-4 border-b border-b-white">
+                    <img src="/RoomWeb/tempo/Raw/CpELogo.jpg" alt="placeholder" class="w-8 h-8 rounded object-cover">
+                    <span class="ml-3 text-lg font-poppins text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        CpE Department
+                    </span>
+                </a>
+                <ul class="flex flex-col mt-4 space-y-2">
+                    <li><a href="index.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
+                    <li><a href="Room.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
+                    <li><a href="315.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-temperature-empty text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">315 Details</span></a></li>
+                    <li><a href="Schedule.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
+                    <li><a href="Logs.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
+                </ul>
+            </div>
+        </div>
+
+            <!-- Main Content -->
+            <div class="flex-1 bg-gray-100 ml-16 p-6">
+                <!-- Main Header Section -->
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-2xl font-bold text-orange-600">SCHEDULE</h1>
+                    <div class="flex items-center space-x-4">
+                        <input type="text" placeholder="Search..." class="border px-3 py-1 focus:ring-orange-600 w-full max-w-lg">
+                        <div class="relative">
+                            <button onclick="toggleDropdown()" class="bg-orange-600 text-white px-5 py-1 whitespace-nowrap rounded focus:outline-none">
+                                More Options
+                            </button>
+                            <div id="dropdownMenu" class="absolute right-0 mt-2 w-32 bg-white border rounded shadow-lg hidden">
+                                <button class="block w-full px-4 py-2 text-left hover:bg-orange-100" onclick="openModal('Add')">Add</button>
+                                <button class="block w-full px-4 py-2 text-left hover:bg-orange-100" onclick="openModal('Edit')">Edit</button>
+                                <button class="block w-full px-4 py-2 text-left hover:bg-orange-100 text-red-800" onclick="openModal('Delete')">Delete</button>
+                            </div>
+                        </div>
+                        <button class="text-orange-600 text-2xl"><i class="fas fa-bell"></i></button>
+                    </div>
+                </div>
+
+                <!-- Main Modal -->
+                <div id="modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden">
+                    <div class="bg-white p-6 rounded shadow-lg w-96">
+                        <h2 id="modalTitle" class="text-xl font-bold mb-4">Modal Title</h2>
+                        <div id="modalContent">
+                            <p id="modalMessage" class="mb-4">Are you sure?</p>
+                        </div>
+                        <div class="flex justify-end space-x-2 mt-4">
+                            <button onclick="closeModal()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+                            <button id="modalConfirmButton" class="px-4 py-2 bg-orange-600 text-white rounded">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Confirmation Modal -->
+                <div id="confirmationModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                        <h2 class="text-3xl text-orange-600 font-semibold">Success</h2>
+                        <p class="mt-2">The changes have been saved successfully.</p>
+                        <button id="closeConfirmation" class="mt-4 bg-orange-500 text-white px-4 py-2 rounded">OK</button>
+                    </div>
+                </div>
+
+
+                <div class="flex space-x-6">
+                    <!-- Rooms in CPE -->
+                    <div class="bg-white shadow-md rounded-lg p-4 w-1/2" style="width: 200px; height: 500px;">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-lg font-bold">Rooms in CPE</h2>
+                        </div>
+                        <ul>
+                            <li class="flex justify-between items-center w-full p-2 border-b text-left bg-transparent hover:bg-gray-200 transition-all duration-300 rounded-md">
+                                <button onclick="updateSchedule('ROOM 300')" class="text-left w-full hover:bg-gray-100">
+                                    ROOM 300
+                                </button>
+                            </li>
+                            <li class="flex justify-between items-center w-full p-2 border-b text-left bg-transparent hover:bg-gray-200 transition-all duration-300 rounded-md">
+                                <button onclick="updateSchedule('ROOM 310')" class="text-left w-full hover:bg-gray-100">ROOM 310</button>
+                            </li>
+                            <li class="flex justify-between items-center w-full p-2 border-b text-left bg-transparent hover:bg-gray-200 transition-all duration-300 rounded-md">
+                                <button onclick="updateSchedule('ROOM 311')" class="text-left w-full hover:bg-gray-100">ROOM 311</button>
+                            </li>
+                            <li class="flex justify-between items-center w-full p-2 border-b text-left bg-transparent hover:bg-gray-200 transition-all duration-300 rounded-md">
+                                <button onclick="updateSchedule('ROOM 312')" class="text-left w-full hover:bg-gray-100">ROOM 312</button>
+                            </li>
+                            <li class="flex justify-between items-center w-full p-2 border-b text-left bg-transparent hover:bg-gray-200 transition-all duration-300 rounded-md">
+                                <button onclick="updateSchedule('ROOM 313')" class="text-left w-full hover:bg-gray-100">ROOM 313</button>
+                            </li>
+                            <li class="flex justify-between items-center w-full p-2 border-b text-left bg-transparent hover:bg-gray-200 transition-all duration-300 rounded-md">
+                                <button onclick="updateSchedule('ROOM 314')" class="text-left w-full hover:bg-gray-100">ROOM 314</button>
+                            </li>
+                            <li class="flex justify-between items-center w-full p-2 border-b text-left bg-transparent hover:bg-gray-200 transition-all duration-300 rounded-md">
+                                <button onclick="updateSchedule('ROOM 315')" class="text-left w-full hover:bg-gray-100">ROOM 315</button>
+                            </li>
+                            <li class="flex justify-between items-center w-full p-2 border-b text-left bg-transparent hover:bg-gray-200 transition-all duration-300 rounded-md">
+                                <button onclick="updateSchedule('ROOM 316')" class="text-left w-full hover:bg-gray-100">ROOM 316</button>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Room Schedule -->
+                    <div id="room-schedule" class="bg-white shadow-md rounded-lg p-4 w-2/3" style="max-height: 600px; width: 1200px; overflow-y: auto;">
+                        <!-- Default content -->
+                        <p>Select a room to view its schedule.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </body>
+    </html>
+    <script>
+        function toggleDropdown() {
+            let dropdown = document.getElementById("dropdownMenu");
+            dropdown.classList.toggle("hidden");
+
+            if (!dropdown.classList.contains("hidden")) {
+                dropdown.classList.remove("opacity-0", "scale-95");
+                dropdown.classList.add("opacity-100", "scale-100");
+            } else {
+                dropdown.classList.remove("opacity-100", "scale-100");
+                dropdown.classList.add("opacity-0", "scale-95");
+            }
+        }
+
+        function openModal(action) {
+            document.getElementById("modal").classList.remove("hidden");
+            document.getElementById("modalTitle").innerText = action + " Schedule";
+            let modalContent = document.getElementById("modalContent");
+
+            if (action === "Add") {
+                modalContent.innerHTML = `
+                    <div class="space-y-2">
+                        <select class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">
+                            <option value="" disabled selected class="text-orange-700">Select Room</option>
+                            <option value="Room 300">Room 300</option>
+                            <option value="Room 310">Room 310</option>
+                            <option value="Room 311">Room 311</option>
+                            <option value="Room 312">Room 312</option>
+                            <option value="Room 313">Room 313</option>
+                            <option value="Room 314">Room 314</option>
+                            <option value="Room 315">Room 315</option>
+                            <option value="Room 316">Room 316</option>
+                        </select>
+
+                        <div class="relative">
+                            <input type="text" id="day" placeholder=" " class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:outline-none focus:ring-orange-500 focus:border-orange-500 peer"/>
+                            <label for="day" class="absolute left-2 top-0.5 bg-white px-1 text-[10px] text-gray-400 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-sm peer-focus:top-0.5 peer-focus:text-[10px]">Day</label>
+                        </div>
+
+                        <div class="relative">
+                            <input type="text" id="time" placeholder=" " class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:outline-none focus:ring-orange-500 focus:border-orange-500 peer"/>
+                            <label for="time" class="absolute left-2 top-0.5 bg-white px-1 text-[10px] text-gray-400 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-sm peer-focus:top-0.5 peer-focus:text-[10px]">Time</label>
+                        </div>
+
+                        <div class="relative">
+                            <input type="text" id="section" placeholder=" " class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:outline-none focus:ring-orange-500 focus:border-orange-500 peer"/>
+                            <label for="section" class="absolute left-2 top-0.5 bg-white px-1 text-[10px] text-gray-400 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-sm peer-focus:top-0.5 peer-focus:text-[10px]">Section</label>
+                        </div>
+
+                        <div class="relative">
+                            <input type="text" id="subject" placeholder=" " class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:outline-none focus:ring-orange-500 focus:border-orange-500 peer"/>
+                            <label for="subject" class="absolute left-2 top-0.5 bg-white px-1 text-[10px] text-gray-400 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-sm peer-focus:top-0.5 peer-focus:text-[10px]">Subject</label>
+                        </div>
+
+                        <div class="relative">
+                            <input type="text" id="prof" placeholder=" " class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 focus:outline-none focus:ring-orange-500 focus:border-orange-500 peer"/>
+                            <label for="prof" class="absolute left-2 top-0.5 bg-white px-1 text-[10px] text-gray-400 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-sm peer-focus:top-0.5 peer-focus:text-[10px]">Instructor</label>
+                        </div>
+                    </div>
+                `;
+            } else {
+                modalContent.innerHTML = `<p id="modalMessage">Are you sure you want to ${action.toLowerCase()} this schedule?</p>`;
+            }
+
+            document.getElementById("modalConfirmButton").onclick = function() {
+                closeModal();  // Close the first modal
+                showConfirmation();  // Show the success message
+            };
+        }
+
+        function closeModal() {
+            document.getElementById("modal").classList.add("hidden");
+        }
+
+        function showConfirmation() {
+            let confirmationModal = document.getElementById("confirmationModal");
+            confirmationModal.classList.remove("hidden");
+
+            document.getElementById("closeConfirmation").onclick = function() {
+                confirmationModal.classList.add("hidden");
+            };
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener("click", function(event) {
+            if (!event.target.closest(".relative") && !event.target.closest("#dropdownMenu")) {
+                let dropdown = document.getElementById("dropdownMenu");
+                dropdown.classList.add("hidden", "opacity-0", "scale-95");
+            }
+        });
+        </script>
+        <script>
+            // Sample data for room schedules
+            const roomSchedules = {
+
+                "ROOM 310": {
+                    type: "Computer Engineering Lecture Room",
+                    schedule: [
+                        {"divider": true},
+                        {day: " ", time: "10:30 AM - 1:30 PM", section: "BSME 2-3", subject: "CMPE 011 - Computer Programming", instructor: "Engr. J.Tena" },
+                        {day: "Monday", time: "3:00 PM - 6:00 PM", section: "BSCpE 3-1", subject: "CMPE 305 - Data and Digital Communications", instructor: "Engr. L.Reyes" },
+                        {day: " ", time: "6:00 PM - 9:00 PM", section: "BSCpE 4-1", subject: "CMPE 30244 - Digital Signal Processing", instructor: "Engr. J.Dela Cruz"},
+                        {"divider": true},
+                        {day: " ", time: "7:30 AM - 10:30 AM", section: "BSCpE 2-3", subject: "MATH 209 - Differential Equations", instructor: " - " },
+                        {day: " ", time: "10:30 AM - 1:30 PM", section: "BSCpE 1-4", subject: "GEED 004 - Math in the Modern World", instructor: " - " },
+                        {day: "Tuesday", time: "2:00 PM - 6:00 PM", section: "BSCpE 3-6", subject: "CMPE 354 - Enterprise Software Systems", instructor: "Engr. J.Tena" },
+                        {day: " ", time: "6:00 PM - 9:00 PM", section: "BSCpE 1-3P", subject: "CMPE 30114 - Data and Digital Communication", instructor: "Engr. J. Binuya"},
+                        {"divider": true},
+                        {day: " ", time: "7:30 AM - 10:30 AM", section: "BSCpE 1-1", subject: "CMPE 101 - Calculus 1", instructor: " - " },
+                        {day: "Wednesday", time: "10:30 AM - 1:30 PM", section: "BSCpE 1-3", subject: "CMPE 101 - Calculus 1", instructor: " - " },
+                        {day: " ", time: "1:30 PM - 4:30 PM", section: "BSCpE 3-4", subject: "ENSC 029 - Technopreneurship 101", instructor: "Dr. L.Lacatan"},
+                        {day: " ", time: "6:00 PM - 9:00 PM", section: "BSCpE 3-1", subject:"ENSC 029 - Technopreneurship 101", instructor: "Engr. L.Reyes"},
+                        {"divider": true},
+                        {day: " ", time: "10:30 AM - 1:30 PM", section: "BSCpE 1-7", subject: "GEED 004 -  Math in the Modern World", instructor: " - "},
+                        {day: "Thursday", time: "3:00 PM - 6:00 PM", section: "BSCpE 3-3", subject: "CMPE 34 - Logic Circuits and Design", instructor: "Engr. J.Lorico, Jr"},
+                        {day: " ", time: "6:00 PM - 9:00 PM", section: "BSCpE 3-3", subject: "CMPE 305 - Data and Digital Communication", instructor: "0. Pajabera"},
+                        {"divider": true},
+                        {day: " ", time: "10:30 AM - 1:30 PM", section: "BSCpE 1-4", subject: "MATH 101  - Calculus 1", instructor: " - " },
+                        {day: "Friday", time: "1:30 PM - 4:30 PM", section: "BSME 2-1", subject: "CMPE 011 - Computer Programming", instructor: "Engr. J. Tena" },
+                        {"divider": true},
+                        {day: " ", time: "7:30 AM - 11:00 AM", section: "BSCpE 1-3P", subject: "CMPE 30094  - Logic Circuits and Design", instructor: "Engr. D.Madrigalejos" },
+                        {day: " ", time: "11:00 AM - 2:00 PM", section: "BSCpE 3-6", subject: "CMPE 303 - CPE Drafting and Design", instructor: "Engr. J.Sarcilla"},
+                        {day: "Saturday", time: "3:00 PM - 6:00 PM", section: "BSCpE 3-6", subject: "CMPE 302 - Intro to HDL", instructor: "Engr. J. Avila"},
+                        {day: " ", time: "6:00 PM - 9:00 PM", section: "BSCpE 3-2", subject: "CMPE 101 - CMPE Discipline", instructor: "Engr. F.Oquindo"},
+                    ]
+                }
+            };
+
+            // Function to update the schedule
+            function updateSchedule(room) {
+    const scheduleContainer = document.getElementById("room-schedule");
+    const roomData = roomSchedules[room];
+
+    if (roomData) {
+        const scheduleRows = roomData.schedule.map((entry) => {
+            if (entry.divider) {
+                return `
+                    <tr>
+                      <td colspan="5" class="py-4 text-center">
+                        <hr class="border-t border-orange-600 w-full">
+                      </td>
+                    </tr>
+                `;
+            } else {
+                return `
+                    <tr>
+                        <td class="py-2">${entry.day}</td>
+                        <td class="py-2">${entry.time}</td>
+                        <td class="py-2">${entry.section}</td>
+                        <td class="py-2">${entry.subject}</td>
+                        <td class="py-2">${entry.instructor}</td>
+                    </tr>
+                `;
+            }
+        }).join("");
+
+        //here you can add the data if room is OCCUPIED or NOT
+        scheduleContainer.innerHTML = `
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-semibold">Room Schedule</h2>
+                <span class="text-red-600 font-bold">OCCUPIED</span>
+            </div>
+            <div class="mb-4">
+                <p><strong>Room no.:</strong> ${room}</p>
+                <p><strong>Room Type:</strong> ${roomData.type}</p>
+            </div>
+            <div>
+                <h3 class="text-center font-bold text-lg mb-2">${room} SCHEDULE</h3>
+                <table class="w-full text-left">
+                    <thead>
+                        <tr>
+                            <th class="py-2">Day</th>
+                            <th class="py-2">Time</th>
+                            <th class="py-2">Section</th>
+                            <th class="py-2">Subject</th>
+                            <th class="py-2">Instructor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${scheduleRows}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    } else {
+        scheduleContainer.innerHTML = `<p>No schedule available for ${room}.</p>`;
+    }
+}
+        </script>
