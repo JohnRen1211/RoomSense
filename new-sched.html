@@ -141,22 +141,29 @@
             let section = document.getElementById("section").value;
             let subject = document.getElementById("subject").value;
             let prof = document.getElementById("prof").value;
-
+        
             if (!day || !time || !section || !subject || !prof) {
                 alert("Please fill all fields");
                 return;
             }
-
+        
             let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
-            if (!schedules[room]) {
-                schedules[room] = [];
+            if (!schedules[room]) schedules[room] = [];
+        
+            // Check for duplicates
+            let duplicate = schedules[room].some(s => s.day === day && s.time === time && s.prof === prof);
+            if (duplicate) {
+                alert("Schedule already exists for this instructor at the given time.");
+                return;
             }
+        
             schedules[room].push({ day, time, section, subject, prof });
             localStorage.setItem("schedules", JSON.stringify(schedules));
-            
+        
             closeModal();
             updateSchedule(room);
         }
+        
 
         function updateSchedule(room) {
             let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
