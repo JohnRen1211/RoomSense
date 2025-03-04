@@ -172,30 +172,76 @@
             let table = `<table class='w-full border-collapse border border-gray-400 mt-4'>
                 <thead>
                     <tr class='bg-orange-500 text-white'>
-                        <th class='border border-gray-400 px-4 py-2'>Room</th>
                         <th class='border border-gray-400 px-4 py-2'>Instructor</th>
                         <th class='border border-gray-400 px-4 py-2'>Day</th>
                         <th class='border border-gray-400 px-4 py-2'>Time</th>
                         <th class='border border-gray-400 px-4 py-2'>Section</th>
                         <th class='border border-gray-400 px-4 py-2'>Subject</th>
+                        <th class='border border-gray-400 px-4 py-2'>Actions</th>
                     </tr>
                 </thead>
                 <tbody>`;
             
-            scheduleData.forEach(s => {
+            scheduleData.forEach((s, index) => {
                 table += `<tr class='bg-white'>
-                    <td class='border border-gray-400 px-4 py-2'>${room}</td>
                     <td class='border border-gray-400 px-4 py-2'>${s.prof}</td>
                     <td class='border border-gray-400 px-4 py-2'>${s.day}</td>
                     <td class='border border-gray-400 px-4 py-2'>${s.time}</td>
                     <td class='border border-gray-400 px-4 py-2'>${s.section}</td>
                     <td class='border border-gray-400 px-4 py-2'>${s.subject}</td>
+                    <td class='border border-gray-400 px-4 py-2'>
+                        <button onclick="editSchedule('${room}', ${index})" class="text-blue-600">Edit</button> |
+                        <button onclick="deleteSchedule('${room}', ${index})" class="text-red-600">Delete</button>
+                    </td>
                 </tr>`;
             });
-            
+        
             table += "</tbody></table>";
             document.getElementById("room-schedule").innerHTML = table;
         }
+
+        function deleteSchedule(room, index) {
+            let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
+            schedules[room].splice(index, 1);
+            localStorage.setItem("schedules", JSON.stringify(schedules));
+            updateSchedule(room);
+        }
+
+        function editSchedule(room, index) {
+            let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
+            let schedule = schedules[room][index];
+        
+            document.getElementById("room").value = room;
+            document.getElementById("day").value = schedule.day;
+            document.getElementById("time").value = schedule.time;
+            document.getElementById("section").value = schedule.section;
+            document.getElementById("subject").value = schedule.subject;
+            document.getElementById("prof").value = schedule.prof;
+        
+            // Show the modal with Save Changes button
+            openModal();
+            
+            document.querySelector(".bg-orange-600.text-white").setAttribute("onclick", `saveEditedSchedule('${room}', ${index})`);
+        }
+        
+        function saveEditedSchedule(room, index) {
+            let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
+            let updatedSchedule = {
+                day: document.getElementById("day").value,
+                time: document.getElementById("time").value,
+                section: document.getElementById("section").value,
+                subject: document.getElementById("subject").value,
+                prof: document.getElementById("prof").value
+            };
+        
+            schedules[room][index] = updatedSchedule;
+            localStorage.setItem("schedules", JSON.stringify(schedules));
+            closeModal();
+            updateSchedule(room);
+        }
+        
+        
+        
     </script>
 </body>
 </html>
