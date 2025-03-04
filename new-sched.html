@@ -117,6 +117,15 @@
             }
         }
 
+        document.addEventListener("click", function (event) {
+            let dropdown = document.getElementById("dropdownMenu");
+            let button = document.querySelector("button[onclick='toggleDropdown()']");
+            if (!dropdown.contains(event.target) && !button.contains(event.target)) {
+                dropdown.classList.add("hidden");
+            }
+        });
+        
+
         function openModal() {
             document.getElementById("modal").classList.remove("hidden");
         }
