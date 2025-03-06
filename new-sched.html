@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/0d66da6825.js" crossorigin="anonymous"></script>
 </head>
+
 <body class="bg-gray-100">
     <div class="flex h-screen">
 
@@ -15,16 +17,37 @@
             <div class="flex flex-col h-full">
                 <a href="#" class="flex items-center p-4 border-b border-b-white">
                     <img src="./images/CpELogo.jpg" alt="placeholder" class="w-8 h-8 rounded object-cover">
-                    <span class="ml-3 text-lg font-poppins text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span
+                        class="ml-3 text-lg font-poppins text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         CpE Department
                     </span>
                 </a>
                 <ul class="flex flex-col mt-4 space-y-2">
-                    <li><a href="index.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
-                    <li><a href="Room.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
-                    <li><a href="315.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-temperature-empty text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">315 Details</span></a></li>
-                    <li><a href="Schedule.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
-                    <li><a href="Logs.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
+                    <li><a href="index.html"
+                            class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i
+                                class="fas fa-home text-2xl"></i><span
+                                class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a>
+                    </li>
+                    <li><a href="Room.html"
+                            class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i
+                                class="fas fa-th-large text-2xl"></i><span
+                                class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a>
+                    </li>
+                    <li><a href="315.html"
+                            class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i
+                                class="fas fa-temperature-empty text-2xl"></i><span
+                                class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">315
+                                Details</span></a></li>
+                    <li><a href="Schedule.html"
+                            class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i
+                                class="fas fa-calendar-alt text-2xl"></i><span
+                                class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a>
+                    </li>
+                    <li><a href="Logs.html"
+                            class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i
+                                class="fas fa-file-alt text-2xl"></i><span
+                                class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -34,20 +57,40 @@
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold text-orange-600">SCHEDULE</h1>
                 <div class="flex items-center space-x-4">
-                    <input type="text" placeholder="Search..." class="border px-3 py-1 focus:ring-orange-600 w-full max-w-lg">
+                    <!-- Day Filter and More Options - Flex Alignment -->
+                    <div class="flex items-center space-x-4">
+                        <label for="dayFilter" class="mr-2 font-semibold">Filter by Day:</label>
+                        <select id="dayFilter"
+                            class="border px-3 py-1 rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500"
+                            onchange="applyDayFilter()">
+                            <option value="">All Days</option>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                            <option value="Sunday">Sunday</option>
+                        </select>
                         <div class="relative">
-                            <button onclick="toggleDropdown()" class="bg-orange-600 text-white px-5 py-1 whitespace-nowrap rounded focus:outline-none">
+                            <button onclick="toggleDropdown()"
+                                class="bg-orange-600 text-white px-5 py-1 whitespace-nowrap rounded focus:outline-none">
                                 More Options
                             </button>
-                            <div id="dropdownMenu" class="absolute right-0 mt-2 w-32 bg-white border rounded shadow-lg hidden">
-                                <button class="block w-full px-4 py-2 text-left hover:bg-orange-100" onclick="openModal('Add')">Add</button>
-                                <button class="block w-full px-4 py-2 text-left hover:bg-orange-100" onclick="openModal('Edit')">Edit</button>
-                                <button class="block w-full px-4 py-2 text-left hover:bg-orange-100 text-red-800" onclick="openModal('Delete')">Delete</button>
+                            <div id="dropdownMenu"
+                                class="absolute right-0 mt-2 w-32 bg-white border rounded shadow-lg hidden">
+                                <button class="block w-full px-4 py-2 text-left hover:bg-orange-100"
+                                    onclick="openModal('Add')">Add</button>
+                                <button class="block w-full px-4 py-2 text-left hover:bg-orange-100"
+                                    onclick="openModal('Edit')">Edit</button>
+                                <button class="block w-full px-4 py-2 text-left hover:bg-orange-100 text-red-800"
+                                    onclick="openModal('Delete')">Delete</button>
                             </div>
                         </div>
-                        <button class="text-orange-600 text-2xl"><i class="fas fa-bell"></i></button>
+                    </div>
+                    <button class="text-orange-600 text-2xl"><i class="fas fa-bell"></i></button>
                 </div>
-                
+
             </div>
 
             <div class="flex space-x-6">
@@ -55,19 +98,35 @@
                 <div class="bg-white shadow-md rounded-lg p-4 w-1/2" style="width: 200px; height: 500px;">
                     <h2 class="text-lg font-bold">Rooms</h2>
                     <ul>
-                        <li><button onclick="updateSchedule('ROOM 300')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM 300</button></li>
-                        <li><button onclick="updateSchedule('ROOM 310')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM 310</button></li>
-                        <li><button onclick="updateSchedule('ROOM 311')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM 311</button></li>
-                        <li><button onclick="updateSchedule('ROOM 312')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM 312</button></li>
-                        <li><button onclick="updateSchedule('ROOM 313')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM 313</button></li>
-                        <li><button onclick="updateSchedule('ROOM 314')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM 314</button></li>
-                        <li><button onclick="updateSchedule('ROOM 315')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM 315</button></li>
-                        <li><button onclick="updateSchedule('ROOM 316')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM 316</button></li>
+                        <li><button onclick="updateSchedule('ROOM 300')"
+                                class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM
+                                300</button></li>
+                        <li><button onclick="updateSchedule('ROOM 310')"
+                                class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM
+                                310</button></li>
+                        <li><button onclick="updateSchedule('ROOM 311')"
+                                class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM
+                                311</button></li>
+                        <li><button onclick="updateSchedule('ROOM 312')"
+                                class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM
+                                312</button></li>
+                        <li><button onclick="updateSchedule('ROOM 313')"
+                                class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM
+                                313</button></li>
+                        <li><button onclick="updateSchedule('ROOM 314')"
+                                class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM
+                                314</button></li>
+                        <li><button onclick="updateSchedule('ROOM 315')"
+                                class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM
+                                315</button></li>
+                        <li><button onclick="updateSchedule('ROOM 316')"
+                                class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM
+                                316</button></li>
                     </ul>
                 </div>
-
-
-                <div id="room-schedule" class="bg-white shadow-md rounded-lg p-4 w-2/3" style="max-height: 600px; width: 1200px; overflow-y: auto;">
+                <!-- Schedule Display -->
+                <div id="room-schedule" class="bg-white shadow-md rounded-lg p-4 w-2/3"
+                    style="max-height: 600px; width: 1200px; overflow-y: auto;">
                     <h2 id="room-title" class="text-center text-xl font-bold text-orange-600 mb-4">Select a room</h2>
                     <p>Select a room to view its schedule.</p>
                 </div>
@@ -125,7 +184,7 @@
                 dropdown.classList.add("hidden");
             }
         });
-        
+
 
         function openModal() {
             document.getElementById("modal").classList.remove("hidden");
@@ -142,35 +201,44 @@
             let section = document.getElementById("section").value;
             let subject = document.getElementById("subject").value;
             let prof = document.getElementById("prof").value;
-        
+
             if (!day || !time || !section || !subject || !prof) {
                 alert("Please fill all fields");
                 return;
             }
-        
+
             let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
             if (!schedules[room]) schedules[room] = [];
-        
+
             // Check for duplicates
             let duplicate = schedules[room].some(s => s.day === day && s.time === time && s.prof === prof);
             if (duplicate) {
                 alert("Schedule already exists for this instructor at the given time.");
                 return;
             }
-        
-            schedules[room].push({ day, time, section, subject, prof });
+
+            schedules[room].push({
+                day,
+                time,
+                section,
+                subject,
+                prof
+            });
             localStorage.setItem("schedules", JSON.stringify(schedules));
-        
+
             closeModal();
             updateSchedule(room);
         }
-        
+
 
         function updateSchedule(room) {
             document.getElementById("room-title").textContent = room; // Update room title
             let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
             let scheduleData = schedules[room] || [];
-            
+
+            // Day filter value
+            let dayFilter = document.getElementById("dayFilter").value;
+
             let table = `<table class='w-full border-collapse border border-gray-400 mt-4'>
                 <thead>
                     <tr class='bg-orange-500 text-white'>
@@ -186,7 +254,9 @@
 
             if (scheduleData.length > 0) {
                 scheduleData.forEach((s, index) => {
-                    table += `<tr>
+                    // Apply day filter
+                    if (dayFilter === "" || s.day === dayFilter) {
+                        table += `<tr>
                         <td class='border border-gray-400 px-4 py-2'>${s.prof}</td>
                         <td class='border border-gray-400 px-4 py-2'>${s.day}</td>
                         <td class='border border-gray-400 px-4 py-2'>${s.time}</td>
@@ -197,15 +267,18 @@
                             <button class='text-red-600' onclick='deleteSchedule("${room}", ${index})'>Delete</button>
                         </td>
                     </tr>`;
+                    }
                 });
             } else {
-                table += `<tr><td colspan='6' class='border border-gray-400 px-4 py-2 text-center'>No schedule available</td></tr>`;
+                table +=
+                    `<tr><td colspan='6' class='border border-gray-400 px-4 py-2 text-center'>No schedule available</td></tr>`;
             }
 
             table += `</tbody></table>`;
-            document.getElementById("room-schedule").innerHTML = `<h2 id="room-title" class="text-center text-xl font-bold text-orange-600 mb-4">${room}</h2>` + table;
+            document.getElementById("room-schedule").innerHTML =
+                `<h2 id="room-title" class="text-center text-xl font-bold text-orange-600 mb-4">${room}</h2>` +
+                table;
         }
-
 
         function deleteSchedule(room, index) {
             let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
@@ -217,20 +290,21 @@
         function editSchedule(room, index) {
             let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
             let schedule = schedules[room][index];
-        
+
             document.getElementById("room").value = room;
             document.getElementById("day").value = schedule.day;
             document.getElementById("time").value = schedule.time;
             document.getElementById("section").value = schedule.section;
             document.getElementById("subject").value = schedule.subject;
             document.getElementById("prof").value = schedule.prof;
-        
+
             // Show the modal with Save Changes button
             openModal();
-            
-            document.querySelector(".bg-orange-600.text-white").setAttribute("onclick", `saveEditedSchedule('${room}', ${index})`);
+
+            document.querySelector(".bg-orange-600.text-white").setAttribute("onclick",
+                `saveEditedSchedule('${room}', ${index})`);
         }
-        
+
         function saveEditedSchedule(room, index) {
             let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
             let updatedSchedule = {
@@ -240,15 +314,20 @@
                 subject: document.getElementById("subject").value,
                 prof: document.getElementById("prof").value
             };
-        
+
             schedules[room][index] = updatedSchedule;
             localStorage.setItem("schedules", JSON.stringify(schedules));
             closeModal();
             updateSchedule(room);
         }
-        
-        
-        
+
+        function applyDayFilter() {
+            let selectedRoom = document.getElementById("room-title").textContent;
+            if (selectedRoom !== "Select a room") {
+                updateSchedule(selectedRoom);
+            }
+        }
     </script>
 </body>
+
 </html>
