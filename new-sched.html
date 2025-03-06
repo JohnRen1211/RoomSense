@@ -59,7 +59,7 @@
                 <div class="flex items-center space-x-4">
                     <!-- Day Filter and More Options - Flex Alignment -->
                     <div class="flex items-center space-x-4">
-                        <label for="dayFilter" class="mr-2 font-semibold">Filter by Day:</label>
+                        <label for="dayFilter" class="text-orange-600 font-semibold">Filter by Day:</label>
                         <select id="dayFilter"
                             class="border px-3 py-1 rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500"
                             onchange="applyDayFilter()">
@@ -232,53 +232,57 @@
 
 
         function updateSchedule(room) {
-            document.getElementById("room-title").textContent = room; // Update room title
-            let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
-            let scheduleData = schedules[room] || [];
+    document.getElementById("room-title").textContent = room; // Update room title
+    let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
+    let scheduleData = schedules[room] || [];
 
-            // Day filter value
-            let dayFilter = document.getElementById("dayFilter").value;
+    // Day filter value
+    let dayFilter = document.getElementById("dayFilter").value;
 
-            let table = `<table class='w-full border-collapse border border-gray-400 mt-4'>
-                <thead>
-                    <tr class='bg-orange-500 text-white'>
-                        <th class='border border-gray-400 px-4 py-2'>Instructor</th>
-                        <th class='border border-gray-400 px-4 py-2'>Day</th>
-                        <th class='border border-gray-400 px-4 py-2'>Time</th>
-                        <th class='border border-gray-400 px-4 py-2'>Section</th>
-                        <th class='border border-gray-400 px-4 py-2'>Subject</th>
-                        <th class='border border-gray-400 px-4 py-2'>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>`;
+    let table = `<table class='w-full border-collapse border border-gray-400 mt-4'>
+        <thead>
+            <tr class='bg-orange-500 text-white'>
+                <th class='border border-gray-400 px-4 py-2'>Instructor</th>
+                <th class='border border-gray-400 px-4 py-2'>Day</th>
+                <th class='border border-gray-400 px-4 py-2'>Time</th>
+                <th class='border border-gray-400 px-4 py-2'>Section</th>
+                <th class='border border-gray-400 px-4 py-2'>Subject</th>
+                <th class='border border-gray-400 px-4 py-2'>Actions</th>
+            </tr>
+        </thead>
+        <tbody>`;
 
-            if (scheduleData.length > 0) {
-                scheduleData.forEach((s, index) => {
-                    // Apply day filter
-                    if (dayFilter === "" || s.day === dayFilter) {
-                        table += `<tr>
-                        <td class='border border-gray-400 px-4 py-2'>${s.prof}</td>
-                        <td class='border border-gray-400 px-4 py-2'>${s.day}</td>
-                        <td class='border border-gray-400 px-4 py-2'>${s.time}</td>
-                        <td class='border border-gray-400 px-4 py-2'>${s.section}</td>
-                        <td class='border border-gray-400 px-4 py-2'>${s.subject}</td>
-                        <td class='border border-gray-400 px-4 py-2'>
-                            <button class='text-blue-600' onclick='editSchedule("${room}", ${index})'>Edit</button> | 
-                            <button class='text-red-600' onclick='deleteSchedule("${room}", ${index})'>Delete</button>
-                        </td>
-                    </tr>`;
-                    }
-                });
-            } else {
-                table +=
-                    `<tr><td colspan='6' class='border border-gray-400 px-4 py-2 text-center'>No schedule available</td></tr>`;
-            }
+    // Apply day filter before checking the length
+    let filteredSchedules = scheduleData.filter(s => dayFilter === "" || s.day === dayFilter);
 
-            table += `</tbody></table>`;
-            document.getElementById("room-schedule").innerHTML =
-                `<h2 id="room-title" class="text-center text-xl font-bold text-orange-600 mb-4">${room}</h2>` +
-                table;
-        }
+    if (filteredSchedules.length > 0) {
+        filteredSchedules.forEach((s, index) => {
+            table += `<tr>
+                <td class='border border-gray-400 px-4 py-2'>${s.prof}</td>
+                <td class='border border-gray-400 px-4 py-2'>${s.day}</td>
+                <td class='border border-gray-400 px-4 py-2'>${s.time}</td>
+                <td class='border border-gray-400 px-4 py-2'>${s.section}</td>
+                <td class='border border-gray-400 px-4 py-2'>${s.subject}</td>
+                <td class='border border-gray-400 px-4 py-2'>
+                    <div class="flex justify-center items-center space-x-2">
+                        <button class="bg-orange-500 text-white px-3 py-1 rounded hover:bg-orange-600" onclick='editSchedule("${room}", ${index})'>Edit</button>
+                        <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" onclick='deleteSchedule("${room}", ${index})'>Delete</button>
+                    </div>
+                </td>
+            </tr>`;
+        });
+    } else {
+        table += `<tr>
+            <td colspan='6' class='border border-gray-400 px-4 py-2 text-center text-red-500'>No schedule available</td>
+        </tr>`;
+    }
+
+    table += `</tbody></table>`;
+    document.getElementById("room-schedule").innerHTML =
+        `<h2 id="room-title" class="text-center text-xl font-bold text-orange-600 mb-4">${room}</h2>` +
+        table;
+}
+
 
         function deleteSchedule(room, index) {
             let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
