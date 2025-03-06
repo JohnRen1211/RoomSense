@@ -66,8 +66,9 @@
                     </ul>
                 </div>
 
-                <!-- Schedule Display -->
+
                 <div id="room-schedule" class="bg-white shadow-md rounded-lg p-4 w-2/3" style="max-height: 600px; width: 1200px; overflow-y: auto;">
+                    <h2 id="room-title" class="text-center text-xl font-bold text-orange-600 mb-4">Select a room</h2>
                     <p>Select a room to view its schedule.</p>
                 </div>
             </div>
@@ -166,6 +167,7 @@
         
 
         function updateSchedule(room) {
+            document.getElementById("room-title").textContent = room; // Update room title
             let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
             let scheduleData = schedules[room] || [];
             
@@ -181,24 +183,29 @@
                     </tr>
                 </thead>
                 <tbody>`;
-            
-            scheduleData.forEach((s, index) => {
-                table += `<tr class='bg-white'>
-                    <td class='border border-gray-400 px-4 py-2'>${s.prof}</td>
-                    <td class='border border-gray-400 px-4 py-2'>${s.day}</td>
-                    <td class='border border-gray-400 px-4 py-2'>${s.time}</td>
-                    <td class='border border-gray-400 px-4 py-2'>${s.section}</td>
-                    <td class='border border-gray-400 px-4 py-2'>${s.subject}</td>
-                    <td class='border border-gray-400 px-4 py-2'>
-                        <button onclick="editSchedule('${room}', ${index})" class="text-blue-600">Edit</button> |
-                        <button onclick="deleteSchedule('${room}', ${index})" class="text-red-600">Delete</button>
-                    </td>
-                </tr>`;
-            });
-        
-            table += "</tbody></table>";
-            document.getElementById("room-schedule").innerHTML = table;
+
+            if (scheduleData.length > 0) {
+                scheduleData.forEach((s, index) => {
+                    table += `<tr>
+                        <td class='border border-gray-400 px-4 py-2'>${s.prof}</td>
+                        <td class='border border-gray-400 px-4 py-2'>${s.day}</td>
+                        <td class='border border-gray-400 px-4 py-2'>${s.time}</td>
+                        <td class='border border-gray-400 px-4 py-2'>${s.section}</td>
+                        <td class='border border-gray-400 px-4 py-2'>${s.subject}</td>
+                        <td class='border border-gray-400 px-4 py-2'>
+                            <button class='text-blue-600' onclick='editSchedule("${room}", ${index})'>Edit</button> | 
+                            <button class='text-red-600' onclick='deleteSchedule("${room}", ${index})'>Delete</button>
+                        </td>
+                    </tr>`;
+                });
+            } else {
+                table += `<tr><td colspan='6' class='border border-gray-400 px-4 py-2 text-center'>No schedule available</td></tr>`;
+            }
+
+            table += `</tbody></table>`;
+            document.getElementById("room-schedule").innerHTML = `<h2 id="room-title" class="text-center text-xl font-bold text-orange-600 mb-4">${room}</h2>` + table;
         }
+
 
         function deleteSchedule(room, index) {
             let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
