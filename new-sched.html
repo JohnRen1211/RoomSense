@@ -324,12 +324,17 @@
         
             openModal();
         
-            let saveButton = document.querySelector(".bg-orange-600.text-white");
-            saveButton.setAttribute("onclick", `saveEditedSchedule('${room}', ${index})`);
+            let buttonContainer = document.querySelector(".flex.justify-end");
+            buttonContainer.innerHTML = `
+                <button onclick="closeModal()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+                <button onclick="saveEditedSchedule('${room}', ${index}, true)" class="px-4 py-2 bg-orange-600 text-white rounded">Save and Delete Old Data</button>
+                <button onclick="saveEditedSchedule('${room}', ${index}, false)" class="px-4 py-2 bg-blue-600 text-white rounded">Save and Keep Old Data</button>
+            `;
         }
-
-        function saveEditedSchedule(room, index) {
+        
+        function saveEditedSchedule(room, index, deleteOld) {
             let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
+            
             let updatedSchedule = {
                 day: document.getElementById("day").value.trim(),
                 time: document.getElementById("time").value.trim(),
@@ -338,11 +343,19 @@
                 prof: document.getElementById("prof").value.trim()
             };
         
-            schedules[room][index] = updatedSchedule;
+            if (deleteOld) {
+                // Replace the existing schedule
+                schedules[room][index] = updatedSchedule;
+            } else {
+                // Keep old data and add new entry
+                schedules[room].push(updatedSchedule);
+            }
+        
             localStorage.setItem("schedules", JSON.stringify(schedules));
             closeModal();
             updateSchedule(room);
         }
+        
         
 
 
