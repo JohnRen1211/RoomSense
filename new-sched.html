@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/0d66da6825.js" crossorigin="anonymous"></script>
 </head>
-
 <body class="bg-gray-100">
     <div class="flex h-screen">
 
@@ -134,33 +132,46 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <div id="modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
-        <div class="bg-white p-6 rounded shadow-lg w-96">
-            <h2 class="text-xl font-bold mb-4">Add Schedule</h2>
-            <div id="modalContent">
-                <select id="room" class="w-full mb-2 p-2 border rounded">
-                    <option value="ROOM 300">ROOM 300</option>
-                    <option value="ROOM 310">ROOM 310</option>
-                    <option value="ROOM 311">ROOM 311</option>
-                    <option value="ROOM 312">ROOM 312</option>
-                    <option value="ROOM 313">ROOM 313</option>
-                    <option value="ROOM 314">ROOM 314</option>
-                    <option value="ROOM 315">ROOM 315</option>
-                    <option value="ROOM 316">ROOM 316</option>
-                </select>
-                <input type="text" id="day" placeholder="Day" class="w-full mb-2 p-2 border rounded">
-                <input type="text" id="time" placeholder="Time" class="w-full mb-2 p-2 border rounded">
-                <input type="text" id="section" placeholder="Section" class="w-full mb-2 p-2 border rounded">
-                <input type="text" id="subject" placeholder="Subject" class="w-full mb-2 p-2 border rounded">
-                <input type="text" id="prof" placeholder="Instructor" class="w-full mb-2 p-2 border rounded">
-            </div>
-            <div class="flex justify-end space-x-2 mt-4">
-                <button onclick="closeModal()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-                <button onclick="saveSchedule()" class="px-4 py-2 bg-orange-600 text-white rounded">Save</button>
-            </div>
+<!-- Modal -->
+<div id="modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="bg-white p-6 rounded shadow-lg w-96">
+        <h2 class="text-xl font-bold mb-4 text-orange-600">Schedule Entry</h2>
+        <div id="modalContent">
+            <label class="font-semibold text-gray-700">Select Room:</label>
+            <select id="room" class="w-full mb-2 p-2 border rounded">
+                <option value="ROOM 300">ROOM 300</option>
+                <option value="ROOM 310">ROOM 310</option>
+                <option value="ROOM 311">ROOM 311</option>
+                <option value="ROOM 312">ROOM 312</option>
+                <option value="ROOM 313">ROOM 313</option>
+                <option value="ROOM 314">ROOM 314</option>
+                <option value="ROOM 315">ROOM 315</option>
+                <option value="ROOM 316">ROOM 316</option>
+            </select>
+
+            <label class="font-semibold text-gray-700">Enter Day:</label>
+            <input type="text" id="day" placeholder="e.g. Monday" class="w-full mb-2 p-2 border rounded">
+
+            <label class="font-semibold text-gray-700">Enter Time:</label>
+            <input type="text" id="time" placeholder="e.g. 10:00 AM - 12:00 PM" class="w-full mb-2 p-2 border rounded">
+
+            <label class="font-semibold text-gray-700">Enter Section:</label>
+            <input type="text" id="section" placeholder="e.g. Section A" class="w-full mb-2 p-2 border rounded">
+
+            <label class="font-semibold text-gray-700">Enter Subject:</label>
+            <input type="text" id="subject" placeholder="e.g. Computer Networks" class="w-full mb-2 p-2 border rounded">
+
+            <label class="font-semibold text-gray-700">Enter Instructor:</label>
+            <input type="text" id="prof" placeholder="e.g. Prof. Smith" class="w-full mb-2 p-2 border rounded">
+        </div>
+
+        <div class="flex justify-end space-x-2 mt-4">
+            <button onclick="closeModal()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+            <button onclick="saveSchedule()" class="px-4 py-2 bg-orange-600 text-white rounded">Save</button>
         </div>
     </div>
+</div>
+
 
     <!-- Script -->
     <script>
@@ -196,92 +207,101 @@
 
         function saveSchedule() {
             let room = document.getElementById("room").value;
-            let day = document.getElementById("day").value;
-            let time = document.getElementById("time").value;
-            let section = document.getElementById("section").value;
-            let subject = document.getElementById("subject").value;
-            let prof = document.getElementById("prof").value;
-
-            if (!day || !time || !section || !subject || !prof) {
-                alert("Please fill all fields");
+            let day = document.getElementById("day").value.trim();
+            let time = document.getElementById("time").value.trim();
+            let section = document.getElementById("section").value.trim();
+            let subject = document.getElementById("subject").value.trim();
+            let prof = document.getElementById("prof").value.trim();
+        
+            if (!room || !day || !time || !section || !subject || !prof) {
+                alert("Please fill in all fields before saving.");
                 return;
             }
-
+        
+            // Retrieve schedules from local storage
             let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
-            if (!schedules[room]) schedules[room] = [];
-
-            // Check for duplicates
-            let duplicate = schedules[room].some(s => s.day === day && s.time === time && s.prof === prof);
-            if (duplicate) {
-                alert("Schedule already exists for this instructor at the given time.");
+        
+            // Ensure room entry exists in the object
+            if (!schedules[room]) {
+                schedules[room] = [];
+            }
+        
+            // Check for duplicate schedule
+            let isDuplicate = schedules[room].some(s =>
+                s.day === day &&
+                s.time === time &&
+                s.section === section &&
+                s.subject === subject &&
+                s.prof === prof
+            );
+        
+            if (isDuplicate) {
+                alert("This exact schedule already exists.");
                 return;
             }
-
-            schedules[room].push({
-                day,
-                time,
-                section,
-                subject,
-                prof
-            });
+        
+            // Add new schedule
+            schedules[room].push({ day, time, section, subject, prof });
             localStorage.setItem("schedules", JSON.stringify(schedules));
-
+        
+            alert("Schedule saved successfully!");
             closeModal();
             updateSchedule(room);
         }
-
-
+        
         function updateSchedule(room) {
-    document.getElementById("room-title").textContent = room; // Update room title
-    let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
-    let scheduleData = schedules[room] || [];
+            document.getElementById("room-title").textContent = room;
+            let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
+            let scheduleData = schedules[room] || [];
+        
+            let dayFilter = document.getElementById("dayFilter").value;
+        
+            let table = `<table class='w-full border-collapse border border-gray-400 mt-4'>
+                <thead>
+                    <tr class='bg-orange-500 text-white'>
+                        <th class='border border-gray-400 px-4 py-2'>Instructor</th>
+                        <th class='border border-gray-400 px-4 py-2'>Day</th>
+                        <th class='border border-gray-400 px-4 py-2'>Time</th>
+                        <th class='border border-gray-400 px-4 py-2'>Section</th>
+                        <th class='border border-gray-400 px-4 py-2'>Subject</th>
+                        <th class='border border-gray-400 px-4 py-2'>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+        
+            let filteredSchedules = scheduleData.filter(s => dayFilter === "" || s.day === dayFilter);
+        
+            if (filteredSchedules.length > 0) {
+                filteredSchedules.forEach((s, index) => {
+                    table += `<tr>
+                        <td class='border border-gray-400 px-4 py-2'>${s.prof}</td>
+                        <td class='border border-gray-400 px-4 py-2'>${s.day}</td>
+                        <td class='border border-gray-400 px-4 py-2'>${s.time}</td>
+                        <td class='border border-gray-400 px-4 py-2'>${s.section}</td>
+                        <td class='border border-gray-400 px-4 py-2'>${s.subject}</td>
+                        <td class='border border-gray-400 px-4 py-2'>
+                            <div class="flex justify-center items-center space-x-2">
+                                <button class="bg-orange-500 text-white px-3 py-1 rounded hover:bg-orange-600" onclick='editSchedule("${room}", ${index})'>Edit</button>
+                                <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" onclick='deleteSchedule("${room}", ${index})'>Delete</button>
+                            </div>
+                        </td>
+                    </tr>`;
+                });
+            } else {
+                table += `<tr>
+                    <td colspan='6' class='border border-gray-400 px-4 py-2 text-center text-red-500'>No schedule available</td>
+                </tr>`;
+            }
+        
+            table += `</tbody></table>`;
+            document.getElementById("room-schedule").innerHTML =
+                `<h2 id="room-title" class="text-center text-xl font-bold text-orange-600 mb-4">${room}</h2>` +
+                table;
+        }
+        
 
-    // Day filter value
-    let dayFilter = document.getElementById("dayFilter").value;
 
-    let table = `<table class='w-full border-collapse border border-gray-400 mt-4'>
-        <thead>
-            <tr class='bg-orange-500 text-white'>
-                <th class='border border-gray-400 px-4 py-2'>Instructor</th>
-                <th class='border border-gray-400 px-4 py-2'>Day</th>
-                <th class='border border-gray-400 px-4 py-2'>Time</th>
-                <th class='border border-gray-400 px-4 py-2'>Section</th>
-                <th class='border border-gray-400 px-4 py-2'>Subject</th>
-                <th class='border border-gray-400 px-4 py-2'>Actions</th>
-            </tr>
-        </thead>
-        <tbody>`;
 
-    // Apply day filter before checking the length
-    let filteredSchedules = scheduleData.filter(s => dayFilter === "" || s.day === dayFilter);
-
-    if (filteredSchedules.length > 0) {
-        filteredSchedules.forEach((s, index) => {
-            table += `<tr>
-                <td class='border border-gray-400 px-4 py-2'>${s.prof}</td>
-                <td class='border border-gray-400 px-4 py-2'>${s.day}</td>
-                <td class='border border-gray-400 px-4 py-2'>${s.time}</td>
-                <td class='border border-gray-400 px-4 py-2'>${s.section}</td>
-                <td class='border border-gray-400 px-4 py-2'>${s.subject}</td>
-                <td class='border border-gray-400 px-4 py-2'>
-                    <div class="flex justify-center items-center space-x-2">
-                        <button class="bg-orange-500 text-white px-3 py-1 rounded hover:bg-orange-600" onclick='editSchedule("${room}", ${index})'>Edit</button>
-                        <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" onclick='deleteSchedule("${room}", ${index})'>Delete</button>
-                    </div>
-                </td>
-            </tr>`;
-        });
-    } else {
-        table += `<tr>
-            <td colspan='6' class='border border-gray-400 px-4 py-2 text-center text-red-500'>No schedule available</td>
-        </tr>`;
-    }
-
-    table += `</tbody></table>`;
-    document.getElementById("room-schedule").innerHTML =
-        `<h2 id="room-title" class="text-center text-xl font-bold text-orange-600 mb-4">${room}</h2>` +
-        table;
-}
 
 
         function deleteSchedule(room, index) {
@@ -294,36 +314,37 @@
         function editSchedule(room, index) {
             let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
             let schedule = schedules[room][index];
-
+        
             document.getElementById("room").value = room;
             document.getElementById("day").value = schedule.day;
             document.getElementById("time").value = schedule.time;
             document.getElementById("section").value = schedule.section;
             document.getElementById("subject").value = schedule.subject;
             document.getElementById("prof").value = schedule.prof;
-
-            // Show the modal with Save Changes button
+        
             openModal();
-
-            document.querySelector(".bg-orange-600.text-white").setAttribute("onclick",
-                `saveEditedSchedule('${room}', ${index})`);
+        
+            let saveButton = document.querySelector(".bg-orange-600.text-white");
+            saveButton.setAttribute("onclick", `saveEditedSchedule('${room}', ${index})`);
         }
 
         function saveEditedSchedule(room, index) {
             let schedules = JSON.parse(localStorage.getItem("schedules")) || {};
             let updatedSchedule = {
-                day: document.getElementById("day").value,
-                time: document.getElementById("time").value,
-                section: document.getElementById("section").value,
-                subject: document.getElementById("subject").value,
-                prof: document.getElementById("prof").value
+                day: document.getElementById("day").value.trim(),
+                time: document.getElementById("time").value.trim(),
+                section: document.getElementById("section").value.trim(),
+                subject: document.getElementById("subject").value.trim(),
+                prof: document.getElementById("prof").value.trim()
             };
-
+        
             schedules[room][index] = updatedSchedule;
             localStorage.setItem("schedules", JSON.stringify(schedules));
             closeModal();
             updateSchedule(room);
         }
+        
+
 
         function applyDayFilter() {
             let selectedRoom = document.getElementById("room-title").textContent;
@@ -333,5 +354,6 @@
         }
     </script>
 </body>
+
 
 </html>
