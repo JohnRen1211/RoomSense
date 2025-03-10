@@ -10,45 +10,24 @@
 <body class="bg-gray-100">
     <div class="flex h-screen">
 
-        <!-- Sidebar -->
-        <div class="fixed h-full bg-orange-600 group transition-all duration-300 w-16 hover:w-64">
-            <div class="flex flex-col h-full">
-                <a href="#" class="flex items-center p-4 border-b border-b-white">
-                    <img src="./images/CpELogo.jpg" alt="placeholder" class="w-8 h-8 rounded object-cover">
-                    <span
-                        class="ml-3 text-lg font-poppins text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        CpE Department
-                    </span>
-                </a>
-                <ul class="flex flex-col mt-4 space-y-2">
-                    <li><a href="index.html"
-                            class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i
-                                class="fas fa-home text-2xl"></i><span
-                                class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a>
-                    </li>
-                    <li><a href="Room.html"
-                            class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i
-                                class="fas fa-th-large text-2xl"></i><span
-                                class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a>
-                    </li>
-                    <li><a href="315.html"
-                            class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i
-                                class="fas fa-temperature-empty text-2xl"></i><span
-                                class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">315
-                                Details</span></a></li>
-                    <li><a href="Schedule.html"
-                            class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i
-                                class="fas fa-calendar-alt text-2xl"></i><span
-                                class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a>
-                    </li>
-                    <li><a href="Logs.html"
-                            class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i
-                                class="fas fa-file-alt text-2xl"></i><span
-                                class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a>
-                    </li>
-                </ul>
+              <!-- Sidebar -->
+              <div class="fixed h-full bg-orange-600 group transition-all duration-300 w-16 hover:w-64 z-20">
+                <div class="flex flex-col h-full">
+                    <a href="#" class="flex items-center p-4 border-b border-b-white">
+                        <img src="/images/CpELogo.jpg" alt="placeholder" class="w-8 h-8 rounded object-cover">
+                        <span class="ml-3 text-lg font-poppins text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            CpE Department
+                        </span>
+                    </a>
+                    <ul class="flex flex-col mt-4 space-y-2">
+                        <li><a href="/index.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
+                        <li><a href="/Room315.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
+                        <li><a href="/Room315.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-temperature-empty text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">315 Details</span></a></li>
+                        <li><a href="/Scheduling.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
+                        <li><a href="/Scheduling.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
         <!-- Main Content -->
         <div class="flex-1 ml-16 p-6">
@@ -96,30 +75,14 @@
                 <div class="bg-white shadow-md rounded-lg p-4 w-1/2" style="width: 200px; height: 500px;">
                     <h2 class="text-lg font-bold">Rooms</h2>
                     <ul>
-                        <li><button onclick="updateSchedule('ROOM 300')"
-                                class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM
-                                300</button></li>
-                        <li><button onclick="updateSchedule('ROOM 310')"
-                                class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM
-                                310</button></li>
-                        <li><button onclick="updateSchedule('ROOM 311')"
-                                class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM
-                                311</button></li>
-                        <li><button onclick="updateSchedule('ROOM 312')"
-                                class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM
-                                312</button></li>
-                        <li><button onclick="updateSchedule('ROOM 313')"
-                                class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM
-                                313</button></li>
-                        <li><button onclick="updateSchedule('ROOM 314')"
-                                class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM
-                                314</button></li>
-                        <li><button onclick="updateSchedule('ROOM 315')"
-                                class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM
-                                315</button></li>
-                        <li><button onclick="updateSchedule('ROOM 316')"
-                                class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM
-                                316</button></li>
+                        <li><button onclick="updateSchedule('ROOM 300')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM 300</button></li>
+                        <li><button onclick="updateSchedule('ROOM 310')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM 310</button></li>
+                        <li><button onclick="updateSchedule('ROOM 311')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM 311</button></li>
+                        <li><button onclick="updateSchedule('ROOM 312')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM 312</button></li>
+                        <li><button onclick="updateSchedule('ROOM 313')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM 313</button></li>
+                        <li><button onclick="updateSchedule('ROOM 314')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM 314</button></li>
+                        <li><button onclick="updateSchedule('ROOM 315')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM 315</button></li>
+                        <li><button onclick="updateSchedule('ROOM 316')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">ROOM 316</button></li>
                     </ul>
                 </div>
                 <!-- Schedule Display -->

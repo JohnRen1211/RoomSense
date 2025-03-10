@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Room Dashboard</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <script src="https://kit.fontawesome.com/0d66da6825.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="font-sans bg-gray-100">
+
+              <!-- Sidebar -->
+              <div class="fixed h-full bg-orange-600 group transition-all duration-300 w-16 hover:w-64 z-20">
+                <div class="flex flex-col h-full">
+                    <a href="#" class="flex items-center p-4 border-b border-b-white">
+                        <img src="/images/CpELogo.jpg" alt="placeholder" class="w-8 h-8 rounded object-cover">
+                        <span class="ml-3 text-lg font-poppins text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            CpE Department
+                        </span>
+                    </a>
+                    <ul class="flex flex-col mt-4 space-y-2">
+                        <li><a href="/index.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
+                        <li><a href="/Room315.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
+                        <li><a href="/Room315.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-temperature-empty text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">315 Details</span></a></li>
+                        <li><a href="/Scheduling.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
+                        <li><a href="/Scheduling.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
+                    </ul>
+                </div>
+            </div>
+
+  <div class="flex h-screen">
+    <div class="flex-1 ml-16 p-6">
+      <h1 class="text-3xl font-bold text-orange-600 mb-6">Floorplan</h1>
+
+      <div class="flex h-screen space-x-4">
+
+        <!-- Left box: Floor Plan -->
+        <div class="bg-white p-1 rounded-lg shadow-lg col-span-2 h-fit">
+          <h2 class="text-lg font-semibold mb-4 ml-2">Rooms</h2>
+          <div class="flex justify-center mb-4"> 
+            <div class="grid grid-cols-9 grid-rows-6 gap-0 bg-gray-100">
+              <div class="col-span-2 row-span-2 col-start-3 row-start-3 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+              <div class="col-span-2 row-span-2 col-start-6 row-start-3 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+              <div class="col-start-1 row-start-1 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+              <div class="col-start-1 row-start-2 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+              <div class="col-start-1 row-start-4 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+              <div class="col-start-1 row-start-5 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+              <div class="col-start-1 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+              <div class="col-start-2 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+              <div class="col-start-3 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+              <div class="col-start-4 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+              <div class="col-start-5 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+              <div class="col-start-6 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+
+              
+              <!-- Room Buttons -->
+              <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="1">316</button>
+              <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="2">315</button>
+              <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="3">314</button>
+              <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="4">313</button>
+              <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="5">312</button>
+              <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="6">311</button>
+              <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="7">310</button>
+              <button class="toggle-button col-start-1 row-start-3 bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="8">300</button>
+              
+              <div class="col-start-9 row-start-1 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+              <div class="col-start-9 row-start-2 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+              <div class="col-start-9 row-start-3 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+              <div class="col-start-9 row-start-4 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+              <div class="col-start-9 row-start-5 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+              <div class="col-start-9 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+              <div class="col-start-8 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+              <div class="col-start-7 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+            </div>
+          </div>
+          
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+</body>
+</html>
