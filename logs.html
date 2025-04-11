@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <script src="https://kit.fontawesome.com/0d66da6825.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <title>Print Schedule</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
-<body class="bg-gray-100">
-    <div class="flex h-screen">
-        
+<body class="bg-white text-black">
+
+  <div class="flex">
     <!-- Sidebar -->
-    <div class="fixed h-full bg-orange-600 group transition-all duration-300 w-16 hover:w-64 z-20">
+    <div class="fixed h-full bg-orange-600 group transition-all duration-300 w-16 hover:w-64">
         <div class="flex flex-col h-full">
             <a href="#" class="flex items-center p-4 border-b border-b-white">
                 <img src="./images/CpELogo.jpg" alt="placeholder" class="w-8 h-8 rounded object-cover">
@@ -30,94 +28,75 @@
         </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="flex-1 ml-16 p-6">
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-orange-600">Logs</h1>
-        </div>
+    <!-- Main content -->
+    <div class="flex-1 ml-16 lg:ml-64 p-6">
+      <div class="mb-6 flex justify-between items-center">
+        <h1 class="text-3xl font-bold text-orange-600">Complete Schedule List</h1>
+        <button onclick="window.print()" class="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700">
+          Print This Page
+        </button>
+      </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-lg">
-            <div class="flex justify-between items-center mb-4">
+      <div id="schedule-table" class="overflow-x-auto shadow-md border border-gray-300 rounded-lg"></div>
+    </div>
+  </div>
 
-            <div class="relative z-10 mb-4">
-                <select class="appearance-none bg-gray-100 border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                    <option>Select Room</option>
-                    <option>ROOM 310</option>
-                    <option>ROOM 311</option>
-                    <option>ROOM 312</option>
-                    <option>ROOM 313</option>
-                    <option>ROOM 314</option>
-                    <option>ROOM 315</option>
-                    <option>ROOM 316</option>  
-                </select>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-            </div>
-                <i class="fas fa-download text-orange-600 text-2xl"></i>
-            </div>
-            <table class="min-w-full bg-white">
-                <thead>
-                    <tr>
-                        <th class="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">Date</th>
-                        <th class="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">Time In</th>
-                        <th class="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">Time Out</th>
-                        <th class="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">Subject</th>
-                        <th class="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">Occupant</th>
-                        <th class="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">Population</th>
-                        <th class="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">Instructor</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Jan 6, 2025</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">10:30 AM</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">1:30 PM</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">CMPE 30224 - CAO</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">BSCpE 4-4</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">45</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Engr. Mahaguay</td>
-                    </tr>
-                    <tr>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Jan 6, 2025</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">10:30 AM</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">1:30 PM</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">CMPE 30224 - CAO</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">BSCpE 4-4</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">45</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Engr. Mahaguay</td>
-                    </tr>
-                    <tr>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Jan 6, 2025</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">10:30 AM</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">1:30 PM</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">CMPE 30224 - CAO</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">BSCpE 4-4</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">45</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Engr. Mahaguay</td>
-                    </tr>
-                    <tr>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Jan 6, 2025</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">10:30 AM</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">1:30 PM</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">CMPE 30224 - CAO</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">BSCpE 4-4</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">45</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Engr. Mahaguay</td>
-                    </tr>
-                    <tr>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Jan 6, 2025</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">10:30 AM</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">1:30 PM</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">CMPE 30224 - CAO</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">BSCpE 4-4</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">45</td>
-                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Engr. Mahaguay</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    </div>
+  <script>
+    const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
+    const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo';
+    const TABLE_NAME = 'schedules';
+
+    async function loadAllSchedules() {
+      try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?select=*`, {
+          headers: {
+            'apikey': SUPABASE_API_KEY,
+            'Authorization': `Bearer ${SUPABASE_API_KEY}`
+          }
+        });
+
+        if (!response.ok) throw new Error(await response.text());
+
+        const schedules = await response.json();
+
+        let html = `
+          <table class="min-w-full text-sm text-left border-collapse">
+            <thead class="bg-orange-500 text-white">
+              <tr>
+                <th class="px-4 py-2 border">Room</th>
+                <th class="px-4 py-2 border">Instructor</th>
+                <th class="px-4 py-2 border">Day</th>
+                <th class="px-4 py-2 border">Time</th>
+                <th class="px-4 py-2 border">Section</th>
+                <th class="px-4 py-2 border">Subject</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+
+        schedules.forEach(s => {
+          html += `
+            <tr class="border-t">
+              <td class="px-4 py-2 border">${s.room || '-'}</td>
+              <td class="px-4 py-2 border">${s.prof || '-'}</td>
+              <td class="px-4 py-2 border">${s.day || '-'}</td>
+              <td class="px-4 py-2 border">${s.time || '-'}</td>
+              <td class="px-4 py-2 border">${s.section || '-'}</td>
+              <td class="px-4 py-2 border">${s.subject || '-'}</td>
+            </tr>
+          `;
+        });
+
+        html += `</tbody></table>`;
+        document.getElementById("schedule-table").innerHTML = html;
+
+      } catch (err) {
+        console.error("Error loading schedules:", err.message);
+        document.getElementById("schedule-table").innerHTML = `<p class="text-red-600">Failed to load schedules.</p>`;
+      }
+    }
+
+    loadAllSchedules();
+  </script>
 </body>
 </html>

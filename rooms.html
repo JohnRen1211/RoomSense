@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://kit.fontawesome.com/0d66da6825.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script>
         // Function to update room status
         function updateRoomStatus(room) {
@@ -281,11 +282,10 @@
                         <!-- SENSOR CARD -->
                         <div class="bg-white p-5 rounded-lg shadow-lg flex flex-col h-full min-h-[210px]">
                             <div class="flex flex-row items-start mb-4 border-b border-gray-300 pb-4">
-                                <div class="text-4xl text-orange-500 font-bold ml-5 mt-7">22°C</div>
+                                <div class="text-4xl text-orange-500 font-bold ml-5 mt-7" id="temperature">22°C</div>
                                 <img src="/images/temperature.png" alt="Temperature Icon" class="h-20 w-20 object-contain ml-auto">
                             </div>
                             <h2 class="text-xl font-bold text-orange-500 mt-4 ml-[52px] italic">Temperature</h2>
-                            <div class="text-sm text-gray-500 ml-[35px] italic">Current Temperature: 22°C</div>
                         </div>
                 
                         <!-- SENSOR CARD -->
@@ -296,20 +296,18 @@
                                       11
                                     </div>
                                   </div>                                  
-                                <img src="./images/presence.png" alt="Presence Icon" class="h-20 w-20 object-contain ml-auto">
+                                <img src="/images/modal2.png" alt="Presence Icon" class="h-20 w-20 object-contain ml-auto">
                             </div>
                             <h2 class="text-xl font-bold text-orange-500 mt-4 ml-[75px] italic">Presence</h2>
-                            <div class="text-sm text-gray-500 ml-[60px] italic">-------------------</div>
                         </div>
                 
                         <!-- SENSOR CARD -->
                         <div class="bg-white p-5 rounded-lg shadow-lg flex flex-col h-full min-h-[210px]">
                             <div class="flex flex-row items-start mb-4 border-b border-gray-300 pb-4">
-                                <div class="text-4xl text-orange-500 font-bold ml-5 mt-7">22°C</div>
-                                <img src="./images/humidity.png" alt="Humidity Icon" class="h-20 w-20 object-contain ml-auto">
+                                <div class="text-4xl text-orange-500 font-bold ml-5 mt-7" id="humidity">%</div>
+                                <img src="/images/Humid.png" alt="Humidity Icon" class="h-20 w-20 object-contain ml-auto">
                             </div>
                             <h2 class="text-xl font-bold text-orange-500 mt-4 ml-[63px] italic">Humidity</h2>
-                            <div class="text-sm text-gray-500 ml-[40px] italic">Current Humidity: 22°C</div>
                         </div>
                         
                 
@@ -320,7 +318,7 @@
                                 <img src="./images/light.png" alt="Humidity Icon" class="h-20 w-20 object-contain ml-auto">
                             </div>
                             <h2 class="text-xl font-bold text-orange-500 mt-4 ml-[85px] italic">Lights</h2>
-                            <div class="text-sm text-gray-500 ml-[55px] italic">Lights at room: 300</div>
+                            <div class="text-sm text-gray-500 ml-[55px] italic">Lights at room: 315</div>
                         </div>
                     </div>
                 </div>
@@ -330,6 +328,7 @@
         
         <!-- Scripts -->
         <script>
+            // What are these functions??
             // Toggle modal visibility
             function toggleModal() {
                 const modal = document.getElementById('equipmentModal');
@@ -365,6 +364,36 @@
                 toggleModal();
             }
             let currentTemp = 0; // initialize
+            //Working codes
+            document.addEventListener("DOMContentLoaded", async () => {
+                const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
+                const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo';
+          
+                const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_API_KEY);
+          
+                async function fetchLatestSensorData() {
+                  const { data, error } = await client
+                    .from('sensor_data')
+                    .select('*')
+                    .order('timestamp', { ascending: false })
+                    .limit(1);
+          
+                  if (error) {
+                    console.error('Error fetching latest data:', error);
+                    return;
+                  }
+          
+                  if (data.length > 0) {
+                    const latest = data[0];
+                    document.getElementById('temperature').textContent = ` ${latest.temperature} °C`;
+                    document.getElementById('humidity').textContent = `  ${latest.humidity} %`;
+                    document.getElementById('timestamp').textContent = ` ${new Date(latest.timestamp).toLocaleString()}`;
+                  }
+                }
+          
+                fetchLatestSensorData();
+              });
+
             
         </script>
     </div>
