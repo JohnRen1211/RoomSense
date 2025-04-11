@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://kit.fontawesome.com/0d66da6825.js" crossorigin="anonymous"></script>
+</head>
+<body class="font-sans bg-gray-100 text-gray-700 overflow-hidden">
+
+    <div class="flex h-screen">
+      <!-- Sidebar -->
+      <div class="fixed h-full bg-orange-600 group transition-all duration-300 w-16 hover:w-64">
+          <div class="flex flex-col h-full">
+              <a href="#" class="flex items-center p-4 border-b border-b-white">
+                  <img src="./images/CpELogo.jpg" alt="placeholder" class="w-8 h-8 rounded object-cover">
+                  <span class="ml-3 text-lg font-poppins text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      CpE Department
+                  </span>
+              </a>
+              <ul class="flex flex-col mt-4 space-y-2">
+                  <li><a href="/dashboard.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
+                  <li><a href="/rooms.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
+                  <li><a href="/Scheduling.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
+                  <li><a href="/logs.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
+              </ul>
+          </div>
+      </div>
+      
+       <!-- Main Content -->
+      <div class="flex-1 ml-16 p-6">
+        <h1 class="text-3xl font-bold text-orange-600 mb-6">Dashboard</h1>
+
+        <div class="flex h-screen space-x-4">
+          <!-- Left box: Floor Plan -->
+          <div class="bg-white p-5 rounded-lg shadow-lg col-span-2 h-fit">
+            <h2 class="text-xl font-bold mb-3 ml-5">CPE Room Layout</h2>
+            <div class="flex justify-center mb-4"> 
+              <div class="grid grid-cols-9 grid-rows-6 gap-0 bg-gray-100">
+                <div class="col-span-2 row-span-2 col-start-3 row-start-3 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-span-2 row-span-2 col-start-6 row-start-3 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-1 row-start-1 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                
+                <!-- Room Buttons -->
+                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="1">316</button>
+                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="2">315</button>
+                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="3">314</button>
+                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="4">313</button>
+                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="5">312</button>
+                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="6">311</button>
+                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="7">310</button>
+                <button class="toggle-button col-start-1 row-start-2 bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="8">300</button>
+
+                <!-- Room Layout -->
+                <div class="col-start-9 row-start-1 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-9 row-start-2 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-9 row-start-3 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-9 row-start-4 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-9 row-start-5 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-9 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-8 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-7 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-6 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-5 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-4 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-3 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-2 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-1 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-1 row-start-5 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-1 row-start-4 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-1 row-start-3 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+              </div>
+            </div>
+            
+            <div class="text-center text-sm text-gray-400">Select area to view room details</div>
+            <div class="flex justify-center mt-3">
+              <div class="flex items-center space-x-2">
+                <div class="bg-green-500 w-4 h-4 rounded"></div>
+                <div class="text-sm text-gray-500">Vacant</div>
+              </div>
+              <div class="flex items-center space-x-2 ml-4">
+                <div class="bg-red-500 w-4 h-4 rounded"></div>
+                <div class="text-sm text-gray-500">Occupied</div>
+              </div>
+              <div class="flex items-center space-x-2 ml-4">
+                <div class="bg-yellow-500 w-4 h-4 rounded"></div>
+                <div class="text-sm text-gray-500">Unverified</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right box: Room Description -->
+          <div class="flex-1 bg-white p-6 rounded-lg shadow-lg overflow-hidden h-fit">
+            <h2 id="roomName" class="text-2xl font-bold text-gray-600 text-center mx-auto">Select a room to see the description.</h2>
+            <div id="roomDesc" class="mt-4">
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDqMibAOg7U_pNQltIB8C_Ov-PaRSQrH6M",
+          authDomain: "ir-t2-82eb8.firebaseapp.com",
+          databaseURL: "https://ir-t2-82eb8-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "ir-t2-82eb8",
+          storageBucket: "ir-t2-82eb8.firebasestorage.app",
+          messagingSenderId: "465916330629",
+          appId: "1:465916330629:web:6646555f8a473830915fec"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        function fetchPeopleCount(roomId) {
+          const countRef = ref(database, `Sensor/peopleCount`); // Adjusted path to match your structure
+          onValue(countRef, (snapshot) => {
+            const count = snapshot.val();
+            const room = roomDetails[roomId];
+            room.population = count !== null ? count : 0; // Update the population in roomDetails
+            updateRoomStatus(roomId); // Update the display after fetching the count
+          }, (error) => {
+            console.error("Error fetching data: ", error);
+          });
+        }
+
+        const roomDetails = {
+          1: { 
+            roomNumber: "316", 
+            roomType: "Lecture Hall", 
+            status: "AVAILABLE", 
+            occupiedBy: "BSCPe 4-1", 
+            //population: 0, 
+            instructor: "Dr. Santos", 
+            subject: "CMPE 301" 
+          },
+          2: { 
+            roomNumber: "315", 
+            roomType: "Computer Laboratory", 
+            status: "AVAILABLE", 
+            occupiedBy: "BSIT 3-2", 
+            //population: 0, 
+            instructor: "Prof. Lopez", 
+            subject: "IT 202" 
+          },
+          3: { 
+            roomNumber: "314", 
+            roomType: "Lecture Hall", 
+            status: "AVAILABLE", 
+            occupiedBy: "-", 
+            //population: 0, 
+            instructor: "-", 
+            subject: "-" 
+          },
+          4: { 
+            roomNumber: "313", 
+            roomType: "Lecture Hall", 
+            status: "AVAILABLE", 
+            occupiedBy: "-", 
+            //population: 0, 
+            instructor: "-", 
+            subject: "-" 
+          },
+          5: { 
+            roomNumber: "312", 
+            roomType: "Lecture Hall", 
+            status: "AVAILABLE", 
+            occupiedBy: "-", 
+            //population: 0, 
+            instructor: "-", 
+            subject: "-" 
+          },
+          6: { 
+            roomNumber: "311", 
+            roomType: "Computer Programming and Design Laboratory", 
+            status: "AVAILABLE", 
+            occupiedBy: "-", 
+            //population: 0, 
+            instructor: "-", 
+            subject: "-" 
+          },
+          7: { 
+            roomNumber: "310", 
+            roomType: "Computer Engineering Lecture Room", 
+            status: "AVAILABLE", 
+            occupiedBy: "-", 
+            //population: 0, 
+            instructor: "-", 
+            subject: "-" 
+          },
+          8: { 
+            roomNumber: "300", 
+            roomType: "Computer Engineering Lecture and Multimedia Room",
+            status: "AVAILABLE", 
+            occupiedBy: "-", 
+            // population: 0, 
+            instructor: "-", 
+            subject: "-",
+            schedule: [
+                        {day: "Monday", time: "10:30 AM - 1:30 PM", section: "BSCpE 4-3", subject: "CMPE 30224 - Computer Architecture", instructor: "Engr. O.Pajabera" },
+                        {day: "Monday", time: "1:30 AM - 4:30 PM", section: "BSCpE 4-3", subject: "CMPE 30224 - Digital Signal Processing", instructor: "Dr. L.Lacatan" },
+                        {day: "Monday", time: "6:00 PM - 9:00 PM", section: "BSCpE 1-3P", subject: "CMPE 30114 - Data and Digital Communications", instructor: "Engr. L.Reyes"},
+                        {day: "Monday", time: "12:00 PM - 2:00 PM", section: "BSCpE 4-4", subject: "CMPE 40093 - Intro to Cybersecurity", instructor: "Engr. O.Pajabera" },
+                        {day: "Tuesday", time: "3:00 PM - 6:00 PM", section: "BSCpE 4-4", subject: "CMPE 40093 - Intro to Cybersecurity", instructor: "Engr. O.Pajabera" },
+                        {day: "Tuesday", time: "6:00 PM - 9:00 PM", section: "BSCpE 1-3P", subject: "CMPE 30121 - Introduction to HDL", instructor: "Engr. A. Dela Cruz"},
+                        {day: "Tuesday", time: "7:30 AM - 10:30 AM", section: "BSCpE 2-3", subject: "CMPE 201 - Data Structures", instructor: "Engr. G. Avena" },
+                        {day: "Wednesday", time: "10:30 AM - 1:30 PM", section: "BSCpE 2-3", subject: "CMPE 201 - Data Structures", instructor: "Engr. G. Avena" },
+                        {day: "Wednesday", time: "2:30 PM - 4:30 PM", section: "BSCpE 3-5", subject: "CMPE 351 - Network Administration", instructor: "Engr. A. Canlas"},
+                        {day: "Wednesday", time: "6:00 PM - 9:00 PM", section: "BSCpE 3-5", subject: "CMPE 351 - Network Administration", instructor: "Engr. A. Canlas"},
+                        {day: "Wednesday", time: "10:30 AM - 1:30 PM", section: "BSCpE 4-2", subject: "CMPE 30244 - Digital Signal Processing", instructor: "Engr. J. Binuya" },
+                        {day: "Thursday", time: "2:30 PM - 4:30 PM", section: "BSCpE 4-4P", subject: "CMPE 40203 - Web & Mobile Systems", instructor: "Engr. A. Canlas"},
+                        {day: "Thursday", time: "6:00 PM - 9:00 PM", section: "BSCpE 4-4P", subject: "CMPE 40203 - Web & Mobile Systems", instructor: "Engr. A. Canlas"},
+                        {day: "Thursday", time: "11:30 AM - 1:30 PM", section: "BSCpE 4-6", subject: "CMPE 40213  - Software Process & Prod Quality", instructor: "Engr. A. Dela Cruz" },
+                        {day: "Friday", time: "2:30 PM - 4:30 PM", section: "BSCpE 4-5", subject: "CMPE 40213  - Software Process & Prod Quality", instructor: "Engr. A. Dela Cruz" },
+                        {day: "Friday", time: "6:00 PM - 9:00 PM", section: "BSCpE 1-1P", subject: "CMPE 30114 - Data & Digital Comms", instructor: "Engr. J. Binuya"},
+                        {day: "Friday", time: "7:30 AM - 12:30 PM", section: "BSCpE 4-6", subject: "CMPE 40213  - Software Process & Prod Quality", instructor: "Engr. A. Dela Cruz" },
+                        {day: "Friday", time: "12:30 PM - 1:30 PM", section: "BSCpE 1-4", subject: "CMPE 101 - CMPE Discipline", instructor: "Engr. F.Oquindo"},
+                        {day: "Saturday", time: "12:00 PM - 2:30 PM", section: "BSCpE 1-7", subject: "CMPE 101 - CMPE Discipline", instructor: "Engr. F.Oquindo"},
+                        {day: "Saturday", time: "3:00 PM - 4:00 PM", section: "BSCpE 1-6", subject: "CMPE 101 - CMPE Discipline", instructor: "Engr. F.Oquindo"},
+                        {day: "Saturday", time: "4:00 PM - 5:00 PM", section: "BSCpE 1-3", subject: "CMPE 101 - CMPE Discipline", instructor: "Engr. F.Oquindo"},
+                        {day: "Saturday", time: "5:00 PM - 9:00 PM", section: "BSCpE 2-5", subject: "CMPE 201 - Data Structures", instructor: "Engr. C. Casuat"},
+                        {day: "Sunday", time: "5:00 AM - 9:00 PM", section: "BSCpE 2-5", subject: "CMPE 201 - Data Structures", instructor: "Engr. C. Casuat"},
+                      ]
+            }
+            };
+            
+        let currentRoomId = null;
+        
+        function getCurrentSchedule(roomId) {
+          const room = roomDetails[roomId];
+          if (!room || !room.schedule) return null;
+
+          const now = new Date();
+          const currentDay = now.toLocaleString('en-US', { weekday: 'long' });
+          const currentTime = now.getHours() * 60 + now.getMinutes(); // Convert to minutes for comparison
+
+          for (const session of room.schedule) {
+            if (session.day === currentDay) {
+              const [start, end] = session.time.split(" - ").map(t => convertToMinutes(t));
+              if (currentTime >= start && currentTime <= end) {
+                return session;
+              }
+            }
+          }
+          return null;
+        }
+
+        function convertToMinutes(timeStr) {
+          const [time, modifier] = timeStr.split(" ");
+          let [hours, minutes] = time.split(":").map(Number);
+
+          if (modifier === "PM" && hours !== 12) hours += 12;
+          if (modifier === "AM" && hours === 12) hours = 0;
+
+          return hours * 60 + minutes;
+        }
+
+        function updateRoomStatus(roomId) {
+          const room = roomDetails[roomId];
+          // room.status = room.population > 0 ? "OCCUPIED" : "AVAILABLE";
+          const roomButton = document.querySelector(`.toggle-button[data-room-id="${roomId}"]`);
+
+          // Update button color based on status
+          updateButtonColor(roomButton, room.status);
+
+          showDescription(roomId);
+        }
+
+        function showDescription(roomId) {
+          const room = roomDetails[roomId];
+          const currentSession = getCurrentSchedule(roomId);
+
+          if (currentSession) {
+            room.status = "OCCUPIED";
+            room.occupiedBy = currentSession.section;
+            room.instructor = currentSession.instructor;
+            room.subject = currentSession.subject;
+          } else {
+            room.status = "AVAILABLE";
+            room.occupiedBy = "-";
+            room.instructor = "-";
+            room.subject = "-";
+          }
+
+          // Update button color again to ensure correct state
+          const roomButton = document.querySelector(`.toggle-button[data-room-id="${roomId}"]`);
+          updateButtonColor(roomButton, room.status);
+
+          document.getElementById('roomName').innerHTML = `
+            <h2 class="text-2xl font-bold text-orange-500 text-center border-b-2 border-gray-300 pb-2">
+              Room ${room.roomNumber} (${room.roomType})
+            </h2>
+          `;
+          const descriptionHTML = `
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-bold text-orange-500">Room Status</h2>
+            <div id="roomStatus" class="text-${room.status === "OCCUPIED" ? 'red' : 'green'}-500 font-bold text-2xl pr-20">
+              ${room.status}
+              <p class="font-extralight text-gray-400 text-sm">Fingerprint not verified</p>
+            </div>
+          </div>
+          <div class="text-base mb-2"><strong>Room no.:</strong> ${room.roomNumber}</div>
+          <div class="text-base mb-2"><strong>Room Type:</strong> ${room.roomType}</div>
+          <div class="text-base mb-2"><strong>Occupied by:</strong> ${room.occupiedBy}</div>
+          <div class="text-base mb-2"><strong>Instructor:</strong> ${room.instructor}</div>
+          <div class="text-base mb-2"><strong>Subject:</strong> ${room.subject}</div>
+        `;  
+          document.getElementById('roomDesc').innerHTML = descriptionHTML;
+
+          currentRoomId = roomId;
+        }
+
+        function updateButtonColor(button, status) {
+          if (!button) return;
+          if (status === "OCCUPIED") {
+            button.classList.remove('bg-green-500');
+            button.classList.add('bg-red-500');
+          } else {
+            button.classList.remove('bg-red-500');
+            button.classList.add('bg-green-500');
+          }
+        }
+
+
+        document.querySelectorAll('.toggle-button').forEach(button => {
+          button.addEventListener('click', () => {
+            const roomId = button.getAttribute('data-room-id');
+            fetchPeopleCount(roomId);
+          });
+        });
+
+        // Initial fetch for room 315 when the page loads
+        fetchPeopleCount(2);
+      </script>
+    </div>
+  </body>
+</html>
