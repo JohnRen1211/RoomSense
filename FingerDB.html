@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fingerprint PAGE UP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .status {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        .status.success {
+            color: green;
+        }
+
+        .status.error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Fingerprint Registration and Matching</h1>
+
+    <div class="container">
+        <!-- Registration Section -->
+        <h2>Register Fingerprint</h2>
+        <input type="text" id="name" placeholder="Enter Name" required>
+        <button onclick="registerFingerprint()">Register Fingerprint</button>
+
+        <!-- Matching Section -->
+        <h2>Match Fingerprint</h2>
+        <button onclick="matchFingerprint()">Match Fingerprint</button>
+
+        <!-- Status Message -->
+        <div id="status" class="status"></div>
+    </div>
+
+    <script>
+        // Placeholder for Supabase URL and API key
+        const SUPABASE_URL = "https://your-project-id.supabase.co";
+        const SUPABASE_KEY = "your-api-key"; // Ensure you have the correct API key
+        const FINGERPRINT_API = "/rest/v1/fingerprints";  // The endpoint for fingerprint records in Supabase
+
+        // Register fingerprint function
+        async function registerFingerprint() {
+            const name = document.getElementById('name').value;
+            if (!name) {
+                alert("Please enter a name.");
+                return;
+            }
+
+            // Simulate sending the fingerprint data (replace this with actual sensor data)
+            const fingerprintData = "SimulatedFingerprintData";  // In practice, get data from the sensor
+
+            // Send data to Supabase
+            const response = await fetch(SUPABASE_URL + FINGERPRINT_API, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                },
+                body: JSON.stringify({
+                    name: name,
+                    fingerprint_data: fingerprintData
+                })
+            });
+
+            // Handle the response from Supabase
+            if (response.ok) {
+                document.getElementById('status').innerHTML = "<span class='success'>Fingerprint registered successfully!</span>";
+            } else {
+                document.getElementById('status').innerHTML = "<span class='error'>Error registering fingerprint. Please try again.</span>";
+            }
+        }
+
+        // Match fingerprint function
+        async function matchFingerprint() {
+            // Simulate fingerprint matching (replace with actual sensor data)
+            const fingerprintData = "SimulatedFingerprintData";  // In practice, get data from the sensor
+
+            // Send GET request to Supabase to check if a match exists
+            const response = await fetch(SUPABASE_URL + FINGERPRINT_API + "?fingerprint_data=eq." + fingerprintData, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+
+            // Handle the response from Supabase
+            if (response.ok) {
+                const data = await response.json();
+                if (data.length > 0) {
+                    document.getElementById('status').innerHTML = "<span class='success'>Fingerprint matched with ID: " + data[0].id + "</span>";
+                } else {
+                    document.getElementById('status').innerHTML = "<span class='error'>No match found.</span>";
+                }
+            } else {
+                document.getElementById('status').innerHTML = "<span class='error'>Error matching fingerprint. Please try again.</span>";
+            }
+        }
+    </script>
+</body>
+</html>
