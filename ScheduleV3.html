@@ -96,26 +96,39 @@
           <option value="315">ROOM 315</option>
           <option value="316">ROOM 316</option>
         </select>
-  
-        <label class="font-semibold text-gray-700">Select Day:</label>
-        <select id="day" class="w-full mb-2 p-2 border rounded" required>
-          <option value="Monday">Monday</option>
-          <option value="Tuesday">Tuesday</option>
-          <option value="Wednesday">Wednesday</option>
-          <option value="Thursday">Thursday</option>
-          <option value="Friday">Friday</option>
-          <option value="Saturday">Saturday</option>
-          <option value="Sunday">Sunday</option>
-        </select>
-  
-        <label class="font-semibold text-gray-700">Select Time:</label>
-        <select id="time" class="w-full mb-2 p-2 border rounded" required>
-          <option value="8:00 AM - 10:00 AM">8:00 AM - 10:00 AM</option>
-          <option value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM</option>
-          <option value="1:00 PM - 3:00 PM">1:00 PM - 3:00 PM</option>
-          <option value="6:00 PM - 10:00 PM">6:00 PM - 10:00 PM</option>
-          <option value="7:00 PM - 7:36 PM">7:00 PM - 7:36 PM</option>
-        </select>
+        <div class="flex items-center space-x-4">
+            <div class="flex flex-col">
+              <label class="font-semibold text-gray-700">Select Date:</label>
+              <input type="date" id="date" class="w-full p-2 border rounded" required />
+            </div>
+          </div>
+          <div class="flex gap-4 mt-2">
+            <div class="w-1/2">
+              <label for="academicYear" class="block">Academic Year</label>
+              <select id="academicYear" class="w-full mb-2 p-2 border rounded" required>
+                <option value="2024-2025">2024-2025</option>
+                <option value="2025-2026">2025-2026</option>
+              </select>            
+            </div>
+            
+            <div class="w-1/2">
+              <label for="semester" class="block">Semester</label>
+              <select id="semester" name="semester" class="w-full p-2 border rounded">
+                <option value="">Select Semester</option>
+                <option value="1st">1st</option>
+                <option value="2nd">2nd</option>
+                <option value="Summer">Summer</option>
+              </select>
+            </div>
+          </div>
+          <label class="font-semibold text-gray-700">Select Time:</label>
+          <select id="time" class="w-full mb-2 p-2 border rounded" required>
+            <option value="8:00 AM - 10:00 AM">8:00 AM - 10:00 AM</option>
+            <option value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM</option>
+            <option value="1:00 PM - 3:00 PM">1:00 PM - 3:00 PM</option>
+            <option value="6:00 PM - 10:00 PM">6:00 PM - 10:00 PM</option>
+            <option value="7:00 PM - 7:36 PM">7:00 PM - 7:36 PM</option>
+          </select>
   
         <label class="font-semibold text-gray-700">Select Section:</label>
         <select id="section" class="w-full mb-2 p-2 border rounded" required>
@@ -140,13 +153,11 @@
   
         <div class="flex justify-end space-x-2 mt-4">
           <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-          <button type="submit" class="px-4 py-2 bg-orange-600 text-white rounded">Save</button>
+          <button id="submitButton" type="submit" class="px-4 py-2 bg-orange-600 text-white rounded">Save</button>
         </div>
       </form>
     </div>
   </div>
-  
-  
 <!-- Script for functions -->
 <script>
     // Dropdown menu code
@@ -175,8 +186,8 @@
         document.getElementById("modal").classList.remove("hidden");
 
         if (mode === 'Add') {
-          currentSchedule = null;
-          document.getElementById("scheduleForm").reset(); // Only reset on Add
+            currentSchedule = null;
+            document.getElementById("scheduleForm").reset(); // Only reset on Add
         }
     }
 
@@ -186,31 +197,25 @@
         document.getElementById("scheduleForm").reset();
     }
 
-    // Filter by day logic
-    function applyDayFilter() {
-        let selectedRoom = document.getElementById("room-title").textContent;
-        if (selectedRoom !== "Select a room") {
-            updateSchedule(selectedRoom);
-        }
-    }
-
     const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
-    const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo';
-    const TABLE_NAME = 'schedules';
-  
-    let currentSchedule = null; // Track editing
+    const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo'; // shortened for clarity
+    const TABLE_NAME = 'schedulesv3';
+
+    let currentSchedule = null;
 
     // Save schedule (both for add and edit)
     async function saveSchedule(event) {
         event?.preventDefault?.();
         let room = document.getElementById("room").value.trim();
-        let day = document.getElementById("day").value.trim();
+        let date = document.getElementById("date").value.trim(); // Accept date as-is (string)
+        let academicYear = document.getElementById("academicYear").value.trim();
+        let semester = document.getElementById("semester").value.trim();
         let time = document.getElementById("time").value.trim();
         let section = document.getElementById("section").value.trim();
         let subject = document.getElementById("subject").value.trim();
         let prof = document.getElementById("prof").value.trim();
 
-        if (!room || !day || !time || !section || !subject || !prof) {
+        if (!room || !date || !academicYear || !time | !semester || !section || !subject || !prof) {
             alert("Please fill in all fields before saving.");
             return;
         }
@@ -219,11 +224,11 @@
         if (submitButton) submitButton.disabled = true;
 
         try {
-            const isEditing = currentSchedule !== null; 
+            const isEditing = currentSchedule !== null;
             const method = isEditing ? 'PUT' : 'POST';
             const url = isEditing
-              ? `${SUPABASE_URL}/rest/v1/${TABLE_NAME}?id=eq.${currentSchedule.id}`
-              : `${SUPABASE_URL}/rest/v1/${TABLE_NAME}`;
+                ? `${SUPABASE_URL}/rest/v1/${TABLE_NAME}?id=eq.${currentSchedule.id}`
+                : `${SUPABASE_URL}/rest/v1/${TABLE_NAME}`;
 
             const response = await fetch(url, {
                 method,
@@ -233,7 +238,7 @@
                     'Authorization': `Bearer ${SUPABASE_API_KEY}`,
                     'Prefer': 'return=representation'
                 },
-                body: JSON.stringify({ room, day, time, section, subject, prof })
+                body: JSON.stringify({ room, date,academicYear, time, section, subject, prof, semester })
             });
 
             if (!response.ok) throw new Error(await response.text());
@@ -252,71 +257,75 @@
     }
 
     // Update schedule and display it in the table
-    async function updateSchedule(room) {
-        let dayFilter = document.getElementById("dayFilter").value;
-        try {
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?room=eq.${room}&select=*`, {
-                headers: {
-                    'apikey': SUPABASE_API_KEY,
-                    'Authorization': `Bearer ${SUPABASE_API_KEY}`
-                }
-            });
-    
-            if (!response.ok) throw new Error(await response.text());
-    
-            let scheduleData = await response.json();
-            let filteredSchedules = scheduleData.filter(s => dayFilter === "" || s.day === dayFilter);
-    
-            let table = `<table class='w-full border-collapse border border-gray-400 mt-4'>
-                <thead>
-                    <tr class='bg-orange-500 text-white'>
-                        <th class='border border-gray-400 px-4 py-2'>Instructor</th>
-                        <th class='border border-gray-400 px-4 py-2'>Day</th>
-                        <th class='border border-gray-400 px-4 py-2'>Time</th>
-                        <th class='border border-gray-400 px-4 py-2'>Section</th>
-                        <th class='border border-gray-400 px-4 py-2'>Subject</th>
-                        <th class='border border-gray-400 px-4 py-2'>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>`;
-    
-            if (filteredSchedules.length > 0) {
-                filteredSchedules.forEach((s) => {
-                    table += `<tr>
-                        <td class='border border-gray-400 px-4 py-2'>${s.prof}</td>
-                        <td class='border border-gray-400 px-4 py-2'>${s.day}</td>
-                        <td class='border border-gray-400 px-4 py-2'>${s.time}</td>
-                        <td class='border border-gray-400 px-4 py-2'>${s.section}</td>
-                        <td class='border border-gray-400 px-4 py-2'>${s.subject}</td>
-                        <td class='border border-gray-400 px-4 py-2'>
-                            <button onclick='editSchedule(${JSON.stringify(s)})' class='text-blue-600 underline mr-2'>Edit</button>
-                            <button onclick='deleteSchedule(${s.id}, "${room}")' class='text-red-600 underline'>Delete</button>
-                        </td>
-                    </tr>`;
-                });
-            } else {
-                table += `<tr>
-                    <td colspan='6' class='border border-gray-400 px-4 py-2 text-center text-red-500'>No schedule available</td>
-                </tr>`;
+// Update schedule and display it in the table
+async function updateSchedule(room) {
+    try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?room=eq.${room}&select=*`, {
+            headers: {
+                'apikey': SUPABASE_API_KEY,
+                'Authorization': `Bearer ${SUPABASE_API_KEY}`
             }
-    
-            table += `</tbody></table>`;
-            document.getElementById("room-schedule").innerHTML =
-                `<h2 class="text-center text-xl font-bold text-orange-600 mb-4">Room ${room}</h2>` + table;
-    
-        } catch (err) {
-            console.error("Error fetching schedule:", err.message);
-            alert("Error loading schedule: " + err.message);
+        });
+
+        if (!response.ok) throw new Error(await response.text());
+
+        let scheduleData = await response.json();
+
+        let table = `<table class='w-full border-collapse border border-gray-400 mt-4'>
+            <thead>
+                <tr class='bg-orange-500 text-white'>
+                    <th class='border border-gray-400 px-4 py-2'>Instructor</th>
+                    <th class='border border-gray-400 px-4 py-2'>Date</th>
+                    <th class='border border-gray-400 px-4 py-2'>Academic Year</th>
+                    <th class='border border-gray-400 px-4 py-2'>Semester</th>
+                    <th class='border border-gray-400 px-4 py-2'>Time</th>
+                    <th class='border border-gray-400 px-4 py-2'>Section</th>
+                    <th class='border border-gray-400 px-4 py-2'>Subject</th>
+                    <th class='border border-gray-400 px-4 py-2'>Actions</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+        if (scheduleData.length > 0) {
+            scheduleData.forEach((s) => {
+                table += `<tr>
+                    <td class='border border-gray-400 px-4 py-2'>${s.prof}</td>
+                    <td class='border border-gray-400 px-4 py-2'>${s.date}</td>
+                    <td class='border border-gray-400 px-4 py-2'>${s.academicYear}</td>
+                    <td class='border border-gray-400 px-4 py-2'>${s.semester}</td>
+                    <td class='border border-gray-400 px-4 py-2'>${s.time}</td>
+                    <td class='border border-gray-400 px-4 py-2'>${s.section}</td>
+                    <td class='border border-gray-400 px-4 py-2'>${s.subject}</td>
+                    <td class='border border-gray-400 px-4 py-2'>
+                        <button onclick='editSchedule(${JSON.stringify(s)})' class='text-blue-600 underline mr-2'>Edit</button>
+                        <button onclick='deleteSchedule(${s.id}, "${room}")' class='text-red-600 underline'>Delete</button>
+                    </td>
+                </tr>`;
+            });
+        } else {
+            table += `<tr>
+                <td colspan='8' class='border border-gray-400 px-4 py-2 text-center text-red-500'>No schedule available</td>
+            </tr>`;
         }
+
+        table += `</tbody></table>`;
+        document.getElementById("room-schedule").innerHTML =
+            `<h2 class="text-center text-xl font-bold text-orange-600 mb-4">Room ${room}</h2>` + table;
+
+    } catch (err) {
+        console.error("Error fetching schedule:", err.message);
+        alert("Error loading schedule: " + err.message);
     }
-    
-    
+}
+
 
     // Edit schedule details
     function editSchedule(schedule) {
         currentSchedule = schedule;
         document.getElementById("room").value = schedule.room;
-        document.getElementById("day").value = schedule.day;
+        document.getElementById("date").value = schedule.date;
+        document.getElementById("academicYear").value = schedule.academicYear || "";
+        document.getElementById("semester").value = schedule.semester || "";
         document.getElementById("time").value = schedule.time;
         document.getElementById("section").value = schedule.section;
         document.getElementById("subject").value = schedule.subject;
@@ -348,5 +357,8 @@
         }
     }
 </script>
+
+
+
 </body>
 </html>
