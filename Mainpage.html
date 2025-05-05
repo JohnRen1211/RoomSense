@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Dashboard</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://kit.fontawesome.com/0d66da6825.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  </head>
+  <body class="font-sans bg-gray-100 text-gray-700 overflow-auto">
+
+    <div class="flex h-screen">
+      <!-- Sidebar -->
+      <div class="fixed h-full bg-orange-600 group transition-all duration-300 w-16 hover:w-64">
+          <div class="flex flex-col h-full">
+              <a href="#" class="flex items-center p-4 border-b border-b-white">
+                  <img src="./images/CpELogo.jpg" alt="placeholder" class="w-8 h-8 rounded object-cover">
+                  <span class="ml-3 text-lg font-poppins text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      CpE Department
+                  </span>
+              </a>
+              <ul class="flex flex-col mt-4 space-y-2">
+                  <li><a href="dashboard.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
+                  <li><a href="Room.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
+                  <li><a href="new-sched.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
+                  <li><a href="Logs.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
+              </ul>
+          </div>
+      </div>
+      
+      <div class="flex-1 ml-16 p-6">
+        <h1 class="text-3xl font-bold text-orange-600 mb-2">Dashboard</h1>
+      
+        <!-- UPPER SECTION: Room Layout + Room Description -->
+        <div class="flex flex-row space-x-4 mb-3">
+
+
+          <!-- Left: Room Layout -->
+          <div class="w-1/2 bg-white p-5 rounded-lg shadow-lg">
+            <h2 class="text-2xl text-orange-600 font-bold mb-3 ml-2">CPE Room Layout</h2>
+            <div class="flex justify-center mb-4">
+              <div class="grid grid-cols-9 grid-rows-6 gap-0 bg-gray-100">
+                <div class="col-span-2 row-span-2 col-start-3 row-start-3 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-span-2 row-span-2 col-start-6 row-start-3 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-1 row-start-1 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                
+                <!-- Room Buttons -->
+                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="1">316</button>
+                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="2">315</button>
+                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="3">314</button>
+                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="4">313</button>
+                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="5">312</button>
+                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="6">311</button>
+                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="7">310</button>
+                <button class="toggle-button col-start-1 row-start-2 bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="8">300</button>
+  
+                <!-- Room Layout -->
+                <div class="col-start-9 row-start-1 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-9 row-start-2 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-9 row-start-3 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-9 row-start-4 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-9 row-start-5 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-9 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-8 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-7 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-6 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-5 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-4 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-3 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-2 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-1 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-1 row-start-5 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-1 row-start-4 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                <div class="col-start-1 row-start-3 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+              </div>
+              </div>
+              
+              <div class="text-center text-sm text-gray-400">Select area to view room details</div>
+              <div class="flex justify-center mt-2">
+                <div class="flex items-center space-x-2">
+                  <div class="bg-green-500 w-4 h-4 rounded"></div>
+                  <div class="text-sm text-gray-500">Vacant</div>
+                </div>
+                <div class="flex items-center space-x-2 ml-4">
+                  <div class="bg-red-500 w-4 h-4 rounded"></div>
+                  <div class="text-sm text-gray-500">Occupied</div>
+                </div>
+                <div class="flex items-center space-x-2 ml-4">
+                  <div class="bg-yellow-500 w-4 h-4 rounded"></div>
+                  <div class="text-sm text-gray-500">Unverified</div>
+                </div>
+              </div>
+            </div>
+      
+          <!-- Right: Room Description -->
+          <div class="w-1/2 bg-white p-6 rounded-lg shadow-lg">
+            <h2 id="roomName" class="text-2xl font-bold text-gray-600 text-center">Select a room to see the description.</h2>
+            <div id="roomDesc" class="mt-4"></div>
+          </div>
+        </div>
+      
+        <!-- BOTTOM SECTION -->
+
+
+        <div class="flex flex-row space-x-4 mb-6">
+          <!-- Left: LAGAY MO DINE YUNG SA SCHEDULE -->
+          <div class="w-1/2 bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold text-orange-600 mb-2">SCHEDULE</h2>
+            <p class="text-sm text-gray-500">Content here...</p>
+          </div>
+      
+          <!-- Right: Sensor Details -->
+          <div class="w-1/2 bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-extrabold text-orange-600">Latest Sensor Reading ROOM-315</h2>
+            <div class="text-xl font-semibold" id="temperature">Temperature: -- °C</div>
+            <div class="text-xl font-semibold" id="humidity">Humidity: -- %</div>
+            <div class="text-xl font-semibold hidden" id="light">Light: --</div>
+            <div id="light-status" class="text-xl font-semibold">Light Status: --</div>
+            <div id="motion-status" class="text-xl font-semibold">Motion Status: --</div>
+            <div class="text-lg text-gray-500" id="timestamp">Timestamp: --</div>
+          </div>
+        </div>
+      </div>
+      
+      </div>
+      <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+          const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
+          const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo';
+    
+          const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_API_KEY);
+    
+          async function fetchLatestSensorData() {
+            const { data, error } = await client
+              .from('comp_data')
+              .select('*')
+              .order('created_at', { ascending: false })
+              .limit(1);
+    
+            if (error) {
+              console.error('Error fetching latest data:', error);
+              return;
+            }
+    
+            if (data.length > 0) {
+              const latest = data[0];
+              document.getElementById('temperature').textContent = `Temperature: ${latest.temperature?.toFixed(1)} °C`;
+              document.getElementById('humidity').textContent = `Humidity: ${latest.humidity?.toFixed(1)} %`;
+              document.getElementById('light').textContent = `Light: ${latest.light}`;
+              document.getElementById('timestamp').textContent = `Timestamp: ${new Date(latest.created_at).toLocaleString()}`;
+    
+              const lightStatus = latest.light > 100 ? 'On' : 'Off';
+              const lightStatusElement = document.getElementById('light-status');
+              lightStatusElement.textContent = `Light Status: ${lightStatus}`;
+              lightStatusElement.className = `text-2xl font-semibold ${lightStatus === 'On' ? 'text-green-600' : 'text-red-600'}`;
+    
+              const motionStatus = latest.motion === 1 ? 'Motion Detected' : 'No Motion';
+              const motionStatusElement = document.getElementById('motion-status');
+              motionStatusElement.textContent = `Motion Status: ${motionStatus}`;
+              motionStatusElement.className = `text-2xl font-semibold ${motionStatus === 'Motion Detected' ? 'text-green-600' : 'text-gray-500'}`;
+            }
+          }
+    
+          fetchLatestSensorData();
+        });
+      </script>
+
+    </div>
+  </body>
+</html>

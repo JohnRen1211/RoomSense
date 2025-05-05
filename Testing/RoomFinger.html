@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Fingerprint Log Viewer</title>
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+          }
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+          }
+          th, td {
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            text-align: left;
+          }
+          th {
+            background-color: #f4f4f4;
+          }
+          caption {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+          }
+        </style>
+      </head>
+      <body>
+      
+      <h1>🕒 Fingerprint Attendance Logs</h1>
+      <table id="logsTable">
+        <caption>Latest Time In/Out Per Person</caption>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Time In</th>
+            <th>Time Out</th>
+          </tr>
+        </thead>
+        <tbody id="logsBody">
+          <tr><td colspan="3">Loading...</td></tr>
+        </tbody>
+      </table>
+      
+      <script>
+        // 🔑 Replace with your Supabase details
+        const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo';
+        const { createClient } = supabase;
+        const client = createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+      
+        async function loadLogs() {
+          const { data, error } = await client
+            .from('fingerprint_logsv')
+            .select('name, status, timestamp')
+            .order('timestamp', { ascending: false });
+      
+          if (error) {
+            document.getElementById('logsBody').innerHTML = `<tr><td colspan="3">❌ Error loading logs</td></tr>`;
+            return;
+          }
+      
+          const logMap = new Map();
+      
+          for (const row of data) {
+            if (!logMap.has(row.name)) {
+              logMap.set(row.name, { in: null, out: null });
+            }
+      
+            if (row.status === 'in' && !logMap.get(row.name).in) {
+              logMap.get(row.name).in = row.timestamp;
+            }
+            if (row.status === 'out' && !logMap.get(row.name).out) {
+              logMap.get(row.name).out = row.timestamp;
+            }
+          }
+      
+          const tbody = document.getElementById('logsBody');
+          tbody.innerHTML = '';
+      
+          logMap.forEach((log, name) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>${name}</td>
+              <td>${log.in ? new Date(log.in).toLocaleString() : '-'}</td>
+              <td>${log.out ? new Date(log.out).toLocaleString() : '-'}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        }
+      
+        loadLogs();
+      </script>
+      
+      </body>
+</html>

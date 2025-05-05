@@ -3,79 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <title>Sensors Reading</title>
+  <link rel="icon" href="/images/favicon.ico" type="image/svg+xml">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <script src="https://kit.fontawesome.com/0d66da6825.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      background-color: #f7f7f7;
-    }
-
-    .sensor-card {
-      background-color: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      max-width: 400px;
-      margin: auto;
-      text-align: center;
-    }
-
-    .sensor-card h2 {
-      margin-bottom: 20px;
-      color: #333;
-    }
-
-    .sensor-value {
-      font-size: 24px;
-      margin: 10px 0;
-    }
-
-    .timestamp {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #777;
-    }
-
-    .light-status {
-      font-size: 20px;
-      margin-top: 20px;
-      font-weight: bold;
-    }
-
-    .light-on {
-      color: green;
-    }
-
-    .light-off {
-      color: red;
-    }
-
-    .motion-status {
-      font-size: 20px;
-      margin-top: 20px;
-      font-weight: bold;
-    }
-
-    .motion-detected {
-      color: green;
-    }
-
-    .no-motion {
-      color: red;
-    }
-  </style>
 </head>
-<body>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
 
-  <div class="sensor-card">
-    <h2>Latest Sensor Reading</h2>
-    <div class="sensor-value" id="temperature">Temperature: -- °C</div>
-    <div class="sensor-value" id="humidity">Humidity: -- %</div>
-    <div class="sensor-value" id="light">Light: --</div>
-    <div class="light-status" id="light-status">Light Status: --</div>
-    <div class="motion-status" id="motion-status">Motion Status: --</div>
-    <div class="timestamp" id="timestamp">Timestamp: --</div>
+  <div class="bg-white rounded-2xl shadow-2xl p-10 w-full max-w-2xl text-center space-y-8">
+    <h2 class="text-4xl font-extrabold text-orange-600">Latest Sensor Reading</h2>
+    <div class="text-2xl font-semibold" id="temperature">Temperature: -- °C</div>
+    <div class="text-2xl font-semibold" id="humidity">Humidity: -- %</div>
+    <div class="text-2xl font-semibold" id="light">Light: --</div>
+    <div id="light-status" class="text-2xl font-semibold">Light Status: --</div>
+    <div id="motion-status" class="text-2xl font-semibold">Motion Status: --</div>
+    <div class="text-lg text-gray-500" id="timestamp">Timestamp: --</div>
   </div>
 
   <script>
@@ -87,7 +30,7 @@
 
       async function fetchLatestSensorData() {
         const { data, error } = await client
-          .from('comp_data') // Use your table name
+          .from('comp_data')
           .select('*')
           .order('created_at', { ascending: false })
           .limit(1);
@@ -104,38 +47,22 @@
           document.getElementById('light').textContent = `Light: ${latest.light}`;
           document.getElementById('timestamp').textContent = `Timestamp: ${new Date(latest.created_at).toLocaleString()}`;
 
-          // Check if Light value is greater than 100
           const lightStatus = latest.light > 100 ? 'On' : 'Off';
           const lightStatusElement = document.getElementById('light-status');
+          lightStatusElement.textContent = `Light Status: ${lightStatus}`;
+          lightStatusElement.className = `text-2xl font-semibold ${lightStatus === 'On' ? 'text-green-600' : 'text-red-600'}`;
 
-          if (lightStatus === 'On') {
-            lightStatusElement.textContent = `Light Status: On`;
-            lightStatusElement.classList.add('light-on');
-            lightStatusElement.classList.remove('light-off');
-          } else {
-            lightStatusElement.textContent = `Light Status: Off`;
-            lightStatusElement.classList.add('light-off');
-            lightStatusElement.classList.remove('light-on');
-          }
-
-          // PIR Motion Status
           const motionStatus = latest.motion === 1 ? 'Motion Detected' : 'No Motion';
           const motionStatusElement = document.getElementById('motion-status');
-
-          if (motionStatus === 'Motion Detected') {
-            motionStatusElement.textContent = `Motion Status: Detected`;
-            motionStatusElement.classList.add('motion-detected');
-            motionStatusElement.classList.remove('no-motion');
-          } else {
-            motionStatusElement.textContent = `Motion Status: No Motion`;
-            motionStatusElement.classList.add('no-motion');
-            motionStatusElement.classList.remove('motion-detected');
-          }
+          motionStatusElement.textContent = `Motion Status: ${motionStatus}`;
+          motionStatusElement.className = `text-2xl font-semibold ${motionStatus === 'Motion Detected' ? 'text-green-600' : 'text-gray-500'}`;
         }
       }
 
       fetchLatestSensorData();
     });
   </script>
+
 </body>
 </html>
+

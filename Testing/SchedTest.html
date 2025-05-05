@@ -147,7 +147,7 @@
         <label class="font-semibold text-gray-700">Select Instructor:</label>
         <select id="prof" class="w-full mb-2 p-2 border rounded" required>
           <option value="Engr. John">Engr. John</option>
-          <option value="Engr. Rolito">Engr. Rolito</option>
+          <option value="Rolito">Rolito</option>
           <option value="Engr. Jorly">Engr. Jorly</option>
         </select>
   
@@ -199,7 +199,7 @@
 
     const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
     const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo'; // shortened for clarity
-    const TABLE_NAME = 'schedulesv3';
+    const TABLE_NAME = 'schedulestest';
 
     let currentSchedule = null;
 
@@ -354,7 +354,7 @@ async function updateSchedule(room) {
             updateSchedule(room);
         } catch (err) {
             console.error("Delete error:", err.message);
-            alert("Delete failed: " + err.message);
+            alert("Delete en error: " + err.message);
         }
     }
 </script>
@@ -363,8 +363,3 @@ async function updateSchedule(room) {
 
 </body>
 </html>
-7:30 AM - 10:30 AM
-10:30 AM - 1:30 PM
-1:30 PM - 4:30 PM
-4:30 PM - 7:30 PM
-7:30 PM - 9:00 PM

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rooms  Table Update</title>
+  <link rel="icon" href="/images/favicon.ico" type="image/svg+xml">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body class="bg-gray-300 text-gray-700">
+  <div class="flex h-screen">
+    <!-- Main Content -->
+    <div class="flex-1 bg-gray-100 ml-16 p-6">
+
+      <!-- Header -->
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-orange-600">ROOMS</h1>
+      </div>
+
+      <div class="flex space-x-6">
+        <!-- Room Buttons -->
+        <div class="bg-white shadow-md rounded-lg p-4 w-48">
+          <h2 class="text-lg text-orange-500 font-bold mb-4">Rooms in CPE</h2>
+          <div class="space-y-2">
+            <button onclick="updateRoomStatus('300', event)" class="border px-3 py-2 w-full rounded">ROOM 300</button>
+            <button onclick="updateRoomStatus('310', event)" class="border px-3 py-2 w-full rounded">ROOM 310</button>
+            <button onclick="updateRoomStatus('311', event)" class="border px-3 py-2 w-full rounded">ROOM 311</button>
+            <button onclick="updateRoomStatus('312', event)" class="border px-3 py-2 w-full rounded">ROOM 312</button>
+            <button onclick="updateRoomStatus('313', event)" class="border px-3 py-2 w-full rounded">ROOM 313</button>
+            <button onclick="updateRoomStatus('314', event)" class="border px-3 py-2 w-full rounded">ROOM 314</button>
+            <button onclick="updateRoomStatus('315', event)" class="border px-3 py-2 w-full rounded">ROOM 315</button>
+            <button onclick="updateRoomStatus('316', event)" class="border px-3 py-2 w-full rounded">ROOM 316</button>
+          </div>
+        </div>
+
+        <!-- Room Details -->
+        <div class="bg-white shadow-md rounded-lg p-6 w-full max-w-xl">
+          <h2 class="text-xl text-orange-500 font-bold mb-4">Room Details</h2>
+          <div class="space-y-4">
+            <div class="mb-4">
+              <label for="overrideStatus" class="block text-sm font-medium text-gray-700">Manual Room Action</label>
+              <select id="overrideStatus" onchange="manualOverrideChanged()" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                <option value="auto">Auto (Based on Schedule)</option>
+                <option value="enter">Enter Room</option>
+                <option value="leave">Leave Room</option>
+              </select>
+            </div>
+
+            <div class="flex justify-between">
+              <span class="font-medium">Room Status</span>
+              <span id="room-status" class="font-bold text-gray-800">UNKNOWN</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="font-medium">Room Number</span>
+              <span id="room-no" class="font-semibold">N/A</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="font-medium">Section</span>
+              <span id="occupied-by" class="font-semibold">N/A</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="font-medium">Subject</span>
+              <span id="room-type-details" class="font-semibold">N/A</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="font-medium">Scheduled Professor</span>
+              <span id="scheduled-professor" class="font-semibold">N/A</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="font-medium">Scanned Professor</span>
+              <span id="scanned-professor" class="font-semibold">N/A</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="font-medium">Schedule</span>
+              <span id="room-schedule" class="font-semibold">N/A</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="font-medium">Scanned In</span>
+              <span id="scan-status" class="font-semibold flex items-center gap-2">
+                <span id="scan-indicator" class="w-3 h-3 rounded-full bg-gray-400 inline-block"></span>
+                <span id="scan-label">No scan</span>
+              </span>
+            <div class="flex justify-between">
+              <span class="font-medium">Other People Scanned</span>
+              <span id="other-scans" class="font-semibold text-red-600">None</span>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supabase & JS Logic -->
+  <script>
+    let manualOverride = 'auto'; // default to auto
+  
+    // Create supabase client
+    const supabaseClient = supabase.createClient(
+      'https://vzubmycafgnjtwnjfpop.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo'
+    );
+  
+    async function updateRoomStatus(room, event) {
+      const roomStatusElement = document.getElementById("room-status");
+      const roomNoElement = document.getElementById("room-no");
+      const roomTypeElement = document.getElementById("room-type-details");
+      const roomScheduleElement = document.getElementById("room-schedule");
+      const occupiedByElement = document.getElementById("occupied-by");
+      const scheduledProfessorElement = document.getElementById("scheduled-professor");
+      const scannedProfessorElement = document.getElementById("scanned-professor");
+      const scanIndicator = document.getElementById("scan-indicator");
+      const scanLabel = document.getElementById("scan-label");
+  
+      // Reset scan indicator
+      scanIndicator.className = 'w-3 h-3 rounded-full bg-gray-400 inline-block';
+      scanLabel.textContent = 'No scan';
+      scannedProfessorElement.textContent = 'N/A';
+  
+      // Highlight active button
+      document.querySelectorAll("button").forEach(btn => btn.classList.remove("bg-orange-100"));
+      if (event?.target) event.target.classList.add("bg-orange-100");
+  
+      // Show loading state
+      roomStatusElement.textContent = 'LOADING...';
+      roomStatusElement.style.color = 'gray';
+  
+      // Fetch today's schedule
+      const { data, error } = await supabaseClient
+        .from('schedulestest')
+        .select('*')
+        .eq('room', room);
+  
+      if (error) {
+        console.error('Error fetching room schedule:', error);
+        markAvailable();
+        return;
+      }
+  
+      const now = new Date();
+      const today = now.toISOString().split('T')[0];
+      const currentTime = now.getHours() + now.getMinutes() / 60;
+  
+      // Convert time string (e.g., "10:00 AM") to decimal (e.g., 10.0)
+      function toDecimal(timeStr) {
+        const parts = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
+        if (!parts) return 0;
+        let [ , h, m, meridian ] = parts;
+        h = parseInt(h);
+        m = parseInt(m);
+        if (meridian.toUpperCase() === 'PM' && h !== 12) h += 12;
+        if (meridian.toUpperCase() === 'AM' && h === 12) h = 0;
+        return h + m / 60;
+      }
+  
+      let currentSchedule = null;
+  
+      if (data?.length > 0) {
+        currentSchedule = data.find(schedule => {
+          if (schedule.date.trim() !== today) return false;
+          const [startTime, endTime] = schedule.time.split('-').map(t => t.trim());
+          return currentTime >= toDecimal(startTime) && currentTime <= toDecimal(endTime);
+        });
+      }
+  
+      // Handle override
+      if (manualOverride === 'leave') {
+        markAvailable();
+        roomStatusElement.textContent = currentSchedule ? 'AVAILABLE 📘' : 'AVAILABLE';
+        roomStatusElement.style.color = 'green';
+        return;
+      }
+  
+      if (manualOverride === 'enter') {
+        markOccupied('Manual Entry');
+        roomStatusElement.textContent = 'OCCUPIED';
+        roomStatusElement.style.color = 'red';
+        return;
+      }
+  
+      // Set UI based on schedule
+      if (currentSchedule) {
+        markOccupied(currentSchedule.prof);
+        roomStatusElement.textContent = 'OCCUPIED';
+        roomStatusElement.style.color = 'red';
+  
+        roomTypeElement.textContent = currentSchedule.subject || 'N/A';
+        roomScheduleElement.textContent = `${currentSchedule.date} (${currentSchedule.time})`;
+        occupiedByElement.textContent = currentSchedule.section || 'N/A';
+        scheduledProfessorElement.textContent = currentSchedule.prof || 'N/A';
+  
+        if (room === '315') {
+          await checkFingerprintScan(currentSchedule.prof);
+        }
+      } else {
+        markAvailable();
+      }
+  
+      function markAvailable() {
+        roomStatusElement.textContent = 'AVAILABLE';
+        roomStatusElement.style.color = 'green';
+        roomNoElement.textContent = `ROOM ${room}`;
+        roomTypeElement.textContent = 'N/A';
+        roomScheduleElement.textContent = 'N/A';
+        occupiedByElement.textContent = 'N/A';
+        scheduledProfessorElement.textContent = 'N/A';
+        scannedProfessorElement.textContent = 'N/A';
+      }
+  
+      function markOccupied(professor = 'N/A') {
+        roomNoElement.textContent = `ROOM ${room}`;
+        // Leave other values to be filled by context (or N/A by default)
+      }
+
+      async function checkFingerprintScan(professorName) {
+        const { data: scans, error: scanError } = await supabaseClient
+          .from('fingerprint_logsv')
+          .select('*')
+          .order('timestamp', { ascending: false })
+          .limit(20);
+      
+        if (scanError || !scans) {
+          console.warn('Error retrieving scans:', scanError);
+          return;
+        }
+      
+        const nowMs = Date.now();
+        const professorScans = scans
+          .filter(scan => scan.name.toLowerCase() === professorName.toLowerCase())
+          .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      
+        if (professorScans.length === 0) {
+          scanIndicator.className = 'w-3 h-3 rounded-full bg-yellow-500 inline-block';
+          scanLabel.textContent = 'Professor timed out';
+          scannedProfessorElement.textContent = 'N/A';
+          return;
+        }
+      
+        const latestScan = new Date(professorScans[0].timestamp).getTime();
+      
+        const scanGapThreshold = 5 * 60 * 1000; // 5 minutes
+        const scannedOut = professorScans.length > 1 &&
+          latestScan < nowMs - scanGapThreshold;
+      
+        if (scannedOut) {
+          scanIndicator.className = 'w-3 h-3 rounded-full bg-blue-500 inline-block';
+          scanLabel.textContent = 'Professor scanned out';
+          scannedProfessorElement.textContent = professorName;
+        } else {
+          scanIndicator.className = 'w-3 h-3 rounded-full bg-green-500 inline-block';
+          scanLabel.textContent = 'Professor scanned in';
+          scannedProfessorElement.textContent = professorName;
+        }
+      }      
+      
+    }
+  </script>
+  
+</body>
+</html>
