@@ -11,32 +11,30 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   </head>
   <body class="font-sans bg-gray-100 text-gray-700 overflow-auto">
-
     <div class="flex h-screen">
       <!-- Sidebar -->
       <div class="fixed h-full bg-orange-600 group transition-all duration-300 w-16 hover:w-64">
-          <div class="flex flex-col h-full">
-              <a href="#" class="flex items-center p-4 border-b border-b-white">
-                  <img src="./images/CpELogo.jpg" alt="placeholder" class="w-8 h-8 rounded object-cover">
-                  <span class="ml-3 text-lg font-poppins text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      CpE Department
-                  </span>
-              </a>
-              <ul class="flex flex-col mt-4 space-y-2">
-                  <li><a href="dashboard.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
-                  <li><a href="Room.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
-                  <li><a href="new-sched.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
-                  <li><a href="Logs.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
-              </ul>
-          </div>
+        <div class="flex flex-col h-full">
+          <a href="#" class="flex items-center p-4 border-b border-b-white">
+            <img src="./images/CpELogo.jpg" alt="placeholder" class="w-8 h-8 rounded object-cover">
+            <span class="ml-3 text-lg font-poppins text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              CpE Department
+            </span>
+          </a>
+          <ul class="flex flex-col mt-4 space-y-2">
+            <li><a href="dashboard.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
+            <li><a href="Room.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
+            <li><a href="new-sched.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
+            <li><a href="Logs.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
+          </ul>
+        </div>
       </div>
       
       <div class="flex-1 ml-16 p-6">
         <h1 class="text-3xl font-bold text-orange-600 mb-2">Dashboard</h1>
-      
+
         <!-- UPPER SECTION: Room Layout + Room Description -->
         <div class="flex flex-row space-x-4 mb-3">
-
 
           <!-- Left: Room Layout -->
           <div class="w-1/2 bg-white p-5 rounded-lg shadow-lg">
@@ -46,128 +44,318 @@
                 <div class="col-span-2 row-span-2 col-start-3 row-start-3 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
                 <div class="col-span-2 row-span-2 col-start-6 row-start-3 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
                 <div class="col-start-1 row-start-1 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-                
                 <!-- Room Buttons -->
-                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="1">316</button>
-                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="2">315</button>
-                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="3">314</button>
-                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="4">313</button>
-                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="5">312</button>
-                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="6">311</button>
-                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="7">310</button>
-                <button class="toggle-button col-start-1 row-start-2 bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" data-room-id="8">300</button>
-  
-                <!-- Room Layout -->
-                <div class="col-start-9 row-start-1 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-                <div class="col-start-9 row-start-2 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-                <div class="col-start-9 row-start-3 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-                <div class="col-start-9 row-start-4 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-                <div class="col-start-9 row-start-5 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-                <div class="col-start-9 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-                <div class="col-start-8 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-                <div class="col-start-7 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-                <div class="col-start-6 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-                <div class="col-start-5 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-                <div class="col-start-4 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-                <div class="col-start-3 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-                <div class="col-start-2 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-                <div class="col-start-1 row-start-6 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-                <div class="col-start-1 row-start-5 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-                <div class="col-start-1 row-start-4 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-                <div class="col-start-1 row-start-3 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-              </div>
-              </div>
+                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="updateRoomStatus('316', event)">316</button>
+                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="updateRoomStatus('315', event)">315</button>
+                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="updateRoomStatus('314', event)">314</button>
+                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="updateRoomStatus('313', event)">313</button>
+                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="updateRoomStatus('312', event)">312</button>
+                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="updateRoomStatus('311', event)">311</button>
+                <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="updateRoomStatus('310', event)">310</button>
+                <button class="toggle-button col-start-1 row-start-2 bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="updateRoomStatus('300', event)">300</button>
               
-              <div class="text-center text-sm text-gray-400">Select area to view room details</div>
-              <div class="flex justify-center mt-2">
-                <div class="flex items-center space-x-2">
-                  <div class="bg-green-500 w-4 h-4 rounded"></div>
-                  <div class="text-sm text-gray-500">Vacant</div>
-                </div>
-                <div class="flex items-center space-x-2 ml-4">
-                  <div class="bg-red-500 w-4 h-4 rounded"></div>
-                  <div class="text-sm text-gray-500">Occupied</div>
-                </div>
-                <div class="flex items-center space-x-2 ml-4">
-                  <div class="bg-yellow-500 w-4 h-4 rounded"></div>
-                  <div class="text-sm text-gray-500">Unverified</div>
-                </div>
               </div>
             </div>
-      
+            
+            <div class="text-center text-sm text-gray-400">Select area to view room details</div>
+            <div class="flex justify-center mt-2">
+              <div class="flex items-center space-x-2">
+                <div class="bg-green-500 w-4 h-4 rounded"></div>
+                <div class="text-sm text-gray-500">Vacant</div>
+              </div>
+              <div class="flex items-center space-x-2 ml-4">
+                <div class="bg-red-500 w-4 h-4 rounded"></div>
+                <div class="text-sm text-gray-500">Occupied</div>
+              </div>
+              <div class="flex items-center space-x-2 ml-4">
+                <div class="bg-yellow-500 w-4 h-4 rounded"></div>
+                <div class="text-sm text-gray-500">Unverified</div>
+              </div>
+            </div>
+          </div>
+
           <!-- Right: Room Description -->
-          <div class="w-1/2 bg-white p-6 rounded-lg shadow-lg">
-            <h2 id="roomName" class="text-2xl font-bold text-gray-600 text-center">Select a room to see the description.</h2>
-            <div id="roomDesc" class="mt-4"></div>
+          <div class="bg-white shadow-md rounded-lg p-6 w-full max-w-xl">
+            <h2 class="text-xl text-orange-500 font-bold mb-4">Room Details</h2>
+            <div class="space-y-4">
+              <div class="mb-4">
+                <label for="overrideStatus" class="block text-sm font-medium text-gray-700 hidden">Manual Room Action</label>
+                <select id="overrideStatus" onchange="manualOverrideChanged()" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm hidden">
+                  <option value="auto">Auto (Based on Schedule)</option>
+                  <option value="enter">Enter Room</option>
+                  <option value="leave">Leave Room</option>
+                </select>
+              </div>
+  
+              <div class="flex justify-between">
+                <span class="font-medium">Room Status</span>
+                <span id="room-status" class="font-bold text-gray-800">UNKNOWN</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="font-medium">Room Number</span>
+                <span id="room-no" class="font-semibold">N/A</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="font-medium">Section</span>
+                <span id="occupied-by" class="font-semibold">N/A</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="font-medium">Subject</span>
+                <span id="room-type-details" class="font-semibold">N/A</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="font-medium">Professor</span>
+                <span id="instructor" class="font-semibold">N/A</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="font-medium">Schedule</span>
+                <span id="room-schedule" class="font-semibold">N/A</span>
+              </div>
+              <div class="flex justify-between items-start">
+                <div class="font-medium flex flex-col">
+                  <span>Scanned In</span>
+                  <span class="text-xs text-gray-500">*Only available in Room 315</span>
+                </div>
+                <span id="scan-status" class="font-semibold flex items-center gap-2">
+                  <span id="scan-indicator" class="w-3 h-3 rounded-full bg-gray-400 inline-block"></span>
+                  <span id="scan-label">No scan</span>
+                </span>
+              </div>
+            </div>
           </div>
         </div>
-      
-        <!-- BOTTOM SECTION -->
 
+<!-- BOTTOM SECTION -->
+<div class="flex flex-row space-x-4 mb-6">
+  <!-- Left: Put schedules of room here depending which room is clicked -->
+  <div class="w-1/2 bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold text-orange-600 mb-2">Room Schedule</h2>
+    <table id="schedule-table" class="min-w-full bg-white border border-gray-200">
+      <thead>
+        <tr>
+          <th class="px-4 py-2 border">Date</th>
+          <th class="px-4 py-2 border">Time</th>
+          <th class="px-4 py-2 border">Subject</th>
+          <th class="px-4 py-2 border">Professor</th>
+          <th class="px-4 py-2 border">Section</th>
+        </tr>
+      </thead>
+      <tbody id="schedule-container">
+        <!-- Schedule will be populated here dynamically -->
+        <tr>
+          <td colspan="6" class="px-4 py-2 text-center text-gray-500">No schedule found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  
 
-        <div class="flex flex-row space-x-4 mb-6">
-          <!-- Left: LAGAY MO DINE YUNG SA SCHEDULE -->
-          <div class="w-1/2 bg-white p-6 rounded-lg shadow-lg">
-            <h2 class="text-2xl font-bold text-orange-600 mb-2">SCHEDULE</h2>
-            <p class="text-sm text-gray-500">Content here...</p>
-          </div>
-      
-          <!-- Right: Sensor Details -->
-          <div class="w-1/2 bg-white p-6 rounded-lg shadow-lg">
-            <h2 class="text-2xl font-extrabold text-orange-600">Latest Sensor Reading ROOM-315</h2>
-            <div class="text-xl font-semibold" id="temperature">Temperature: -- °C</div>
-            <div class="text-xl font-semibold" id="humidity">Humidity: -- %</div>
-            <div class="text-xl font-semibold hidden" id="light">Light: --</div>
-            <div id="light-status" class="text-xl font-semibold">Light Status: --</div>
-            <div id="motion-status" class="text-xl font-semibold">Motion Status: --</div>
-            <div class="text-lg text-gray-500" id="timestamp">Timestamp: --</div>
-          </div>
-        </div>
+  <!-- Right: Sensor Details -->
+  <div class="w-1/2 bg-white p-6 rounded-lg shadow-lg">
+    <h2 id="sensorName" class="text-2xl font-extrabold text-orange-600">Latest Sensor Reading</h2>
+    <p id="sensorData" class="text-sm text-gray-500">Sensor data will appear here...</p>
+  </div>
+</div>
+
       </div>
-      
-      </div>
-      <script>
-        document.addEventListener("DOMContentLoaded", async () => {
-          const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
-          const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo';
-    
-          const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_API_KEY);
-    
-          async function fetchLatestSensorData() {
-            const { data, error } = await client
-              .from('comp_data')
-              .select('*')
-              .order('created_at', { ascending: false })
-              .limit(1);
-    
-            if (error) {
-              console.error('Error fetching latest data:', error);
-              return;
-            }
-    
-            if (data.length > 0) {
-              const latest = data[0];
-              document.getElementById('temperature').textContent = `Temperature: ${latest.temperature?.toFixed(1)} °C`;
-              document.getElementById('humidity').textContent = `Humidity: ${latest.humidity?.toFixed(1)} %`;
-              document.getElementById('light').textContent = `Light: ${latest.light}`;
-              document.getElementById('timestamp').textContent = `Timestamp: ${new Date(latest.created_at).toLocaleString()}`;
-    
-              const lightStatus = latest.light > 100 ? 'On' : 'Off';
-              const lightStatusElement = document.getElementById('light-status');
-              lightStatusElement.textContent = `Light Status: ${lightStatus}`;
-              lightStatusElement.className = `text-2xl font-semibold ${lightStatus === 'On' ? 'text-green-600' : 'text-red-600'}`;
-    
-              const motionStatus = latest.motion === 1 ? 'Motion Detected' : 'No Motion';
-              const motionStatusElement = document.getElementById('motion-status');
-              motionStatusElement.textContent = `Motion Status: ${motionStatus}`;
-              motionStatusElement.className = `text-2xl font-semibold ${motionStatus === 'Motion Detected' ? 'text-green-600' : 'text-gray-500'}`;
-            }
-          }
-    
-          fetchLatestSensorData();
-        });
-      </script>
-
     </div>
+
+    <script>
+// Initialize Supabase client with project URL and anon key.
+const supabaseClient = supabase.createClient(
+    'https://vzubmycafgnjtwnjfpop.supabase.co',  // Supabase URL
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo' // Supabase API Key
+);
+
+// Store manual overrides for room statuses.
+let manualOverrides = {};
+let currentRoom = null;
+
+// Function to handle changes in the manual override dropdown.
+function manualOverrideChanged() {
+    const value = document.getElementById("overrideStatus").value;  // Get the selected override value.
+    if (currentRoom) {
+        manualOverrides[currentRoom] = value;  // Set the manual override for the current room.
+        updateRoomStatus(currentRoom);  // Refresh the view after the change.
+    }
+}
+
+// Function to update room status based on data from Supabase.
+async function updateRoomStatus(room, event) {
+  currentRoom = room;
+
+  // Define DOM elements to update with room details.
+  const roomStatusElement = document.getElementById("room-status");
+  const roomNoElement = document.getElementById("room-no");
+  const roomTypeElement = document.getElementById("room-type-details");
+  const roomScheduleElement = document.getElementById("room-schedule");
+  const occupiedByElement = document.getElementById("occupied-by");
+  const instructorElement = document.getElementById("instructor");
+  const scanIndicator = document.getElementById("scan-indicator");
+  const scanLabel = document.getElementById("scan-label");
+
+  resetScanIndicator();  // Reset the scan indicator state.
+
+  // Highlight the clicked button.
+  document.querySelectorAll("button").forEach(btn => {
+      btn.classList.remove("bg-orange-100");  // Remove highlight from all buttons.
+  });
+  if (event) event.target.classList.add("bg-orange-100");  // Highlight the clicked button.
+
+  roomStatusElement.textContent = 'LOADING...';  // Display loading state.
+  roomStatusElement.style.color = 'gray';  // Set loading text color.
+
+  // Fetch the schedule for the room from Supabase.
+  const { data, error } = await supabaseClient
+      .from('schedules_test')  // Use the 'schedules_test' table
+      .select('*')
+      .eq('room', room)  // Filter by room
+      .order('start_time', { ascending: true });  // Sort by start time
+
+  if (error) {
+      console.error('Error fetching schedule:', error);
+      roomStatusElement.textContent = 'Error loading schedule';  // Display error message if data fetch fails.
+      roomStatusElement.style.color = 'red';  // Change text color to red for error.
+      return;
+  }
+
+  // Update the schedule section of the UI with the fetched data.
+  const scheduleContainer = document.getElementById("schedule-container");
+  if (data.length === 0) {
+      scheduleContainer.innerHTML = '<tr><td colspan="5" class="px-4 py-2 text-center text-gray-500">No schedule found for this room.</td></tr>';
+  } else {
+      scheduleContainer.innerHTML = data.map(schedule => {
+          const startTime = new Date(schedule.start_time).toLocaleString([], {hour: '2-digit', minute:'2-digit', hour12: true});
+          const endTime = new Date(schedule.end_time).toLocaleString([], {hour: '2-digit', minute:'2-digit', hour12: true});
+          const timeRange = `${startTime} - ${endTime}`;  // Combine start and end time.
+          const date = new Date(schedule.date).toLocaleDateString(); // Format the date.
+          
+          return `
+              <tr>
+                  <td class="px-4 py-2 border">${date}</td>
+                  <td class="px-4 py-2 border">${timeRange}</td>
+                  <td class="px-4 py-2 border">${schedule.subject}</td>
+                  <td class="px-4 py-2 border">${schedule.prof}</td>
+                  <td class="px-4 py-2 border">${schedule.section}</td>
+              </tr>
+          `;
+      }).join('');
+  }
+
+    // Handle room status update based on schedule or manual override.
+    const now = new Date();
+    const localDate = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
+
+    let currentSchedule = null;
+    for (const schedule of data || []) {
+        if (!schedule || !schedule.start_time || !schedule.end_time) continue;
+
+        const start = new Date(schedule.start_time).toLocaleString('en-US', { timeZone: 'Asia/Manila' });
+        const end = new Date(schedule.end_time).toLocaleString('en-US', { timeZone: 'Asia/Manila' });
+
+        const startTime = new Date(start);
+        const endTime = new Date(end);
+
+        const nowMs = localDate.getTime();
+        if (startTime.getTime() <= nowMs && nowMs <= endTime.getTime()) {
+            currentSchedule = schedule;
+            break;
+        }
+    }
+
+    const override = manualOverrides[room] || 'auto';
+
+    // Update the room display based on manual override or schedule data.
+    if (override === 'leave') {
+        updateRoomDisplay('AVAILABLE 📘', 'green', room, null);
+    } else if (override === 'enter') {
+        updateRoomDisplay('OCCUPIED', 'red', room, null);
+    } else if (currentSchedule) {
+        updateRoomDisplay('OCCUPIED', 'red', room, currentSchedule);
+    } else {
+        updateRoomDisplay('AVAILABLE', 'green', room, null);
+    }
+
+    // Function to update room display based on status and schedule data.
+    function updateRoomDisplay(status, color, room, schedule = null) {
+        roomStatusElement.textContent = status;
+        roomStatusElement.style.color = color;
+        roomNoElement.textContent = `ROOM ${room}`;
+        roomTypeElement.textContent = schedule?.subject || 'N/A';
+        roomScheduleElement.textContent = schedule
+            ? `${formatTimeTo12Hour(schedule.start_time)} - ${formatTimeTo12Hour(schedule.end_time)}, ${new Date(schedule.date).toLocaleDateString()}`
+            : 'N/A';
+        occupiedByElement.textContent = schedule?.section || 'N/A';
+        instructorElement.textContent = schedule?.prof || 'N/A';
+    }
+
+    // Reset the scan indicator to a neutral state.
+    function resetScanIndicator() {
+        scanIndicator.className = 'w-3 h-3 rounded-full bg-gray-400 inline-block';
+        scanLabel.textContent = 'No scan';
+    }
+}
+
+// Format time to 12-hour AM/PM format.
+function formatTimeTo12Hour(timeString) {
+    const date = new Date(timeString);
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'AM' : 'PM';
+
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+
+    return `${hours}:${minutes} ${ampm}`;
+}
+
+// Update the status of all room buttons based on the current schedule.
+async function updateAllRoomButtons() {
+    const roomNumbers = ['300', '310', '311', '312', '313', '314', '315', '316'];
+
+    const now = new Date();
+    const localNow = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
+
+    // Fetch all schedule data.
+    const { data, error } = await supabaseClient
+        .from('schedules_test')
+        .select('*');
+
+    if (error) {
+        console.error('Failed to fetch schedule data:', error);
+        return;
+    }
+
+    // Iterate through each room number and update its button's color based on its current schedule.
+    roomNumbers.forEach(room => {
+        const button = document.querySelector(`button[onclick*="'${room}'"]`);
+        if (!button) return;
+
+        const roomSchedules = data.filter(s => s.room === room);
+        const hasCurrentSchedule = roomSchedules.some(schedule => {
+            const start = new Date(new Date(schedule.start_time).toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
+            const end = new Date(new Date(schedule.end_time).toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
+            return start <= localNow && localNow <= end;
+        });
+
+        // Change the button color based on whether the room is occupied or not.
+        if (hasCurrentSchedule) {
+            button.classList.remove('bg-green-500');
+            button.classList.add('bg-red-500');
+        } else {
+            button.classList.remove('bg-red-500');
+            button.classList.add('bg-green-500');
+        }
+    });
+}
+
+// Update room buttons when the document is ready and every 60 seconds.
+document.addEventListener("DOMContentLoaded", updateAllRoomButtons);
+setInterval(updateAllRoomButtons, 60000); // Refresh every 60 seconds
+
+  </script>
+
   </body>
 </html>
