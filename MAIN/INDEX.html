@@ -16,17 +16,17 @@
       <div class="fixed h-full bg-orange-600 group transition-all duration-300 w-16 hover:w-64">
         <div class="flex flex-col h-full">
           <a href="#" class="flex items-center p-4 border-b border-b-white">
-            <img src="./images/CpELogo.jpg" alt="placeholder" class="w-8 h-8 rounded object-cover">
+            <img src="/images/CpELogo.jpg" alt="placeholder" class="w-8 h-8 rounded object-cover">
             <span class="ml-3 text-lg font-poppins text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               CpE Department
             </span>
           </a>
           <ul class="flex flex-col mt-4 space-y-2">
-            <li><a href="dashboard.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
-            <li><a href="Room.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
-            <li><a href="new-sched.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
-            <li><a href="Logs.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
-          </ul>
+            <li><a href="/MAIN/INDEX.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
+            <li><a href="/MAIN/ROOMS.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
+            <li><a href="/MAIN/SCHEDULES.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
+            <li><a href="/MAIN/LOGS.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
+        </ul>
         </div>
       </div>
       
@@ -133,11 +133,11 @@
     <table id="schedule-table" class="min-w-full bg-white border border-gray-200">
       <thead>
         <tr>
-          <th class="px-4 py-2 border">Date</th>
-          <th class="px-4 py-2 border">Time</th>
+          <th class="px-4 py-2 border">Section</th>
           <th class="px-4 py-2 border">Subject</th>
           <th class="px-4 py-2 border">Professor</th>
-          <th class="px-4 py-2 border">Section</th>
+          <th class="px-4 py-2 border">Date</th>
+          <th class="px-4 py-2 border">Time</th>
         </tr>
       </thead>
       <tbody id="schedule-container">
@@ -152,10 +152,17 @@
   
 
   <!-- Right: Sensor Details -->
-  <div class="w-1/2 bg-white p-6 rounded-lg shadow-lg">
-    <h2 id="sensorName" class="text-2xl font-extrabold text-orange-600">Latest Sensor Reading</h2>
-    <p id="sensorData" class="text-sm text-gray-500">Sensor data will appear here...</p>
+  <div class="w-full md:w-1/2 bg-white p-2 rounded-2xl shadow-lg">
+    <h2 class="text-2xl font-bold text-orange-600">Latest Sensor Reading</h2>
+    <div class="text-lg font-semibold text-gray-800" id="temperature">Temperature: -- °C</div>
+    <div class="text-lg font-semibold text-gray-800" id="humidity">Humidity: -- %</div>
+    <div class="text-lg font-semibold text-gray-800" id="light">Light: --</div>
+    <div class="text-lg font-semibold text-gray-800" id="light-status">Light Status: --</div>
+    <div class="text-lg font-semibold text-gray-800" id="motion-status">Motion Status: --</div>
+    <div class="text-sm text-gray-500 mt-2" id="timestamp">Timestamp: --</div>
   </div>
+  
+  
 </div>
 
       </div>
@@ -233,11 +240,11 @@ async function updateRoomStatus(room, event) {
           
           return `
               <tr>
-                  <td class="px-4 py-2 border">${date}</td>
-                  <td class="px-4 py-2 border">${timeRange}</td>
-                  <td class="px-4 py-2 border">${schedule.subject}</td>
-                  <td class="px-4 py-2 border">${schedule.prof}</td>
-                  <td class="px-4 py-2 border">${schedule.section}</td>
+                <td class="px-4 py-2 border">${schedule.section}</td>
+                <td class="px-4 py-2 border">${schedule.subject}</td>
+                <td class="px-4 py-2 border">${schedule.prof}</td>
+                <td class="px-4 py-2 border">${date}</td>
+                <td class="px-4 py-2 border">${timeRange}</td>
               </tr>
           `;
       }).join('');
@@ -356,6 +363,47 @@ document.addEventListener("DOMContentLoaded", updateAllRoomButtons);
 setInterval(updateAllRoomButtons, 60000); // Refresh every 60 seconds
 
   </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
+        const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo';
+  
+        const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_API_KEY);
+  
+        async function fetchLatestSensorData() {
+          const { data, error } = await client
+            .from('comp_data')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(1);
+  
+          if (error) {
+            console.error('Error fetching latest data:', error);
+            return;
+          }
+  
+          if (data.length > 0) {
+            const latest = data[0];
+            document.getElementById('temperature').textContent = `Temperature: ${latest.temperature?.toFixed(1)} °C`;
+            document.getElementById('humidity').textContent = `Humidity: ${latest.humidity?.toFixed(1)} %`;
+            document.getElementById('light').textContent = `Light: ${latest.light}`;
+            document.getElementById('timestamp').textContent = `Timestamp: ${new Date(latest.created_at).toLocaleString()}`;
+  
+            const lightStatus = latest.light > 100 ? 'On' : 'Off';
+            const lightStatusElement = document.getElementById('light-status');
+            lightStatusElement.textContent = `Light Status: ${lightStatus}`;
+            lightStatusElement.className = `text-2xl font-semibold ${lightStatus === 'On' ? 'text-green-600' : 'text-red-600'}`;
+  
+            const motionStatus = latest.motion === 1 ? 'Motion Detected' : 'No Motion';
+            const motionStatusElement = document.getElementById('motion-status');
+            motionStatusElement.textContent = `Motion Status: ${motionStatus}`;
+            motionStatusElement.className = `text-2xl font-semibold ${motionStatus === 'Motion Detected' ? 'text-green-600' : 'text-gray-500'}`;
+          }
+        }
+  
+        fetchLatestSensorData();
+      });
+    </script>
 
   </body>
 </html>
