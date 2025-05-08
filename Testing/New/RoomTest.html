@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rooms Table Update</title>
+  <link rel="icon" href="/images/favicon.ico" type="image/svg+xml">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body class="bg-gray-300 text-gray-700">
+  <div class="flex h-screen">
+    <!-- Main Content -->
+    <div class="flex-1 bg-gray-100 ml-16 p-6">
+      <!-- Header -->
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-orange-600">ROOMS</h1>
+      </div>
+
+      <div class="flex space-x-6">
+        <!-- Room Buttons -->
+        <div class="bg-white shadow-md rounded-lg p-4 w-48">
+          <h2 class="text-lg text-orange-500 font-bold mb-4">Rooms in CPE</h2>
+          <div class="space-y-2">
+            <button onclick="updateRoomStatus('300', event)" class="border px-3 py-2 w-full rounded">ROOM 300</button>
+            <button onclick="updateRoomStatus('310', event)" class="border px-3 py-2 w-full rounded">ROOM 310</button>
+            <button onclick="updateRoomStatus('311', event)" class="border px-3 py-2 w-full rounded">ROOM 311</button>
+            <button onclick="updateRoomStatus('312', event)" class="border px-3 py-2 w-full rounded">ROOM 312</button>
+            <button onclick="updateRoomStatus('313', event)" class="border px-3 py-2 w-full rounded">ROOM 313</button>
+            <button onclick="updateRoomStatus('314', event)" class="border px-3 py-2 w-full rounded">ROOM 314</button>
+            <button onclick="updateRoomStatus('315', event)" class="border px-3 py-2 w-full rounded">ROOM 315</button>
+            <button onclick="updateRoomStatus('316', event)" class="border px-3 py-2 w-full rounded">ROOM 316</button>
+          </div>
+        </div>
+
+        <!-- Room Details -->
+        <div class="bg-white shadow-md rounded-lg p-6 w-full max-w-xl">
+          <h2 class="text-xl text-orange-500 font-bold mb-4">Room Details</h2>
+          <div class="space-y-4">
+            <div class="mb-4">
+              <label for="overrideStatus" class="block text-sm font-medium text-gray-700">Manual Room Action</label>
+              <select id="overrideStatus" onchange="manualOverrideChanged()" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                <option value="auto">Auto (Based on Schedule)</option>
+                <option value="enter">Enter Room</option>
+                <option value="leave">Leave Room</option>
+              </select>
+            </div>
+
+            <div class="flex justify-between">
+              <span class="font-medium">Room Status</span>
+              <span id="room-status" class="font-bold text-gray-800">UNKNOWN</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="font-medium">Room Number</span>
+              <span id="room-no" class="font-semibold">N/A</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="font-medium">Section</span>
+              <span id="occupied-by" class="font-semibold">N/A</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="font-medium">Subject</span>
+              <span id="room-type-details" class="font-semibold">N/A</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="font-medium">Professor</span>
+              <span id="instructor" class="font-semibold">N/A</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="font-medium">Schedule</span>
+              <span id="room-schedule" class="font-semibold">N/A</span>
+            </div>
+            <div class="flex justify-between items-start">
+              <div class="font-medium flex flex-col">
+                <span>Scanned In</span>
+                <span class="text-xs text-gray-500">*Only available in Room 315</span>
+              </div>
+              <span id="scan-status" class="font-semibold flex items-center gap-2">
+                <span id="scan-indicator" class="w-3 h-3 rounded-full bg-gray-400 inline-block"></span>
+                <span id="scan-label">No scan</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const supabaseClient = supabase.createClient(
+        'https://vzubmycafgnjtwnjfpop.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo'
+    );
+
+    let manualOverrides = {};
+    let currentRoom = null;
+
+    function manualOverrideChanged() {
+        const value = document.getElementById("overrideStatus").value;
+        if (currentRoom) {
+            manualOverrides[currentRoom] = value;
+            updateRoomStatus(currentRoom); // Refresh view after override change
+        }
+    }
+
+    async function updateRoomStatus(room, event) {
+        currentRoom = room;
+
+        const roomStatusElement = document.getElementById("room-status");
+        const roomNoElement = document.getElementById("room-no");
+        const roomTypeElement = document.getElementById("room-type-details");
+        const roomScheduleElement = document.getElementById("room-schedule");
+        const occupiedByElement = document.getElementById("occupied-by");
+        const instructorElement = document.getElementById("instructor");
+        const scanIndicator = document.getElementById("scan-indicator");
+        const scanLabel = document.getElementById("scan-label");
+
+        resetScanIndicator();
+
+        document.querySelectorAll("button").forEach(btn => {
+            btn.classList.remove("bg-orange-100");
+        });
+        if (event) event.target.classList.add("bg-orange-100");
+
+        roomStatusElement.textContent = 'LOADING...';
+        roomStatusElement.style.color = 'gray';
+
+        // Set dropdown to current override
+        document.getElementById("overrideStatus").value = manualOverrides[room] || 'auto';
+
+        const { data, error } = await supabaseClient
+            .from('schedules_test')
+            .select('*')
+            .eq('room', room);
+
+        if (error) {
+            console.error('Error fetching room data:', error);
+            roomStatusElement.textContent = 'Error loading schedule';
+            roomStatusElement.style.color = 'red';
+            return;
+        }
+
+        const now = new Date();
+        const localDate = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
+
+        let currentSchedule = null;
+
+        for (const schedule of data || []) {
+            if (!schedule || !schedule.start_time || !schedule.end_time) continue;
+
+            const start = new Date(schedule.start_time).toLocaleString('en-US', { timeZone: 'Asia/Manila' });
+            const end = new Date(schedule.end_time).toLocaleString('en-US', { timeZone: 'Asia/Manila' });
+
+            const startTime = new Date(start);
+            const endTime = new Date(end);
+
+            const nowMs = localDate.getTime();
+            if (startTime.getTime() <= nowMs && nowMs <= endTime.getTime()) {
+                currentSchedule = schedule;
+                break;
+            }
+        }
+
+        const override = manualOverrides[room] || 'auto';
+
+        if (override === 'leave') {
+            updateRoomDisplay('AVAILABLE 📘', 'green', room, null);
+        } else if (override === 'enter') {
+            updateRoomDisplay('OCCUPIED', 'red', room, null);
+        } else if (currentSchedule) {
+            updateRoomDisplay('OCCUPIED', 'red', room, currentSchedule);
+            if (room === '315') {
+                await checkFingerprintScan(currentSchedule);
+            }
+        } else {
+            updateRoomDisplay('AVAILABLE', 'green', room, null);
+        }
+
+        function updateRoomDisplay(status, color, room, schedule = null) {
+            roomStatusElement.textContent = status;
+            roomStatusElement.style.color = color;
+            roomNoElement.textContent = `ROOM ${room}`;
+            roomTypeElement.textContent = schedule?.subject || 'N/A';
+            roomScheduleElement.textContent = schedule
+                ? `${formatTimeTo12Hour(schedule.start_time)} - ${formatTimeTo12Hour(schedule.end_time)}, ${new Date(schedule.date).toLocaleDateString()}`
+                : 'N/A';
+            occupiedByElement.textContent = schedule?.section || 'N/A';
+            instructorElement.textContent = schedule?.prof || 'N/A';
+        }
+
+        function resetScanIndicator() {
+            scanIndicator.className = 'w-3 h-3 rounded-full bg-gray-400 inline-block';
+            scanLabel.textContent = 'No scan';
+        }
+
+        async function checkFingerprintScan(schedule) {
+            try {
+                const { data: scans, error } = await supabaseClient
+                    .from('fingerprint_logsv')
+                    .select('*')
+                    .order('timestamp', { ascending: false })
+                    .limit(10);
+
+                if (error || !scans) return;
+
+                const nowMs = new Date().getTime();
+                const recentScans = scans.filter(scan => {
+                    const scanTime = new Date(scan.timestamp).getTime();
+                    return nowMs - scanTime < 30 * 60 * 1000;
+                });
+
+                const scanNames = recentScans.map(s => s.name.toLowerCase());
+                const profName = schedule.prof.toLowerCase();
+
+                if (scanNames.includes(profName)) {
+                    scanIndicator.className = 'w-3 h-3 rounded-full bg-green-500 inline-block';
+                    scanLabel.textContent = 'Professor scanned in';
+                } else if (recentScans.length > 0) {
+                    scanIndicator.className = 'w-3 h-3 rounded-full bg-red-500 inline-block';
+                    scanLabel.textContent = 'Other person(s) scanned';
+                } else {
+                    resetScanIndicator();
+                }
+            } catch (err) {
+                console.error('Error checking fingerprint scan:', err);
+            }
+        }
+    }
+
+    // Format time into 12-hour format with AM/PM
+    function formatTimeTo12Hour(timeString) {
+        const date = new Date(timeString);
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        const ampm = hours >= 12 ? 'AM' : 'PM';
+
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+
+        return `${hours}:${minutes} ${ampm}`;
+    }
+</script>
+  
+</body>
+</html>

@@ -122,17 +122,21 @@
       let currentSchedule = null;
   
       for (const schedule of data) {
+        console.log('Schedule date:', schedule.date);
+        console.log('Schedule time:', schedule.time);
+      
         if (schedule.date.trim() !== today) continue;
-  
+      
         const [startTime, endTime] = schedule.time.split('-').map(t => t.trim());
         const startDecimal = toDecimal(startTime);
         const endDecimal = toDecimal(endTime);
-  
+      
         if (currentTime >= startDecimal && currentTime <= endDecimal) {
           currentSchedule = schedule;
           break;
         }
       }
+      
   
       if (currentSchedule) {
         roomStatusElement.textContent = 'OCCUPIED';
