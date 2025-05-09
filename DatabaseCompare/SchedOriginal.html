@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule ORIGINAL</title>
+    <link rel="icon" href="/images/favicon.ico" type="image/svg+xml">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/0d66da6825.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+
+    <div class="flex h-screen">
+
+              <!-- Sidebar -->
+              <div class="fixed h-full bg-orange-600 group transition-all duration-300 w-16 hover:w-64 z-20">
+                <div class="flex flex-col h-full">
+                    <a href="#" class="flex items-center p-4 border-b border-b-white">
+                        <img src="/images/CpELogo.jpg" alt="placeholder" class="w-8 h-8 rounded object-cover">
+                        <span class="ml-3 text-lg font-poppins text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            CpE Department
+                        </span>
+                    </a>
+                    <ul class="flex flex-col mt-4 space-y-2">
+                        <li><a href="/Dashboard.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
+                        <li><a href="/Rooms.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
+                        <li><a href="/Scheduling.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
+                        <li><a href="/Logs.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
+                    </ul>
+                </div>
+            </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 ml-16 p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-orange-600">SCHEDULE</h1>
+                <div class="flex items-center space-x-4">
+                    <!-- Day Filter and More Options - Flex Alignment -->
+                    <div class="flex items-center space-x-4">
+                        <label for="dayFilter" class="text-orange-600 font-semibold">Filter by Day:</label>
+                        <select id="dayFilter"
+                            class="border px-3 py-1 rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500"
+                            onchange="applyDayFilter()">
+                            <option value="">All Days</option>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                        </select>
+                        <div class="relative">
+                            <button class="bg-orange-600 text-white px-5 py-1 whitespace-nowrap rounded focus:outline-none" onclick="openModal('Add')">Add Schedule</button>
+                        </div>
+                    </div>
+                    <button class="text-orange-600 text-2xl"><i class="fas fa-bell"></i></button>
+                </div>
+
+            </div>
+
+            <div class="flex space-x-6">
+                <!-- Room List -->
+                <div class="bg-white shadow-md rounded-lg p-4 w-1/2" style="width: 200px; height: 500px;">
+                    <h2 class="text-lg font-bold">Rooms</h2>
+                    <ul>
+                        <li><button onclick="updateSchedule(300)" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">300</button></li>
+                        <li><button onclick="updateSchedule(310)" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">310</button></li>
+                        <li><button onclick="updateSchedule(311)" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">311</button></li>
+                        <li><button onclick="updateSchedule(312)" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">312</button></li>
+                        <li><button onclick="updateSchedule(313)" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">313</button></li>
+                        <li><button onclick="updateSchedule(314)" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">314</button></li>
+                        <li><button onclick="updateSchedule(315)" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">315</button></li>
+                        <li><button onclick="updateSchedule(316)" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">316</button></li>
+                    </ul>                    
+                </div>
+                <!-- Schedule Display -->
+                <div id="room-schedule" class="bg-white shadow-md rounded-lg p-4 w-2/3"
+                    style="max-height: 600px; width: 1200px; overflow-y: auto;">
+                    <h2 id="room-title" class="text-center text-xl font-bold text-orange-600 mb-4">Select a room</h2>
+                    <p>Select a room to view its schedule.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Modal -->
+<div id="modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="bg-white p-6 rounded shadow-lg w-96">
+      <h2 class="text-xl font-bold mb-4 text-orange-600">Schedule Entry</h2>
+      <form id="scheduleForm" onsubmit="saveSchedule(event)">
+        <div class="space-y-4">
+            <div class="flex flex-col">
+                <label class="font-semibold text-gray-700">Select Room:</label>
+                <select id="room" class="w-full p-2 border rounded" required>
+                    <option value="300">ROOM 300</option>
+                    <option value="310">ROOM 310</option>
+                    <option value="311">ROOM 311</option>
+                    <option value="312">ROOM 312</option>
+                    <option value="313">ROOM 313</option>
+                    <option value="314">ROOM 314</option>
+                    <option value="315">ROOM 315</option>
+                    <option value="316">ROOM 316</option>
+                </select>
+            </div>
+        
+            <div class="flex flex-col">
+                <label class="font-semibold text-gray-700">Select Date:</label>
+                <input type="date" id="date" class="w-full p-2 border rounded" required />
+            </div>
+        </div>
+             
+          <div class="flex gap-4 mt-2">
+            <div class="w-1/2">
+              <label for="academicYear" class="block">Academic Year</label>
+              <select id="academicYear" class="w-full mb-2 p-2 border rounded" required>
+                <option value="2024-2025">2024-2025</option>
+                <option value="2025-2026">2025-2026</option>
+              </select>            
+            </div>
+            
+            <div class="w-1/2">
+              <label for="semester" class="block">Semester</label>
+              <select id="semester" name="semester" class="w-full p-2 border rounded">
+                <option value="1st">1st</option>
+                <option value="2nd">2nd</option>
+                <option value="Summer">Summer</option>
+              </select>
+            </div>
+          </div>
+          <!-- Start and End Time Dropdowns -->
+          <div class="flex gap-4 mb-2">
+            <div class="w-1/2">
+              <label class="font-semibold text-gray-700">Start Time:</label>
+              <select id="startTime" class="w-full p-2 border rounded" required>
+                <option value="00:30">12:30 AM</option>
+                <option value="07:30">07:30 AM</option>
+                <option value="10:30">10:30 AM</option>
+                <option value="13:30">1:30 PM</option>
+                <option value="16:30">4:30 PM</option>
+                <option value="19:30">7:30 PM</option>
+                <option value="21:00">9:00 PM</option>
+              </select>
+            </div>
+            <div class="w-1/2">
+              <label class="font-semibold text-gray-700">End Time:</label>
+              <select id="endTime" class="w-full p-2 border rounded" required>
+                <option value="06:30">6:30 AM</option>
+                <option value="10:30">10:30 AM</option>
+                <option value="13:30">1:30 PM</option>
+                <option value="16:30">4:30 PM</option>
+                <option value="19:30">7:30 PM</option>
+                <option value="21:00">9:00 PM</option>
+                <option value="23:46">11:46 PM</option>
+              </select>
+            </div>
+          </div>  
+          <div class="flex gap-4 mt-2">
+            <div class="w-1/2">
+                <label class="font-semibold text-gray-700">Select Year Level:</label>
+                <select id="yearLevel" class="w-full mb-2 p-2 border rounded" required>
+                  <option value="BSCOE 1">BSCOE 1</option>
+                  <option value="BSCOE 2">BSCOE 2</option>
+                  <option value="BSCOE 3">BSCOE 3</option>
+                  <option value="BSCOE 4">BSCOE 4</option>
+                </select>    
+            </div>
+            
+            <div class="w-1/2">
+                <label class="font-semibold text-gray-700">Select Section:</label>
+                <select id="section" class="w-full mb-2 p-2 border rounded" required>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                </select>
+            </div>
+          </div>        
+        <label class="font-semibold text-gray-700">Select Subject:</label>
+        <select id="subject" class="w-full mb-2 p-2 border rounded" required>
+          <option value="Computer">Computer</option>
+          <option value="CAD">CAD</option>
+          <option value="P.E.">P.E.</option>
+        </select>
+  
+        <label class="font-semibold text-gray-700">Select Instructor:</label>
+        <select id="prof" class="w-full mb-2 p-2 border rounded" required>
+          <option value="Engr. John">Engr. John</option>
+          <option value="Rolito">Rolito</option>
+          <option value="Engr. Jorly">Engr. Jorly</option>
+        </select>
+  
+        <div class="flex justify-end space-x-2 mt-4">
+          <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+          <button id="submitButton" type="submit" class="px-4 py-2 bg-orange-600 text-white rounded">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+<!-- Script for functions -->
+<script>
+    // Dropdown menu code
+    let dropdown = document.getElementById("dropdownMenu");
+
+    function toggleDropdown() {
+        dropdown.classList.toggle("hidden");
+    
+        if (!dropdown.classList.contains("hidden")) {
+            dropdown.classList.remove("opacity-0", "scale-95");
+            dropdown.classList.add("opacity-100", "scale-100");
+        } else {
+            dropdown.classList.remove("opacity-100", "scale-100");
+            dropdown.classList.add("opacity-0", "scale-95");
+        }
+    }
+    
+
+    document.addEventListener("click", function (event) {
+        let button = document.querySelector("button[onclick='toggleDropdown()']");
+        if (!dropdown.contains(event.target) && !button.contains(event.target)) {
+            dropdown.classList.add("hidden");
+        }
+    });
+
+    function openModal(mode = 'Add') {
+        document.getElementById("modal").classList.remove("hidden");
+
+        if (mode === 'Add') {
+            currentSchedule = null;
+            document.getElementById("scheduleForm").reset(); // Only reset on Add
+        }
+    }
+
+    function closeModal() {
+        document.getElementById("modal").classList.add("hidden");
+        currentSchedule = null;
+        document.getElementById("scheduleForm").reset();
+    }
+
+    const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
+    const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NDM0NjY1NCwiZXhwIjoyMDU5OTIyNjU0fQ.c7xkLWthN-SHSjJjs22CDy45MvfEFGxH7A-JD4aOSxI';
+    const TABLE_NAME = 'schedules_original';  // Updated to match table name
+
+    let currentSchedule = null;
+
+    // Format time into 12-hour format with AM/PM
+    function formatTimeTo12Hour(timeString) {
+        const date = new Date(timeString);
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        const ampm = hours >= 12 ? 'pm' : 'am';
+
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+
+        return `${hours}:${minutes} ${ampm}`;
+    }
+
+    // Update schedule and display it in the table
+    async function updateSchedule(room) {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?room=eq.${room}&select=*`, {
+                headers: {
+                    'apikey': SUPABASE_API_KEY,
+                    'Authorization': `Bearer ${SUPABASE_API_KEY}`
+                }
+            });
+
+            if (!response.ok) throw new Error(await response.text());
+
+            let scheduleData = await response.json();
+
+            let table = `<table class='w-full border-collapse border border-gray-400 mt-4'>
+                <thead>
+                    <tr class='bg-orange-500 text-white'>
+                        <th class='border border-gray-400 px-4 py-2'>Section</th>
+                        <th class='border border-gray-400 px-4 py-2'>Subject</th>
+                        <th class='border border-gray-400 px-4 py-2'>Instructor</th>
+                        <th class='border border-gray-400 px-4 py-2'>Date</th>
+                        <th class='border border-gray-400 px-4 py-2'>Academic Year</th>
+                        <th class='border border-gray-400 px-4 py-2'>Semester</th>
+                        <th class='border border-gray-400 px-4 py-2'>Time</th>
+                        <th class='border border-gray-400 px-4 py-2'>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+
+            if (scheduleData.length > 0) {
+                scheduleData.forEach((s) => {
+                    // Format start and end times
+                    const startTimeFormatted = formatTimeTo12Hour(s.start_time);
+                    const endTimeFormatted = formatTimeTo12Hour(s.end_time);
+
+                    table += `<tr>
+                        <td class='border border-gray-400 px-4 py-2'>${s.section}</td>
+                        <td class='border border-gray-400 px-4 py-2'>${s.subject}</td>
+                        <td class='border border-gray-400 px-4 py-2'>${s.prof}</td>
+                        <td class='border border-gray-400 px-4 py-2'>${s.date}</td>
+                        <td class='border border-gray-400 px-4 py-2'>${s.academicYear}</td>
+                        <td class='border border-gray-400 px-4 py-2'>${s.semester}</td>
+                        <td class='border border-gray-400 px-4 py-2'>${startTimeFormatted} - ${endTimeFormatted}</td>
+                        <td class='border border-gray-400 px-4 py-2'>
+                            <button onclick='editSchedule(${JSON.stringify(s)})' class='text-blue-600 underline mr-2'>Edit</button>
+                            <button onclick='deleteSchedule(${s.id}, "${room}")' class='text-red-600 underline'>Delete</button>
+                        </td>
+                    </tr>`;
+                });
+            } else {
+                table += `<tr>
+                    <td colspan='8' class='border border-gray-400 px-4 py-2 text-center text-red-500'>No schedule available</td>
+                </tr>`;
+            }
+
+            table += `</tbody></table>`;
+            document.getElementById("room-schedule").innerHTML =
+                `<h2 class="text-center text-xl font-bold text-orange-600 mb-4">Room ${room}</h2>` + table;
+
+        } catch (err) {
+            console.error("Error fetching schedule:", err.message);
+            alert("Error loading schedule: " + err.message);
+        }
+    }
+
+    // Edit schedule details
+// Edit schedule details
+function editSchedule(schedule) {
+    currentSchedule = schedule; // Store the schedule to edit
+    document.getElementById("room").value = schedule.room;
+    document.getElementById("date").value = schedule.date;
+    document.getElementById("academicYear").value = schedule.academicYear || "";
+    document.getElementById("semester").value = schedule.semester || "";
+    document.getElementById("startTime").value = schedule.start_time ? new Date(schedule.start_time).toLocaleTimeString() : "";
+    document.getElementById("endTime").value = schedule.end_time ? new Date(schedule.end_time).toLocaleTimeString() : "";
+    document.getElementById("section").value = schedule.section;
+    document.getElementById("subject").value = schedule.subject;
+    document.getElementById("prof").value = schedule.prof;
+    openModal('Edit'); // Open modal in Edit mode
+}
+
+// Save schedule (both for add and edit)
+// Save schedule (both for add and edit)
+async function saveSchedule(event) {
+    event?.preventDefault?.();
+    
+    // Get values from the form
+    let room = document.getElementById("room").value.trim();
+    let date = document.getElementById("date").value.trim(); // Accept date as-is (string)
+    let academicYear = document.getElementById("academicYear").value.trim();
+    let semester = document.getElementById("semester").value.trim();
+    let startTime = document.getElementById("startTime").value.trim();
+    let endTime = document.getElementById("endTime").value.trim();
+
+    // Convert times to ISO string format with time zone information
+    const startDateTime = new Date(`${date}T${startTime}`).toISOString();
+    const endDateTime = new Date(`${date}T${endTime}`).toISOString();
+
+    // Combine Year Level and Section
+    let yearLevel = document.getElementById("yearLevel").value.trim();
+    let section = document.getElementById("section").value.trim();
+    let combinedSection = `${yearLevel}-${section}`;
+
+
+    let subject = document.getElementById("subject").value.trim();
+    let prof = document.getElementById("prof").value.trim();
+
+    // Validation check
+    if (!room || !date || !academicYear || !startTime || !endTime || !semester || !combinedSection || !subject || !prof) {
+        alert("Please fill in all fields before saving.");
+        return;
+    }
+
+    const submitButton = document.getElementById("submitButton");
+    if (submitButton) submitButton.disabled = true;
+
+    try {
+        const isEditing = currentSchedule !== null; // Check if we're editing
+        const method = isEditing ? 'PATCH' : 'POST'; // Use PATCH for editing, POST for creating
+        const url = isEditing
+            ? `${SUPABASE_URL}/rest/v1/${TABLE_NAME}?id=eq.${currentSchedule.id}` // Update existing schedule
+            : `${SUPABASE_URL}/rest/v1/${TABLE_NAME}`; // Create new schedule
+
+        const response = await fetch(url, {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+                'apikey': SUPABASE_API_KEY,
+                'Authorization': `Bearer ${SUPABASE_API_KEY}`,
+                'Prefer': 'return=representation'
+            },
+            body: JSON.stringify({
+                room, date, academicYear, start_time: startDateTime, end_time: endDateTime,
+                section: combinedSection, subject, prof, semester
+            })
+        });
+
+        if (!response.ok) throw new Error(await response.text());
+
+        alert(isEditing ? "Schedule updated!" : "Schedule saved!");
+        closeModal();
+        currentSchedule = null; // Reset currentSchedule after saving or updating
+        updateSchedule(room); // Refresh the schedule for that room
+
+    } catch (err) {
+        console.error("Save error:", err.message);
+        alert("Failed: " + err.message);
+    } finally {
+        if (submitButton) submitButton.disabled = false;
+    }
+}
+
+
+    // Delete schedule
+    async function deleteSchedule(id, room) {
+        const confirmed = confirm("Are you sure you want to delete this schedule?");
+        if (!confirmed) return;
+
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?id=eq.${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'apikey': SUPABASE_API_KEY,
+                    'Authorization': `Bearer ${SUPABASE_API_KEY}`,
+                    'Prefer': 'return=representation'
+                }
+            });
+
+            if (!response.ok) throw new Error(await response.text());
+
+            alert("Schedule deleted.");
+            updateSchedule(room);
+        } catch (err) {
+            console.error("Delete error:", err.message);
+            alert("Delete error: " + err.message);
+        }
+    }
+</script>
+</body>
+</html>
