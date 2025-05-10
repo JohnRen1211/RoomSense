@@ -1,0 +1,123 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logs</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://kit.fontawesome.com/0d66da6825.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        
+    <!-- Sidebar -->
+    <div class="fixed h-full bg-orange-600 group transition-all duration-300 w-16 hover:w-64 z-20">
+        <div class="flex flex-col h-full">
+            <a href="#" class="flex items-center p-4 border-b border-b-white">
+                <img src="./images/CpELogo.jpg" alt="placeholder" class="w-8 h-8 rounded object-cover">
+                <span class="ml-3 text-lg font-poppins text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    CpE Department
+                </span>
+            </a>
+            <ul class="flex flex-col mt-4 space-y-2">
+                <li><a href="dashboard.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
+                <li><a href="Room.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
+                <li><a href="new-sched.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
+                <li><a href="Logs.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 ml-16 p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold text-orange-600">Logs</h1>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <div class="flex justify-between items-center mb-4">
+
+            <div class="relative z-10 mb-4">
+                <select class="appearance-none bg-gray-100 border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                    <option>Select Room</option>
+                    <option>ROOM 310</option>
+                    <option>ROOM 311</option>
+                    <option>ROOM 312</option>
+                    <option>ROOM 313</option>
+                    <option>ROOM 314</option>
+                    <option>ROOM 315</option>
+                    <option>ROOM 316</option>  
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+                <i class="fas fa-download text-orange-600 text-2xl"></i>
+            </div>
+            <table class="min-w-full bg-white">
+                <thead>
+                    <tr>
+                        <th class="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">Date</th>
+                        <th class="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">Time In</th>
+                        <th class="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">Time Out</th>
+                        <th class="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">Subject</th>
+                        <th class="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">Occupant</th>
+                        <th class="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">Population</th>
+                        <th class="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">Instructor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Jan 6, 2025</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">10:30 AM</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">1:30 PM</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">CMPE 30224 - CAO</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">BSCpE 4-4</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">45</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Engr. Mahaguay</td>
+                    </tr>
+                    <tr>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Jan 6, 2025</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">10:30 AM</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">1:30 PM</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">CMPE 30224 - CAO</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">BSCpE 4-4</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">45</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Engr. Mahaguay</td>
+                    </tr>
+                    <tr>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Jan 6, 2025</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">10:30 AM</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">1:30 PM</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">CMPE 30224 - CAO</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">BSCpE 4-4</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">45</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Engr. Mahaguay</td>
+                    </tr>
+                    <tr>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Jan 6, 2025</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">10:30 AM</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">1:30 PM</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">CMPE 30224 - CAO</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">BSCpE 4-4</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">45</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Engr. Mahaguay</td>
+                    </tr>
+                    <tr>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Jan 6, 2025</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">10:30 AM</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">1:30 PM</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">CMPE 30224 - CAO</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">BSCpE 4-4</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">45</td>
+                        <td class="py-2 px-4 border-b border-gray-200 text-sm text-gray-700">Engr. Mahaguay</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

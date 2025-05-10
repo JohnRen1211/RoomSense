@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rooms</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://kit.fontawesome.com/0d66da6825.js" crossorigin="anonymous"></script>
+    <script>
+        // Function to update room status
+        function updateRoomStatus(room) {
+            const roomStatusElement = document.getElementById("room-status");
+            const roomNoElement = document.getElementById("room-no");
+            const roomTypeElement = document.getElementById("room-type-details");
+            const occupiedByElement = document.getElementById("occupied-by");
+            const populationElement = document.getElementById("population");
+            const instructorElement = document.getElementById("instructor");
+
+            // Update the room's details based on the selected room
+            switch(room) {
+                case '300':
+                    roomStatusElement.textContent = 'OCCUPIED';
+                    roomStatusElement.style.color = 'red';
+                    roomNoElement.textContent = 'ROOM 300';
+                    roomTypeElement.textContent = 'Computer Engineering Lecture and Multimedia Room';
+                    occupiedByElement.textContent = 'BSCpE 4 - 4';
+                    populationElement.textContent = '45';
+                    instructorElement.textContent = 'Engr. Cansino';
+                    break;
+                case '310':
+                    roomStatusElement.textContent = 'OCCUPIED';
+                    roomStatusElement.style.color = 'red';
+                    roomNoElement.textContent = 'ROOM 310';
+                    roomTypeElement.textContent = 'Computer Engineering Lecture Room';
+                    occupiedByElement.textContent = 'BSCpE 4 - 4';
+                    populationElement.textContent = '45';
+                    instructorElement.textContent = 'Engr. Bautista';
+                    break;
+                case '311':
+                    roomStatusElement.textContent = 'AVAILABLE';
+                    roomStatusElement.style.color = 'green';
+                    roomNoElement.textContent = 'ROOM 311';
+                    roomTypeElement.textContent = 'Computer Programming and Design Laboratory';
+                    occupiedByElement.textContent = 'N/A';
+                    populationElement.textContent = '0';
+                    instructorElement.textContent = 'Engr. Pajabera';
+                    break;
+                    case '312':
+                    roomStatusElement.textContent = 'AVAILABLE';
+                    roomStatusElement.style.color = 'green';
+                    roomNoElement.textContent = 'ROOM 312';
+                    roomTypeElement.textContent = 'Digital Systems and Simulation and Drafting Laboratory';
+                    occupiedByElement.textContent = 'N/A';
+                    populationElement.textContent = '0';
+                    instructorElement.textContent = 'Dr. Ado';
+                    break;
+                    case '313':
+                    roomStatusElement.textContent = 'AVAILABLE';
+                    roomStatusElement.style.color = 'green';
+                    roomNoElement.textContent = 'ROOM 313';
+                    roomTypeElement.textContent = 'Computer Programming and Design Laboratory';
+                    occupiedByElement.textContent = 'N/A';
+                    populationElement.textContent = '0';
+                    instructorElement.textContent = 'Engr. Valle';
+                    break;
+                    case '314':
+                    roomStatusElement.textContent = 'AVAILABLE';
+                    roomStatusElement.style.color = 'green';
+                    roomNoElement.textContent = 'ROOM 314';
+                    roomTypeElement.textContent = 'Emerson Laboratory Room';
+                    occupiedByElement.textContent = 'N/A';
+                    populationElement.textContent = '0';
+                    instructorElement.textContent = 'Engr. Cabate';
+                    break;
+                    case '315':
+                    roomStatusElement.textContent = 'AVAILABLE';
+                    roomStatusElement.style.color = 'green';
+                    roomNoElement.textContent = 'ROOM 315';
+                    roomTypeElement.textContent = 'Computer Architecture and Networking';
+                    occupiedByElement.textContent = 'N/A';
+                    populationElement.textContent = '0';
+                    instructorElement.textContent = 'Engr. Amulong';
+                    break;
+                    case '316':
+                    roomStatusElement.textContent = 'AVAILABLE';
+                    roomStatusElement.style.color = 'green';
+                    roomNoElement.textContent = 'ROOM 316';
+                    roomTypeElement.textContent = 'Electronic and Electrical Circuit and Design Laboratory';
+                    occupiedByElement.textContent = 'N/A';
+                    populationElement.textContent = '0';
+                    instructorElement.textContent = 'Engr. Jaylo';
+                    break;
+                // More rooms as per your original code
+                default:
+                    roomStatusElement.textContent = 'UNKNOWN';
+                    roomStatusElement.style.color = 'gray';
+                    roomNoElement.textContent = 'N/A';
+                    roomTypeElement.textContent = 'N/A';
+                    occupiedByElement.textContent = 'N/A';
+                    populationElement.textContent = '0';
+                    instructorElement.textContent = 'N/A';
+            }
+        }
+
+        // Function to set room status to "AVAILABLE" when "LEAVE ROOM" is clicked
+        function leaveRoom() {
+            const roomStatusElement = document.getElementById("room-status");
+            const occupiedByElement = document.getElementById("occupied-by");
+            const populationElement = document.getElementById("population");
+
+            roomStatusElement.textContent = 'AVAILABLE';
+            roomStatusElement.style.color = 'green';
+            occupiedByElement.textContent = 'N/A';
+            populationElement.textContent = '0';
+        }
+
+        // Function to set room status to "OCCUPIED" when "ENTER ROOM" is clicked
+        function enterRoom() {
+            const roomStatusElement = document.getElementById("room-status");
+            const occupiedByElement = document.getElementById("occupied-by");
+            const populationElement = document.getElementById("population");
+
+            roomStatusElement.textContent = 'OCCUPIED';
+            roomStatusElement.style.color = 'red';
+            occupiedByElement.textContent = 'BSCpE 4 - 4';
+            populationElement.textContent = '45';
+        }
+    
+    </script>
+</head>
+
+
+<body class="bg-gray-300 text-gray-500">
+    <div class="flex h-screen">
+
+        <!-- Sidebar -->
+        <div class="fixed h-full bg-orange-600 group transition-all duration-300 w-16 hover:w-64">
+            <div class="flex flex-col h-full">
+                <a href="#" class="flex items-center p-4 border-b border-b-white">
+                    <img src="/RoomWeb/tempo/Raw/CpELogo.jpg" alt="placeholder" class="w-8 h-8 rounded object-cover">
+                    <span class="ml-3 text-lg font-poppins text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        CpE Department
+                    </span>
+                </a>
+                <ul class="flex flex-col mt-4 space-y-2">
+                    <li><a href="dashboard.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
+                    <li><a href="Room.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
+                    <li><a href="new-sched.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
+                    <li><a href="Logs.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 bg-gray-100 ml-16 p-6">
+
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-orange-600">ROOMS</h1>
+            </div>
+
+            <!-- Content -->
+            <div class="flex space-x-6">
+                <!-- Rooms in CPE -->
+                <div class="bg-white shadow-md rounded-lg p-4" style="width: 200px;">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg text-orange-500 font-bold">Rooms in CPE</h2>
+                    </div>
+                    <div class="space-y-2">
+                        <button onclick="updateRoomStatus('300')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">
+                            <span>ROOM 300</span>
+                        </button>
+                        <button onclick="updateRoomStatus('310')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">
+                            <span>ROOM 310</span>
+                        </button>
+                        <button onclick="updateRoomStatus('311')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">
+                            <span>ROOM 311</span>
+                        </button>
+                        <button onclick="updateRoomStatus('312')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">
+                            <span>ROOM 312</span>
+                        </button>
+                        <button onclick="updateRoomStatus('313')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">
+                            <span>ROOM 313</span>
+                        </button>
+                        <button onclick="updateRoomStatus('314')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">
+                            <span>ROOM 314</span>
+                        </button>
+                        <button onclick="updateRoomStatus('315')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">
+                            <span>ROOM 315</span>
+                        </button>
+                        <button onclick="updateRoomStatus('316')" class="border px-3 py-2 w-full rounded focus:outline-none focus:ring-orange-300 focus:border-orange-500">
+                            <span>ROOM 316</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Room Details -->
+                <div class="bg-white shadow-md rounded-lg p-4" style="width: 600px; max-height: 600px;">
+                    <h2 class="text-lg text-orange-500 font-bold mb-4">Room Details</h2>
+                    <div class="space-y-4">
+                        <div class="flex justify-between">
+                            <span>Room Status</span>
+                            <span id="room-status" class="text-gray-600 font-bold">UNKNOWN</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Room Number</span>
+                            <span id="room-no" class="font-semibold">N/A</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Room Type</span>
+                            <span id="room-type-details" class="font-semibold">N/A</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Occupied By</span>
+                            <span id="occupied-by" class="font-semibold">N/A</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Population</span>
+                            <span id="population" class="font-semibold">0</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Instructor</span>
+                            <span id="instructor" class="font-semibold">N/A</span>
+                        </div>
+
+                        <!-- Equipment List -->
+                        <div class="space-y-10">
+                            <div class="mt-8">
+                                <div class="border-t border-gray-700 mb-4"></div>
+                                <div class="flex items-center justify-between mb-1">
+                                    <h2 class="text-lg font-semibold">Equipment List</h2>
+                                    <button onclick="toggleModal()" class="bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium py-2 px-8 rounded">
+                                        Edit Equipment List
+                                    </button>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between">
+                                        <span>Number of Chairs</span>
+                                        <span id="chair-count" class="font-semibold" onclick="editItem('chair')">N/A</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Number of Computers</span>
+                                        <span id="computer-count" class="font-semibold" onclick="editItem('computer')">N/A</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div id="equipmentModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden z-50">
+                            <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+                                <h2 class="text-xl font-bold mb-4">Edit Equipment List</h2>
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium mb-1">Number of Chairs</label>
+                                    <input type="number" id="chairInput" class="w-full p-2 border rounded" />
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium mb-1">Number of Computers</label>
+                                    <input type="number" id="computerInput" class="w-full p-2 border rounded" />
+                                </div>
+                                <div class="flex justify-end space-x-2">
+                                    <button id="closeModal" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400" onclick="toggleModal()">Cancel</button>
+                                    <button id="saveEquipment" class="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600" onclick="saveEquipment()">Save</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="flex items-center justify-center space-x-4">
+                            <button onclick="enterRoom()" class="mt-4 w-1/2 p-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-all duration-300">Enter Room</button>
+                            <button onclick="leaveRoom()" class="mt-4 w-1/2 p-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-all duration-300">Leave Room</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sensor Information -->
+                <div class="bg-white shadow-md rounded-lg p-4" style="width: 570px;">
+                    <h2 class="text-lg text-orange-500 font-bold mb-4">Sensor Details</h2>
+                    <div class="grid grid-cols-2 gap-4">
+
+                        <!-- SENSOR CARD -->
+                        <div class="bg-white p-5 rounded-lg shadow-lg flex flex-col h-full min-h-[210px]">
+                            <div class="flex flex-row items-start mb-4 border-b border-gray-300 pb-4">
+                                <div class="text-4xl text-orange-500 font-bold ml-5 mt-7">22°C</div>
+                                <img src="./images/temp.png" alt="Temperature Icon" class="h-20 w-20 object-contain ml-auto">
+                            </div>
+                            <h2 class="text-xl font-bold text-orange-500 mt-4 ml-[52px] italic">Temperature</h2>
+                            <div class="text-sm text-gray-500 ml-[35px] italic">Current Temperature: 22°C</div>
+                        </div>
+                
+                        <!-- SENSOR CARD -->
+                        <div class="bg-white p-5 rounded-lg shadow-lg flex flex-col h-full min-h-[210px]">
+                            <div class="flex flex-row items-start mb-4 border-b border-gray-300 pb-4">
+                                <div class="ml-8 mt-5">
+                                    <div class="w-16 h-14 rounded-full bg-gray-100 flex items-center justify-center text-4xl text-orange-500 font-bold">
+                                      11
+                                    </div>
+                                  </div>                                  
+                                <img src="./images/presence.png" alt="Presence Icon" class="h-20 w-20 object-contain ml-auto">
+                            </div>
+                            <h2 class="text-xl font-bold text-orange-500 mt-4 ml-[75px] italic">Presence</h2>
+                            <div class="text-sm text-gray-500 ml-[60px] italic">-------------------</div>
+                        </div>
+                
+                        <!-- SENSOR CARD -->
+                        <div class="bg-white p-5 rounded-lg shadow-lg flex flex-col h-full min-h-[210px]">
+                            <div class="flex flex-row items-start mb-4 border-b border-gray-300 pb-4">
+                                <div class="text-4xl text-orange-500 font-bold ml-5 mt-7">22°C</div>
+                                <img src="./images/humidity.png" alt="Humidity Icon" class="h-20 w-20 object-contain ml-auto">
+                            </div>
+                            <h2 class="text-xl font-bold text-orange-500 mt-4 ml-[63px] italic">Humidity</h2>
+                            <div class="text-sm text-gray-500 ml-[40px] italic">Current Humidity: 22°C</div>
+                        </div>
+                        
+                
+                        <!-- SENSOR CARD -->
+                        <div class="bg-white p-5 rounded-lg shadow-lg flex flex-col h-full min-h-[210px]">
+                            <div class="flex flex-row items-start mb-4 border-b border-gray-300 pb-4">
+                                <div class="text-4xl text-orange-500 font-bold ml-5 mt-7">OFF</div>
+                                <img src="./images/light.png" alt="Humidity Icon" class="h-20 w-20 object-contain ml-auto">
+                            </div>
+                            <h2 class="text-xl font-bold text-orange-500 mt-4 ml-[85px] italic">Lights</h2>
+                            <div class="text-sm text-gray-500 ml-[55px] italic">Lights at room: 300</div>
+                        </div>
+                    </div>
+                </div>
+                             
+            </div>
+        </div>
+        
+        <!-- Scripts -->
+        <script>
+            // Toggle modal visibility
+            function toggleModal() {
+                const modal = document.getElementById('equipmentModal');
+                modal.classList.toggle('hidden');
+            }
+
+            let editingItem = null;
+
+            function editItem(item) {
+                editingItem = item;
+                const chairCount = document.getElementById('chair-count').textContent;
+                const computerCount = document.getElementById('computer-count').textContent;
+
+                if (item === 'chair') {
+                    document.getElementById('chairInput').value = chairCount === 'N/A' ? '' : chairCount;
+                } else if (item === 'computer') {
+                    document.getElementById('computerInput').value = computerCount === 'N/A' ? '' : computerCount;
+                }
+
+                toggleModal();
+            }
+
+            function saveEquipment() {
+                const chairCount = document.getElementById('chairInput').value;
+                const computerCount = document.getElementById('computerInput').value;
+
+                if (editingItem === 'chair') {
+                    document.getElementById('chair-count').textContent = chairCount || 'N/A';
+                } else if (editingItem === 'computer') {
+                    document.getElementById('computer-count').textContent = computerCount || 'N/A';
+                }
+
+                toggleModal();
+            }
+            let currentTemp = 0; // initialize
+            
+        </script>
+    </div>
+</body>
+
+</html>
