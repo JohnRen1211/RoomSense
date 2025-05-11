@@ -22,9 +22,9 @@
             </span>
           </a>
           <ul class="flex flex-col mt-4 space-y-2">
-            <li><a href="dashboard.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
-            <li><a href="Room.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
-            <li><a href="new-sched.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
+            <li><a href="/Deploy/index.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
+            <li><a href="/Deploy/Deploymanual.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">MANUAL</span></a></li>
+            <li><a href="/Deploy/DeployOriginal.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">ORIGINAL</span></a></li>
             <li><a href="Logs.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
           </ul>
         </div>
@@ -69,7 +69,7 @@
               </div>
               <div class="flex items-center space-x-2 ml-4">
                 <div class="bg-yellow-500 w-4 h-4 rounded"></div>
-                <div class="text-sm text-gray-500">Conflict</div>
+                <div class="text-sm text-gray-500">Unscheduled</div>
               </div>
             </div>
           </div>
@@ -164,16 +164,16 @@
       </div>
     </div>
     <script>
-    // Initialize Supabase client
+    // Initialize Supabase client with URL and anonymous API key
     const supabaseClient = supabase.createClient(
         'https://vzubmycafgnjtwnjfpop.supabase.co',
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo'
     );
 
-    let manualOverrides = {}; // Tracks manual override state for each room
-    let currentRoom = null;   // Currently selected room for UI
+    let manualOverrides = {}; // Stores manual override states for each room
+    let currentRoom = null;   // Tracks the currently selected room
 
-    // Handle override dropdown change
+    // Called when override dropdown changes
     function manualOverrideChanged() {
         const value = document.getElementById("overrideStatus").value;
         if (currentRoom) {
@@ -182,11 +182,11 @@
         }
     }
 
-    // Updates the room status display and schedule table
+    // Updates the status display for a specific room
     async function updateRoomStatus(room, event) {
         currentRoom = room;
 
-        // DOM elements
+        // DOM references
         const roomStatusElement = document.getElementById("room-status");
         const roomNoElement = document.getElementById("room-no");
         const roomTypeElement = document.getElementById("room-type-details");
@@ -196,9 +196,9 @@
         const scanIndicator = document.getElementById("scan-indicator");
         const scanLabel = document.getElementById("scan-label");
 
-        resetScanIndicator();
+        resetScanIndicator(); // Reset scan visuals
 
-        // Highlight active room button
+        // Highlight selected room button
         document.querySelectorAll("button").forEach(btn => {
             btn.classList.remove("border-4", "border-black");
         });
@@ -207,7 +207,7 @@
         roomStatusElement.textContent = 'LOADING...';
         roomStatusElement.style.color = 'gray';
 
-        // Fetch schedules from both sources
+        // Fetch schedule data from both original and manual tables
         const [{ data: originalData, error: originalError }, { data: manualData, error: manualError }] = await Promise.all([
             supabaseClient.from('schedules_original').select('*').eq('room', room).order('start_time', { ascending: true }),
             supabaseClient.from('schedules_manual').select('*').eq('room', room).order('start_time', { ascending: true })
@@ -220,15 +220,10 @@
             return;
         }
 
-        // Render schedule table
+        // Display schedule table
         const scheduleContainer = document.getElementById("schedule-container");
         if (originalData.length === 0 && manualData.length === 0) {
-            scheduleContainer.innerHTML = `
-                <tr>
-                    <td colspan="5" class="px-4 py-2 text-center text-gray-500">
-                        No schedule found for this room.
-                    </td>
-                </tr>`;
+            scheduleContainer.innerHTML = '<tr><td colspan="5" class="px-4 py-2 text-center text-gray-500">No schedule found for this room.</td></tr>';
         } else {
             const mergedSchedules = [...originalData, ...manualData];
             scheduleContainer.innerHTML = mergedSchedules.map(schedule => {
@@ -242,51 +237,42 @@
                         <td class="px-4 py-2 border">${schedule.subject}</td>
                         <td class="px-4 py-2 border">${schedule.prof}</td>
                         <td class="px-4 py-2 border">${schedule.section}</td>
-                    </tr>`;
+                    </tr>
+                `;
             }).join('');
         }
 
-        // Get local time (Asia/Manila)
+        // Get current time (Manila timezone)
         const now = new Date();
         const localNow = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
         const nowMs = localNow.getTime();
 
-        // Filter current active schedules
+        // Find schedules active right now
         const originalNow = findOverlappingNow(originalData, nowMs);
         const manualNow = findOverlappingNow(manualData, nowMs);
-        const allCurrent = [...originalNow, ...manualNow];
 
         const override = manualOverrides[room] || 'auto';
 
-        // Display logic based on override and conflict checks
-        if (override === 'leave') {
-            updateRoomDisplay('AVAILABLE 📘', 'green', room, null);
-        } else if (override === 'enter') {
-            updateRoomDisplay('OCCUPIED', 'red', room, null);
-        } else {
-            let foundSame = false;
-            let foundDiff = false;
+        // Logic for how to display room status
+if (override === 'leave') {
+    updateRoomDisplay('AVAILABLE 📘', 'green', room, null);
+} else if (override === 'enter') {
+    updateRoomDisplay('OCCUPIED', 'red', room, null);
+} else {
+    const allCurrent = [...originalNow, ...manualNow];
+    const hasConflictNow = hasInternalConflict(allCurrent);
 
-            for (let i = 0; i < allCurrent.length; i++) {
-                for (let j = i + 1; j < allCurrent.length; j++) {
-                    if (schedulesMatch(allCurrent[i], allCurrent[j])) {
-                        foundSame = true;
-                    } else {
-                        foundDiff = true;
-                    }
-                }
-            }
+    if (hasConflictNow) {
+        updateRoomDisplay('CONFLICT ⚠️', 'yellow', room, allCurrent[0]);
+    } else if (allCurrent.length > 0) {
+        updateRoomDisplay('OCCUPIED', 'red', room, allCurrent[0]);
+    } else {
+        updateRoomDisplay('AVAILABLE', 'green', room, null);
+    }
+}
 
-            if (foundSame) {
-                updateRoomDisplay('OCCUPIED', 'red', room, allCurrent[0]);
-            } else if (allCurrent.length > 0) {
-                updateRoomDisplay('CONFLICT ⚠️', 'yellow', room, allCurrent[0]);
-            } else {
-                updateRoomDisplay('AVAILABLE', 'green', room, null);
-            }
-        }
 
-        // Updates text fields in the UI
+        // Updates all UI text fields for the room
         function updateRoomDisplay(status, color, room, schedule = null) {
             roomStatusElement.textContent = status;
             roomStatusElement.style.color = color;
@@ -299,14 +285,14 @@
             instructorElement.textContent = schedule?.prof || 'N/A';
         }
 
-        // Reset scan indicator UI
+        // Resets scan circle color
         function resetScanIndicator() {
             scanIndicator.className = 'w-3 h-3 rounded-full bg-gray-400 inline-block';
             scanLabel.textContent = 'No scan';
         }
     }
 
-    // Converts time string to 12-hour format
+    // Format time to 12-hour display
     function formatTimeTo12Hour(timeString) {
         const date = new Date(timeString);
         let hours = date.getHours();
@@ -317,81 +303,65 @@
         return `${hours}:${minutes} ${ampm}`;
     }
 
-    // Refreshes the status of all room buttons
-    async function updateAllRoomButtons() {
-        const roomNumbers = ['300', '310', '311', '312', '313', '314', '315', '316'];
-        const now = new Date();
-        const localNow = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
-        const nowMs = localNow.getTime();
+    // Updates button colors for all rooms based on current status
+async function updateAllRoomButtons() {
+    const roomNumbers = ['300', '310', '311', '312', '313', '314', '315', '316'];
 
-        const [{ data: originalData, error: originalError }, { data: manualData, error: manualError }] = await Promise.all([
-            supabaseClient.from('schedules_original').select('*'),
-            supabaseClient.from('schedules_manual').select('*')
-        ]);
+    const now = new Date();
+    const localNow = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
+    const nowMs = localNow.getTime();
 
-        if (originalError || manualError) {
-            console.error('Failed to fetch schedule data:', originalError || manualError);
-            return;
-        }
+    const [{ data: originalData, error: originalError }, { data: manualData, error: manualError }] = await Promise.all([
+        supabaseClient.from('schedules_original').select('*'),
+        supabaseClient.from('schedules_manual').select('*')
+    ]);
 
-        roomNumbers.forEach(room => {
-            const button = document.querySelector(`button[onclick*="'${room}'"]`);
-            if (!button) return;
+    if (originalError || manualError) {
+        console.error('Failed to fetch schedule data:', originalError || manualError);
+        return;
+    }
 
-            const originalSchedules = originalData.filter(s => s.room === room);
-            const manualSchedules = manualData.filter(s => s.room === room);
+    roomNumbers.forEach(room => {
+        const button = document.querySelector(`button[onclick*="'${room}'"]`);
+        if (!button) return;
 
-            const currentOriginal = findOverlappingNow(originalSchedules, nowMs);
-            const currentManual = findOverlappingNow(manualSchedules, nowMs);
-            const totalCurrent = [...currentOriginal, ...currentManual];
+        const originalSchedules = originalData.filter(s => s.room === room);
+        const manualSchedules = manualData.filter(s => s.room === room);
 
-            button.classList.remove('bg-green-500', 'bg-red-500', 'bg-yellow-500');
-
-            const originalConflict = checkConflictWithDetails(currentOriginal);
-            const manualConflict = checkConflictWithDetails(currentManual);
-
-            const bothHave = currentOriginal.length > 0 && currentManual.length > 0;
-            const bothMatch = allOverlappingSchedulesMatch(currentOriginal, currentManual);
-
-            if (originalConflict === 'yellow' || manualConflict === 'yellow') {
-                button.classList.add('bg-yellow-500');
-            } else if (originalConflict === 'red' || manualConflict === 'red') {
-                button.classList.add('bg-red-500');
-            } else if (bothHave && !bothMatch) {
-                button.classList.add('bg-yellow-500');
-            } else if (bothHave && bothMatch) {
-                button.classList.add('bg-red-500');
-            } else if (totalCurrent.length > 0) {
-                button.classList.add('bg-red-500');
-            } else {
-                button.classList.add('bg-green-500');
-            }
+        // Get current overlapping schedules only
+        const currentOriginal = originalSchedules.filter(s => {
+            const start = new Date(s.start_time).getTime();
+            const end = new Date(s.end_time).getTime();
+            return start <= nowMs && nowMs <= end;
         });
-    }
 
-    // Detect internal conflicts with same or different details
-    function checkConflictWithDetails(schedules) {
-        for (let i = 0; i < schedules.length; i++) {
-            for (let j = i + 1; j < schedules.length; j++) {
-                const a = schedules[i];
-                const b = schedules[j];
+        const currentManual = manualSchedules.filter(s => {
+            const start = new Date(s.start_time).getTime();
+            const end = new Date(s.end_time).getTime();
+            return start <= nowMs && nowMs <= end;
+        });
 
-                const aStart = new Date(a.start_time).getTime();
-                const aEnd = new Date(a.end_time).getTime();
-                const bStart = new Date(b.start_time).getTime();
-                const bEnd = new Date(b.end_time).getTime();
+        const totalCurrent = [...currentOriginal, ...currentManual];
 
-                const isOverlap = aStart < bEnd && bStart < aEnd;
+        // Check if there's internal overlap in current time
+        const hasConflictNow = hasInternalConflict(totalCurrent);
 
-                if (isOverlap) {
-                    return schedulesMatch(a, b) ? 'red' : 'yellow';
-                }
-            }
+        // Remove previous status color
+        button.classList.remove('bg-green-500', 'bg-red-500', 'bg-yellow-500');
+
+        if (hasConflictNow) {
+            button.classList.add('bg-yellow-500');
+        } else if (totalCurrent.length > 0) {
+            button.classList.add('bg-red-500');
+        } else {
+            button.classList.add('bg-green-500');
         }
-        return null;
-    }
+    });
+}
 
-    // Compares if two schedules have matching details
+
+  
+    // Checks if two schedules match on subject, time, prof, and section
     function schedulesMatch(s1, s2) {
         return (
             s1.subject === s2.subject &&
@@ -402,7 +372,7 @@
         );
     }
 
-    // Filters schedules overlapping with current time
+    // Returns all schedules that overlap with current time
     function findOverlappingNow(schedules, nowMs) {
         return schedules.filter(s => {
             const start = new Date(s.start_time).getTime();
@@ -411,19 +381,64 @@
         });
     }
 
-    // Returns true if all overlapping schedules match exactly
+    // Compares overlapping schedules to see if all match
     function allOverlappingSchedulesMatch(originalNow, manualNow) {
         if (originalNow.length === 0 || manualNow.length === 0) return false;
+
         return manualNow.every(manual =>
             originalNow.some(original => schedulesMatch(original, manual))
         );
     }
 
-    // Init auto refresh every minute
+    // Checks for time conflicts within a single schedule array
+    function hasInternalConflict(schedules) {
+        for (let i = 0; i < schedules.length; i++) {
+            const aStart = new Date(schedules[i].start_time).getTime();
+            const aEnd = new Date(schedules[i].end_time).getTime();
+            for (let j = i + 1; j < schedules.length; j++) {
+                const bStart = new Date(schedules[j].start_time).getTime();
+                const bEnd = new Date(schedules[j].end_time).getTime();
+
+                if (aStart < bEnd && bStart < aEnd) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // Initialize and refresh room status every minute
     document.addEventListener("DOMContentLoaded", updateAllRoomButtons);
     setInterval(updateAllRoomButtons, 60000);
 </script>
-
-
   </body>
 </html> 
+
+<!--
+Form List:
+Manual page!
+Room type:
+Make automatic ROOM
+Make DATE = DAY:
+Add Student Rep
+Add others option to REP:
+
+Index page:
+Room type:
+Should have buttons enter and leave
+Leave = early leave or end time  
+
+Fingerprint:
+Room type
+Display finger's name rep and prof
+Time in and out
+
+Create landing page
+-ADMIN-
+-VIEWING-
+LOGS
+-record fingerprint time in and out 315 only others empty for
+-Export as excel
+
+Transfer to Vercel deploy REACT
+-->

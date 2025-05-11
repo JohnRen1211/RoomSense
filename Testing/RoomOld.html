@@ -203,10 +203,14 @@
                 if (error || !scans) return;
 
                 const nowMs = new Date().getTime();
-                const recentScans = scans.filter(scan => {
-                    const scanTime = new Date(scan.timestamp).getTime();
-                    return nowMs - scanTime < 30 * 60 * 1000;
-                });
+const recentScans = scans.filter(scan => {
+  const scanTime = new Date(scan.timestamp).getTime();
+  const schedStart = new Date(schedule.start_time).getTime();
+  const schedEnd = new Date(schedule.end_time).getTime();
+  
+  return scanTime >= schedStart && scanTime <= schedEnd;
+});
+
 
                 const scanNames = recentScans.map(s => s.name.toLowerCase());
                 const profName = schedule.prof.toLowerCase();
@@ -231,7 +235,7 @@
         const date = new Date(timeString);
         let hours = date.getHours();
         let minutes = date.getMinutes();
-        const ampm = hours >= 12 ? 'AM' : 'PM';
+        const ampm = hours >= 12 ? 'pm' : 'am';
 
         hours = hours % 12;
         hours = hours ? hours : 12;

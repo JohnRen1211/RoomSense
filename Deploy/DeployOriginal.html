@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schedule Manual</title>
+    <title>Schedule ORIGINAL</title>
     <link rel="icon" href="/images/favicon.ico" type="image/svg+xml">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -22,19 +22,19 @@
                             CpE Department
                         </span>
                     </a>
-                    <ul class="flex flex-col mt-4 space-y-2">
-                        <li><a href="/Dashboard.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
-                        <li><a href="/Rooms.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
-                        <li><a href="/Scheduling.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
-                        <li><a href="/Logs.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
-                    </ul>
+          <ul class="flex flex-col mt-4 space-y-2">
+            <li><a href="/Deploy/index.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
+            <li><a href="/Deploy/Deploymanual.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">MANUAL</span></a></li>
+            <li><a href="/Deploy/DeployOriginal.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">ORIGINAL</span></a></li>
+            <li><a href="Logs.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
+          </ul>
                 </div>
             </div>
 
         <!-- Main Content -->
         <div class="flex-1 ml-16 p-6">
             <div class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-bold text-orange-600">SCHEDULE</h1>
+                <h1 class="text-2xl font-bold text-orange-600">ORIGINAL SCHEDULE</h1>
                 <div class="flex items-center space-x-4">
                     <!-- Day Filter and More Options - Flex Alignment -->
                     <div class="flex items-center space-x-4">
@@ -237,7 +237,7 @@
 
     const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
     const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NDM0NjY1NCwiZXhwIjoyMDU5OTIyNjU0fQ.c7xkLWthN-SHSjJjs22CDy45MvfEFGxH7A-JD4aOSxI';
-    const TABLE_NAME = 'schedules_manual';  // Updated to match table name
+    const TABLE_NAME = 'schedules_original';  // Updated to match table name
 
     let currentSchedule = null;
 
@@ -298,11 +298,10 @@
                         <td class='border border-gray-400 px-4 py-2'>${s.academicYear}</td>
                         <td class='border border-gray-400 px-4 py-2'>${s.semester}</td>
                         <td class='border border-gray-400 px-4 py-2'>${startTimeFormatted} - ${endTimeFormatted}</td>
-<td class='border border-gray-400 px-4 py-2'>
-    <button onclick='editSchedule(${JSON.stringify(s)})' class='text-blue-600 underline mr-2'>Edit</button>
-    <button onclick='deleteSchedule(${s.id}, "${room}")' class='text-red-600 underline mr-2'>Delete</button>
-</td>
-
+                        <td class='border border-gray-400 px-4 py-2'>
+                            <button onclick='editSchedule(${JSON.stringify(s)})' class='text-blue-600 underline mr-2'>Edit</button>
+                            <button onclick='deleteSchedule(${s.id}, "${room}")' class='text-red-600 underline'>Delete</button>
+                        </td>
                     </tr>`;
                 });
             } else {
