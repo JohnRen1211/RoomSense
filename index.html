@@ -767,6 +767,43 @@ function removeSpecialChars(input) {
   input.value = cleaned;
 }
 //Functions for lOGS SAVING
+async function saveToConfirmUsage(scheduleData, type) {
+  if (!selectedRoom || !scheduleData) {
+    alert('No room or schedule selected!');
+    return;
+  }
+
+  try {
+    const { error } = await supabase.from('confirm_usage_table').insert({
+      room: selectedRoom,
+      date: scheduleData.date, 
+      start_time: scheduleData.start_time,
+      end_time: scheduleData.end_time,
+      section: scheduleData.section,
+      subject: scheduleData.subject,
+      prof: scheduleData.prof,
+      academicYear: scheduleData.academicYear,
+      semester: scheduleData.semester,
+      type: type, // 'manual' or 'original'
+      created_at: new Date().toISOString() // Optional
+    });
+
+    if (error) {
+      console.error('Error saving to confirm_usage_table:', error);
+      alert('Failed to save schedule.');
+    } else {
+      alert(`Successfully saved ${type} schedule.`);
+    }
+  } catch (err) {
+    console.error('Unexpected error:', err);
+    alert('Unexpected error occurred.');
+  }
+}
+
+function confirmUsage(scheduleData, type) {
+  console.log('confirmUsage triggered:', scheduleData, type);
+  saveToConfirmUsage(scheduleData, type);
+}
 
 
 		</script>
