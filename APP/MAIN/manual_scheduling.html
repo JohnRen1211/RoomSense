@@ -178,11 +178,14 @@
         </select>
   
         <label class="font-semibold text-gray-700">Select Instructor:</label>
-        <select id="prof" class="w-full mb-2 p-2 border rounded" required>
-          <option value="Engr. John">Engr. John</option>
-          <option value="Rolito">Rolito</option>
-          <option value="Engr. Jorly">Engr. Jorly</option>
+        <select id="prof" class="w-full mb-2 p-2 border rounded" onchange="toggleCustomProf()" required>
+            <option value="Engr. John">Engr. John</option>
+            <option value="Rolito">Rolito</option>
+            <option value="Engr. Jorly">Engr. Jorly</option>
+            <option value="Others">Others</option>
+            <!-- Added option -->
         </select>
+        <input type="text" id="customProf" placeholder="Enter instructor name" class="w-full mb-2 p-2 border rounded hidden" oninput="removeSpecialChars(this)" />
   
         <div class="flex justify-end space-x-2 mt-4">
           <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
@@ -233,7 +236,7 @@
 
     const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
     const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NDM0NjY1NCwiZXhwIjoyMDU5OTIyNjU0fQ.c7xkLWthN-SHSjJjs22CDy45MvfEFGxH7A-JD4aOSxI';
-    const TABLE_NAME = 'schedules_test';  // Updated to match table name
+    const TABLE_NAME = 'schedules_manual';  // Updated to match table name
 
     let currentSchedule = null;
 
@@ -429,6 +432,29 @@ async function saveSchedule(event) {
             alert("Delete error: " + err.message);
         }
     }
+
+      //Add others in form
+  function toggleCustomProf() {
+  const profDropdown = document.getElementById("prof");
+  const customProfInput = document.getElementById("customProf");
+  if (profDropdown.value === "Others") {
+    customProfInput.classList.remove("hidden");
+    customProfInput.required = true;
+  } else {
+    customProfInput.classList.add("hidden");
+    customProfInput.required = false;
+  }
+}
+alert(isEditing ? "Schedule updated!" : "Schedule saved!");
+
+//special characters
+function removeSpecialChars(input) {
+  const original = input.value;
+  const cleaned = original
+    .replace(/[^a-zA-Z0-9. ]/g, '') // Allow letters, digits, space, dot
+    .replace(/\.(?=.*\.)/g, '');    // Allow only one dot (remove all but the first)
+  input.value = cleaned;
+}
 </script>
 </body>
 </html>
