@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finger UI PAGE</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .status {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        .status.success {
+            color: green;
+        }
+
+        .status.error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Fingerprint Registration and Matching</h1>
+
+    <div class="container">
+        <!-- Registration Section -->
+        <h2>Register Fingerprint</h2>
+        <input type="text" id="name" placeholder="Enter Name" required>
+        <button onclick="registerFingerprint()">Register Fingerprint</button>
+
+        <!-- Matching Section -->
+        <h2>Match Fingerprint</h2>
+        <button onclick="matchFingerprint()">Match Fingerprint</button>
+
+        <!-- Status Message -->
+        <div id="status" class="status"></div>
+    </div>
+</body>
+</html>

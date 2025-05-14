@@ -15,21 +15,21 @@
 <body>
     <div class="flex h-screen">
         
-            <!-- Sidebar -->
-            <div class="fixed h-full bg-orange-600 group transition-all duration-300 w-16 hover:w-64 z-20">
+              <!-- Sidebar -->
+              <div class="fixed h-full bg-orange-600 group transition-all duration-300 w-16 hover:w-64 z-20">
                 <div class="flex flex-col h-full">
                     <a href="#" class="flex items-center p-4 border-b border-b-white">
-                        <img src="/images/images/CpELogo.jpg" alt="placeholder" class="w-8 h-8 rounded object-cover">
+                        <img src="/images/CpELogo.jpg" alt="placeholder" class="w-8 h-8 rounded object-cover">
                         <span class="ml-3 text-lg font-poppins text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             CpE Department
                         </span>
                     </a>
                     <ul class="flex flex-col mt-4 space-y-2">
-                        <li><a href="index.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
-                        <li><a href="Room.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
-                        <li><a href="315.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-temperature-empty text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">315 Details</span></a></li>
-                        <li><a href="Schedule.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
-                        <li><a href="Logs.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
+                        <li><a href="/index.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
+                        <li><a href="/Room315.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
+                        <li><a href="/Room315.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-temperature-empty text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">315 Details</span></a></li>
+                        <li><a href="/Scheduling.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
+                        <li><a href="/Scheduling.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
                     </ul>
                 </div>
             </div>
@@ -44,7 +44,6 @@
                         <h2 class="text-lg font-bold mb-2 text-orange-600">Temperature</h2>
                         <div class="data">
                             <p><span>Temperature:</span> <span id="temp">Loading...</span> °C</p>
-                            <p><span>Humidity:</span> <span id="humidity">Loading...</span> %</p>
                           </div>
                         <img src="./images/humidity.png" alt="Humidity Icon" class="w-[200px] h-auto mb-4">
                         <div class="text-center text-sm text-gray-500">Select area to view room details</div>
@@ -54,6 +53,9 @@
                     <button onclick="openModal('lightModal')" 
                         class="bg-white p-5 rounded-lg shadow-lg w-1/4 flex flex-col items-center justify-center transition-all duration-300 hover:bg-orange-100 hover:text-white">
                         <h2 class="text-lg font-bold mb-1 text-orange-600">Humidity</h2>
+                        <div class="data">
+                            <p><span>Humidity:</span> <span id="humidity">Loading...</span> %</p>
+                          </div>
                         <img src="./images/light.png" alt="Light Icon" class="w-[250px] h-auto mb-2">
                         <div class="text-center text-sm text-gray-500">Select area to view room details</div>
                     </button>

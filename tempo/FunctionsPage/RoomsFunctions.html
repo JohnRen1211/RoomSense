@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Scripts -->
+<script>
+    // Function to toggle the visibility of the equipment modal
+    // This modal allows users to edit the number of chairs and computers in a room
+    function toggleModal() {
+        const modal = document.getElementById('equipmentModal');
+        modal.classList.toggle('hidden'); // Toggle the 'hidden' class to show or hide the modal
+    }
+
+    let editingItem = null; // Variable to store the item currently being edited (either 'chair' or 'computer')
+
+    // Function to initialize the modal for editing either chairs or computers
+    function editItem(item) {
+        editingItem = item; // Store the item being edited (either 'chair' or 'computer')
+
+        // Get the current counts of chairs and computers from the displayed content
+        const chairCount = document.getElementById('chair-count').textContent;
+        const computerCount = document.getElementById('computer-count').textContent;
+
+        // If editing chairs, set the input field value to the current chair count, or empty if 'N/A'
+        if (item === 'chair') {
+            document.getElementById('chairInput').value = chairCount === 'N/A' ? '' : chairCount;
+        } 
+        // If editing computers, set the input field value to the current computer count, or empty if 'N/A'
+        else if (item === 'computer') {
+            document.getElementById('computerInput').value = computerCount === 'N/A' ? '' : computerCount;
+        }
+
+        toggleModal(); // Show the modal by toggling the visibility
+    }
+
+    // Function to save the updated equipment count (chairs or computers)
+    function saveEquipment() {
+        // Get the updated values from the input fields
+        const chairCount = document.getElementById('chairInput').value;
+        const computerCount = document.getElementById('computerInput').value;
+
+        // Update the displayed chair count or computer count based on the item being edited
+        if (editingItem === 'chair') {
+            document.getElementById('chair-count').textContent = chairCount || 'N/A'; // Set to 'N/A' if the value is empty
+        } else if (editingItem === 'computer') {
+            document.getElementById('computer-count').textContent = computerCount || 'N/A'; // Set to 'N/A' if the value is empty
+        }
+
+        toggleModal(); // Close the modal after saving
+    }
+
+    let currentTemp = 0; // Initialize variable to hold the current temperature (not used yet)
+
+    // This code runs after the HTML document is fully loaded
+    document.addEventListener("DOMContentLoaded", async () => {
+        // Define the Supabase URL and API key for connecting to the database
+        const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
+        const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo';
+
+        // Initialize the Supabase client using the URL and API key
+        const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_API_KEY);
+
+        // Function to fetch the most recent sensor data from the 'sensor_data' table
+        async function fetchLatestSensorData() {
+            // Query the database to get the latest data, ordered by timestamp
+            const { data, error } = await client
+                .from('sensor_data')
+                .select('*')
+                .order('timestamp', { ascending: false }) // Get the latest data (most recent timestamp first)
+                .limit(1); // Only fetch the latest record
+
+            // If an error occurs while fetching data, log the error
+            if (error) {
+                console.error('Error fetching latest data:', error);
+                return;
+            }
+
+            // If data is fetched successfully, update the displayed values
+            if (data.length > 0) {
+                const latest = data[0]; // Get the most recent sensor data
+
+                // Update the temperature, humidity, and timestamp displayed on the page
+                document.getElementById('temperature').textContent = ` ${latest.temperature} °C`;
+                document.getElementById('humidity').textContent = `  ${latest.humidity} %`;
+                document.getElementById('timestamp').textContent = ` ${new Date(latest.timestamp).toLocaleString()}`;
+            }
+        }
+
+        // Call the function to fetch the latest sensor data
+        fetchLatestSensorData();
+    });
+</script>
+
+    
+</body>
+</html>

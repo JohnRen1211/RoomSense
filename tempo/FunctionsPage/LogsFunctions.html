@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+<!--Scripts for Table logs-->>
+  <script>
+    // URL of the Supabase API endpoint (replace with your actual Supabase URL)
+    const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
+  
+    // API key used to authenticate requests to the Supabase backend
+    const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+  
+    // The name of the table from which we are retrieving data (in this case, 'schedules')
+    const TABLE_NAME = 'schedules';
+  
+    // Asynchronous function to load all the schedules from the Supabase database
+    async function loadAllSchedules() {
+      try {
+        // Sending a GET request to the Supabase REST API to fetch all rows from the 'schedules' table
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?select=*`, {
+          headers: {
+            // Adding the API key to the request headers for authentication
+            'apikey': SUPABASE_API_KEY,
+            // Adding the Authorization header for Bearer token-based access
+            'Authorization': `Bearer ${SUPABASE_API_KEY}`
+          }
+        });
+  
+        // If the response is not OK (status other than 200), throw an error
+        if (!response.ok) throw new Error(await response.text());
+  
+        // Parse the response JSON and store it in the 'schedules' variable
+        const schedules = await response.json();
+  
+        // Start building the HTML table structure
+        let html = `
+          <table class="min-w-full text-sm text-left border-collapse">
+            <thead class="bg-orange-500 text-white">
+              <tr>
+                <th class="px-4 py-2 border">Room</th>
+                <th class="px-4 py-2 border">Instructor</th>
+                <th class="px-4 py-2 border">Day</th>
+                <th class="px-4 py-2 border">Time</th>
+                <th class="px-4 py-2 border">Section</th>
+                <th class="px-4 py-2 border">Subject</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+  
+        // Iterate over each schedule (each item in the 'schedules' array) and build a table row for each
+        schedules.forEach(s => {
+          html += `
+            <tr class="border-t">
+              <!-- Display the room, instructor, day, time, section, and subject from each schedule -->
+              <td class="px-4 py-2 border">${s.room || '-'}</td>
+              <td class="px-4 py-2 border">${s.prof || '-'}</td>
+              <td class="px-4 py-2 border">${s.day || '-'}</td>
+              <td class="px-4 py-2 border">${s.time || '-'}</td>
+              <td class="px-4 py-2 border">${s.section || '-'}</td>
+              <td class="px-4 py-2 border">${s.subject || '-'}</td>
+            </tr>
+          `;
+        });
+  
+        // Close the table and insert the built HTML into the page (specifically into the 'schedule-table' div)
+        html += `</tbody></table>`;
+        document.getElementById("schedule-table").innerHTML = html;
+  
+      } catch (err) {
+        // If there's an error (e.g., network issue, bad response), display an error message
+        console.error("Error loading schedules:", err.message);
+        document.getElementById("schedule-table").innerHTML = `<p class="text-red-600">Failed to load schedules.</p>`;
+      }
+    }
+  
+    // Call the function to load the schedules when the script is executed
+    loadAllSchedules();
+  </script>
+
+    <!--Script for Print Table LOGS filter-->>
+    <script>
+        // This variable will store all schedules from the database
+        let allSchedules = [];
+      
+        // Loads all schedule data from Supabase and initializes the page
+        async function loadAllSchedules() {
+          try {
+            // Fetch data from Supabase using REST API
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?select=*`, {
+              headers: {
+                'apikey': SUPABASE_API_KEY, // Your Supabase API key
+                'Authorization': `Bearer ${SUPABASE_API_KEY}` // Auth header (can be same as apikey for anon access)
+              }
+            });
+      
+            // If the fetch fails, throw an error to catch
+            if (!response.ok) throw new Error(await response.text());
+      
+            // Parse JSON response and store in global variable
+            allSchedules = await response.json();
+      
+            // Populate the filter dropdowns with unique values from the data
+            populateFilters();
+      
+            // Render the schedule table with all data
+            renderSchedule(allSchedules);
+      
+          } catch (err) {
+            // If anything goes wrong, show an error message and log it
+            console.error("Error loading schedules:", err.message);
+            document.getElementById("schedule-table").innerHTML = `<p class="text-red-600">Failed to load schedules.</p>`;
+          }
+        }
+      
+        // Populates dropdowns for Room, Professor, and Time with unique values
+        function populateFilters() {
+          // Create sets to store unique values
+          const roomSet = new Set();
+          const profSet = new Set();
+          const timeSet = new Set();
+      
+          // Loop through all schedule entries and collect unique values
+          allSchedules.forEach(s => {
+            if (s.room) roomSet.add(s.room);
+            if (s.prof) profSet.add(s.prof);
+            if (s.time) timeSet.add(s.time);
+          });
+      
+          // Get dropdown elements from the DOM
+          const roomSelect = document.getElementById("filter-room");
+          const profSelect = document.getElementById("filter-professor");
+          const timeSelect = document.getElementById("filter-time");
+      
+          // Add unique room options to the dropdown
+          roomSet.forEach(room => roomSelect.innerHTML += `<option value="${room}">${room}</option>`);
+      
+          // Add unique professor options
+          profSet.forEach(prof => profSelect.innerHTML += `<option value="${prof}">${prof}</option>`);
+      
+          // Add unique time options
+          timeSet.forEach(time => timeSelect.innerHTML += `<option value="${time}">${time}</option>`);
+      
+          // Add event listeners to dropdowns to trigger filtering when changed
+          [roomSelect, profSelect, timeSelect].forEach(select => {
+            select.addEventListener("change", applyFilters);
+          });
+        }
+      
+        // Filters the schedule table based on selected dropdown values
+        function applyFilters() {
+          // Get currently selected filter values
+          const selectedRoom = document.getElementById("filter-room").value;
+          const selectedProf = document.getElementById("filter-professor").value;
+          const selectedTime = document.getElementById("filter-time").value;
+      
+          // Filter the data array by matching selected filters (if any)
+          const filtered = allSchedules.filter(s => {
+            return (!selectedRoom || s.room === selectedRoom) &&
+                   (!selectedProf || s.prof === selectedProf) &&
+                   (!selectedTime || s.time === selectedTime);
+          });
+      
+          // Render the filtered results in the table
+          renderSchedule(filtered);
+        }
+      
+        // Renders the schedule table based on a given list of schedules
+        function renderSchedule(schedules) {
+          // Start the table structure
+          let html = `
+            <table class="min-w-full text-sm text-left border-collapse">
+              <thead class="bg-orange-500 text-white">
+                <tr>
+                  <th class="px-4 py-2 border">Room</th>
+                  <th class="px-4 py-2 border">Instructor</th>
+                  <th class="px-4 py-2 border">Day</th>
+                  <th class="px-4 py-2 border">Time</th>
+                  <th class="px-4 py-2 border">Section</th>
+                  <th class="px-4 py-2 border">Subject</th>
+                </tr>
+              </thead>
+              <tbody>
+          `;
+      
+          // Loop through schedule data and generate table rows
+          schedules.forEach(s => {
+            html += `
+              <tr class="border-t">
+                <td class="px-4 py-2 border">${s.room || '-'}</td>
+                <td class="px-4 py-2 border">${s.prof || '-'}</td>
+                <td class="px-4 py-2 border">${s.day || '-'}</td>
+                <td class="px-4 py-2 border">${s.time || '-'}</td>
+                <td class="px-4 py-2 border">${s.section || '-'}</td>
+                <td class="px-4 py-2 border">${s.subject || '-'}</td>
+              </tr>
+            `;
+          });
+      
+          // Close table and inject into the DOM
+          html += `</tbody></table>`;
+          document.getElementById("schedule-table").innerHTML = html;
+        }
+      
+        // Initial function call to load and display schedules when the page loads
+        loadAllSchedules();
+      </script>
+      
+    
+</body>
+</html>
