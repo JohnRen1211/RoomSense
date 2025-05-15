@@ -224,7 +224,7 @@ onclick="leaveRoom()" disabled> Leave Room </button>
 						</div>
 						<label class="font-semibold text-gray-700">Select Subject:</label>
 						<select id="subject" class="w-full mb-2 p-2 border rounded" required>
-							<option value="Computer">Computer</option>
+							<option value="Computer"></option>
 							<option value="CAD">CAD</option>
 							<option value="P.E.">P.E.</option>
 						</select>
@@ -681,7 +681,7 @@ if (representative === "Others") {
             if (!response.ok) throw new Error(await response.text());
 
             alert("Schedule deleted.");
-            updateSchedule(room);
+            
         } catch (err) {
             console.error("Delete error:", err.message);
             alert("Delete error: " + err.message);

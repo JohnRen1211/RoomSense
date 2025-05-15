@@ -2,6 +2,10 @@
 // Codes Fingerprint names hardcoded
 #include <Adafruit_Fingerprint.h>
 
+// ==================== Wi-Fi Configuration ====================
+#define WIFI_SSID "OPPO A76"
+#define WIFI_PASSWORD "pOgi1234"
+
 #define RX_PIN 16
 #define TX_PIN 17
 #define RESET_BUTTON_PIN 12
@@ -9,8 +13,8 @@
 HardwareSerial mySerial(2);
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
 
-const int MAX_USERS = 5;
-String names[MAX_USERS + 1] = { "", "John", "Rolito", "Jorly", "Diana", "Eve" }; // IDs 1–5
+const int MAX_USERS = 12;
+String names[MAX_USERS + 1] = { "", "John", "Jay Andrey Amulong", "Reiven Cabate", "Ronan Valle", "Dr. Remedios G. Ado", "Engr. Rolito L. Mahaguay", "Engr. Joshua Benjamin B. Rodriguez", "Engr. Orlando V. Pajabera", "Engr. Marlon Jhon B. Bautista", "Engr. Julius S. Cansino", "Nicole Enriquez", "Hydee Palisoc" }; // IDs 1–12
 
 void setup() {
   Serial.begin(115200);
@@ -111,7 +115,7 @@ void promptForEnrollmentID() {
       enrollFingerprint(id);
       return;
     } else {
-      Serial.println("Type ID. Enter 1–5 or 'q' to cancel:");
+      Serial.println("Type ID. Enter 1–12 or 'q' to cancel:");
       while (Serial.available()) Serial.read(); // clear buffer
     }
   }
