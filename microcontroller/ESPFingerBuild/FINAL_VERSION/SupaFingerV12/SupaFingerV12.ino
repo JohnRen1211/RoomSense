@@ -2,15 +2,21 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <Adafruit_Fingerprint.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 
 // ==================== Wi-Fi Configuration ====================
 #define WIFI_SSID "PLDTHOMEFIBR67508"
 #define WIFI_PASSWORD "PLDTWIFI7ghd3"
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_RESET -1
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 // ==================== Supabase Configuration ====================
 const String SUPABASE_URL = "https://vzubmycafgnjtwnjfpop.supabase.co";
 const String SUPABASE_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo";
-const String SUPABASE_TABLE_NAME = "fingerprint_logsv";
+const String SUPABASE_TABLE_NAME = "raw_logs";
 
 // ==================== Fingerprint Sensor Configuration ====================
 #define RX_PIN 16
@@ -27,6 +33,19 @@ bool isTimeIn[MAX_USERS + 1];  // false = next is Time In, true = next is Time O
 void setup() {
   Serial.begin(115200);
   delay(1000);
+
+  // Initialize OLED
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println("❌ OLED not found");
+    while (true); // Halt if OLED is not found
+  }
+
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(20, 25);
+  display.println("SCAN FINGER");
+  display.display();
 
   // Connect to Wi-Fi
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -50,13 +69,14 @@ void setup() {
   }
 }
 
+
 void loop() {
   if (finger.getImage() == FINGERPRINT_OK) {
     if (finger.image2Tz() == FINGERPRINT_OK && finger.fingerFastSearch() == FINGERPRINT_OK) {
       int id = finger.fingerID;
       if (id >= 1 && id <= MAX_USERS) {
         String name = names[id];
-        String status = isTimeIn[id] ? "entry" : "exit";
+        String status = isTimeIn[id] ? "out" : "in";
 
         Serial.println("👆 Finger detected!");
         Serial.println("✅ Match Found:");

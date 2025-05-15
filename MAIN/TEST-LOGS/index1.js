@@ -1,288 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>ROOM Dashboard</title>
-		<link rel="icon" href="favicon.ico" type="image/x-icon" />
-		<script src="https://cdn.tailwindcss.com"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-		<script src="https://kit.fontawesome.com/0d66da6825.js" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-	</head>
-	<body class="font-sans bg-gray-100 text-gray-700 overflow-auto">
-		<div class="flex h-screen">
-			<!-- Sidebar -->
-      <div class="fixed h-full bg-orange-600 group transition-all duration-300 w-16 hover:w-64">
-        <div class="flex flex-col h-full">
-          <a href="#" class="flex items-center p-4 border-b border-b-white">
-            <img src="./images/CpELogo.jpg" alt="placeholder" class="w-8 h-8 rounded object-cover"/>
-            <span class="ml-3 text-lg font-poppins text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" >CpE Department </span>
-          </a>
-          <ul class="flex flex-col mt-4 space-y-2">
-            <li><a href="dashboard.html"class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
-            <li><a href="Room.html"class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i> <span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
-            <li><a href="new-sched.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
-            <li><a href="/MAIN/LOGS.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
-          </ul>
-        </div>
-      </div>
-			<!--BOXES-->
-			<div class="flex-1 ml-16 p-6">
-				<h1 class="text-3xl font-bold text-orange-600 mb-2">Dashboard</h1>
-				<div class="grid grid-cols-2 gap-4 mb-6">
-					<!-- Left: Room Layout -->
-					<div class="bg-white p-5 rounded-lg shadow-lg flex-col">
-						<h2 class="text-2xl text-orange-600 font-bold mb-3 ml-2">
-							CPE Room Layout
-						</h2>
-						<div class="flex justify-center mb-4">
-							<div class="grid grid-cols-9 grid-rows-6 gap-0 bg-gray-100">
-								<div class="col-span-2 row-span-2 col-start-3 row-start-3 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-								<div class="col-span-2 row-span-2 col-start-6 row-start-3 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-								<div class="col-start-1 row-start-1 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-								<!-- Room Buttons -->
-								<button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="roomClicked('316', event)" type="button" id="room-btn-316">316</button>
-								<button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="roomClicked('315', event)" type="button" id="room-btn-315">315</button>
-								<button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="roomClicked('314', event)" type="button" id="room-btn-314">314</button>
-								<button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="roomClicked('313', event)" type="button" id="room-btn-313">313</button>
-								<button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="roomClicked('312', event)" type="button" id="room-btn-312">312</button>
-								<button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="roomClicked('311', event)" type="button" id="room-btn-311">311</button>
-								<button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="roomClicked('310', event)" type="button" id="room-btn-310">310</button>
-								<button class="toggle-button col-start-1 row-start-2 bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="roomClicked('300', event)" type="button" id="room-btn-300">
-									300
-								</button>
-							</div>
-						</div>
-
-						<div class="text-center text-sm text-gray-400">
-							Select area to view room details
-						</div>
-						<div class="flex justify-center mt-2">
-							<div class="flex items-center space-x-2">
-								<div class="bg-green-500 w-4 h-4 rounded"></div>
-								<div class="text-sm text-gray-500">Vacant</div>
-							</div>
-							<div class="flex items-center space-x-2 ml-4">
-								<div class="bg-red-500 w-4 h-4 rounded"></div>
-								<div class="text-sm text-gray-500">Occupied</div>
-							</div>
-							<div class="flex items-center space-x-2 ml-4">
-								<div class="bg-yellow-500 w-4 h-4 rounded"></div>
-								<div class="text-sm text-gray-500">Conflict</div>
-							</div>
-						</div>
-					</div>
-
-					<!-- Right: Room Description -->
-					<div class="bg-white shadow-md rounded-lg p-6 flex flex-col" id="room-details-panel">
-						<h2 class="text-xl text-orange-500 font-bold mb-4">Room Details</h2>
-						<div class="space-y-4 flex-grow">
-							<div class="flex justify-between">
-								<span class="font-medium">Room Status</span>
-								<span id="room-status" class="font-bold text-gray-800">UNKNOWN</span>
-							</div>
-							<div class="flex justify-between">
-								<span class="font-medium">Room Number</span>
-								<span id="room-no" class="font-semibold">N/A</span>
-							</div>
-							<div class="flex justify-between">
-								<span class="font-medium">Section</span>
-								<span id="occupied-by" class="font-semibold">N/A</span>
-							</div>
-							<div class="flex justify-between">
-								<span class="font-medium">Subject</span>
-								<span id="room-type-details" class="font-semibold">N/A</span>
-							</div>
-							<div class="flex justify-between">
-								<span class="font-medium">Professor</span>
-								<span id="instructor" class="font-semibold">N/A</span>
-							</div>
-							<div class="flex justify-between">
-								<span class="font-medium">Schedule</span>
-								<span id="room-schedule" class="font-semibold">N/A</span>
-							</div>
-							<div class="flex justify-between items-start">
-								<div class="font-medium flex flex-col">
-									<span>Scanned In</span>
-									<span class="text-xs text-gray-500">*Only available in Room 315</span>
-								</div>
-								<span id="scan-status" class="font-semibold flex items-center gap-2">
-									<span id="scan-indicator" class="w-3 h-3 rounded-full bg-gray-400 inline-block"></span>
-									<span id="scan-label">No scan</span>
-								</span>
-							</div>
-						</div>
-
-						<!-- Buttons: Add Schedule and Leave Room -->
-<div class="flex justify-center gap-x-4 mt-4"> 
-<button class="bg-red-500 text-white w-40 py-2 rounded focus:outline-none hover:bg-red-800 transition disabled:opacity-50 disabled:cursor-not-allowed" 
-onclick="openModalForAddSchedule()" id="add-schedule-btn" disabled> Enter Room </button>
-<button id="toggle-schedule-view" class="bg-green-500 text-white w-40 py-2 rounded focus:outline-none hover:bg-green-800 transition disabled:opacity-50 disabled:cursor-not-allowed" 
-onclick="leaveRoom()" disabled> Leave Room </button>
-<button class="bg-red-500 text-white w-40 py-2 rounded focus:outline-none hover:bg-red-800 transition disabled:opacity-50 disabled:cursor-not-allowed" 
-onclick="confirmUsage(scheduleManual, 'manual')" id="save-manual-schedule-btn" disabled> Confirm manual </button>
-<button class="bg-red-500 text-white w-40 py-2 rounded focus:outline-none hover:bg-red-800 transition disabled:opacity-50 disabled:cursor-not-allowed" 
-onclick="confirmUsage(scheduleOriginal, 'original')" id="save-original-schedule-btn" disabled> Confirm Original </button> 
-</div>
-
-					</div>
-					<!-- BOTTOM SECTION -->
-					<!-- Left: Put schedules of room here depending which room is clicked -->
-					<div class="w-full bg-white p-6 rounded-lg shadow-lg flex-col">
-						<h2 class="text-2xl font-bold text-orange-600 mb-2">Room Schedule</h2>
-						<table id="schedule-table" class="min-w-full bg-white border border-gray-200">
-							<thead>
-								<tr>
-									<th class="px-4 py-2 border">Date</th>
-									<th class="px-4 py-2 border">Time</th>
-									<th class="px-4 py-2 border">Subject</th>
-									<th class="px-4 py-2 border">Professor</th>
-									<th class="px-4 py-2 border">Section</th>
-								</tr>
-							</thead>
-							<tbody id="schedule-container">
-								<!-- Schedule will be populated here dynamically -->
-								<tr>
-									<td colspan="6" class="px-4 py-2 text-center text-gray-500">No schedule found.</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-
-					<!-- Right: Sensor Details -->
-					<div class="bg-white p-6 rounded-lg shadow-lg flex-col">
-						<h2 id="sensorName" class="text-2xl font-extrabold text-orange-600">
-							Latest Sensor Reading
-						</h2>
-						<p id="sensorData" class="text-sm text-gray-500">
-							Sensor data will appear here...
-						</p>
-					</div>
-				</div>
-			</div>
-			<!-- Modal -->
-			<div id="modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
-				<div class="bg-white p-6 rounded shadow-lg w-96">
-					<h2 class="text-xl font-bold mb-4 text-orange-600">Schedule Entry</h2>
-					<form id="scheduleForm" onsubmit="saveSchedule(event)">
-						<div class="space-y-4">
-							<div class="flex flex-col">
-								<label class="font-semibold text-gray-700">Selected Room:</label>
-								<input id="room" type="text" class="w-full p-2 border rounded bg-gray-100 cursor-not-allowed" readonly />
-							</div>
-
-							<div class="flex flex-col">
-								<label class="font-semibold text-gray-700">Select Date:</label>
-								<input type="date" id="date" class="w-full p-2 border rounded" required />
-							</div>
-						</div>
-
-						<div class="flex gap-4 mt-2">
-							<div class="w-1/2">
-								<label for="academicYear" class="block">Academic Year</label>
-								<select id="academicYear" class="w-full mb-2 p-2 border rounded" required>
-									<option value="2024-2025">2024-2025</option>
-									<option value="2025-2026">2025-2026</option>
-								</select>
-							</div>
-
-							<div class="w-1/2">
-								<label for="semester" class="block">Semester</label>
-								<select id="semester" name="semester" class="w-full p-2 border rounded">
-									<option value="1st">1st</option>
-									<option value="2nd">2nd</option>
-									<option value="Summer">Summer</option>
-								</select>
-							</div>
-						</div>
-						<!-- Start and End Time Dropdowns -->
-						<div class="flex gap-4 mb-2">
-							<div class="w-1/2">
-								<label class="font-semibold text-gray-700">Start Time:</label>
-								<select id="startTime" class="w-full p-2 border rounded" required>
-									<option value="00:30">12:30 AM</option>
-									<option value="07:30">07:30 AM</option>
-									<option value="10:30">10:30 AM</option>
-									<option value="13:30">1:30 PM</option>
-									<option value="16:30">4:30 PM</option>
-									<option value="19:30">7:30 PM</option>
-									<option value="21:00">9:00 PM</option>
-								</select>
-							</div>
-							<div class="w-1/2">
-								<label class="font-semibold text-gray-700">End Time:</label>
-								<select id="endTime" class="w-full p-2 border rounded" required>
-									<option value="06:30">6:30 AM</option>
-									<option value="10:30">10:30 AM</option>
-									<option value="13:30">1:30 PM</option>
-									<option value="16:30">4:30 PM</option>
-									<option value="19:30">7:30 PM</option>
-									<option value="21:00">9:00 PM</option>
-									<option value="23:46">11:46 PM</option>
-								</select>
-							</div>
-						</div>
-						<div class="flex gap-4 mt-2">
-							<div class="w-1/2">
-								<label class="font-semibold text-gray-700">Select Year Level:</label>
-								<select id="yearLevel" class="w-full mb-2 p-2 border rounded" required>
-									<option value="BSCOE 1">BSCOE 1</option>
-									<option value="BSCOE 2">BSCOE 2</option>
-									<option value="BSCOE 3">BSCOE 3</option>
-									<option value="BSCOE 4">BSCOE 4</option>
-								</select>
-							</div>
-
-							<div class="w-1/2">
-								<label class="font-semibold text-gray-700">Select Section:</label>
-								<select id="section" class="w-full mb-2 p-2 border rounded" required>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-									<option value="6">6</option>
-								</select>
-							</div>
-						</div>
-						<label class="font-semibold text-gray-700">Select Subject:</label>
-						<select id="subject" class="w-full mb-2 p-2 border rounded" required>
-							<option value="Computer">Computer</option>
-							<option value="CAD">CAD</option>
-							<option value="P.E.">P.E.</option>
-						</select>
-						<label class="font-semibold text-gray-700">Select Instructor:</label>
-						<select id="prof" class="w-full mb-2 p-2 border rounded" onchange="toggleCustomProf()" required>
-							<option value="Engr. John">Engr. John</option>
-							<option value="Rolito">Rolito</option>
-							<option value="Engr. Jorly">Engr. Jorly</option>
-							<option value="Others">Others</option>
-							<!-- Added option -->
-						</select>
-						<input type="text" id="customProf" placeholder="Enter instructor name" class="w-full mb-2 p-2 border rounded hidden" oninput="removeSpecialChars(this)" />
-
-						<div class="flex justify-end space-x-2 mt-4">
-							<button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 rounded">
-								Cancel
-							</button>
-							<button id="submitButton" type="submit" class="px-4 py-2 bg-orange-600 text-white rounded">
-								Save
-							</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-		<script>
-			//VERSION 1
-//Script
+//SCRIPT for this page
 // Initialize Supabase client
     const supabaseClient = supabase.createClient(
         'https://vzubmycafgnjtwnjfpop.supabase.co',
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo'
     );
-
+    
     let manualOverrides = {}; // Tracks manual override state for each room
     let currentRoom = null;   // Currently selected room for UI
 
@@ -306,6 +28,7 @@ onclick="confirmUsage(scheduleOriginal, 'original')" id="save-original-schedule-
         const roomScheduleElement = document.getElementById("room-schedule");
         const occupiedByElement = document.getElementById("occupied-by");
         const instructorElement = document.getElementById("instructor");
+        const representativeElement = document.getElementById("representative-details");
         const scanIndicator = document.getElementById("scan-indicator");
         const scanLabel = document.getElementById("scan-label");
 
@@ -313,17 +36,17 @@ onclick="confirmUsage(scheduleOriginal, 'original')" id="save-original-schedule-
 
         // Highlight active room button
         document.querySelectorAll("button").forEach(btn => {
-            btn.classList.remove("border-4", "border-black");
+            btn.classList.remove("border-4", "border-red");
         });
-        if (event) event.target.classList.add("border-4", "border-black");
+        if (event) event.target.classList.add("border-4", "border-red");
 
         roomStatusElement.textContent = 'LOADING...';
         roomStatusElement.style.color = 'gray';
 
         // Fetch schedules from both sources
         const [{ data: originalData, error: originalError }, { data: manualData, error: manualError }] = await Promise.all([
-            supabaseClient.from('schedules_original').select('*').eq('room', room).order('start_time', { ascending: true }),
-            supabaseClient.from('schedules_manual').select('*').eq('room', room).order('start_time', { ascending: true })
+            supabaseClient.from('schedules_originalv2').select('*').eq('room', room).order('start_time', { ascending: true }),
+            supabaseClient.from('schedules_manualv2').select('*').eq('room', room).order('start_time', { ascending: true })
         ]);
 
         if (originalError || manualError) {
@@ -343,20 +66,45 @@ onclick="confirmUsage(scheduleOriginal, 'original')" id="save-original-schedule-
                     </td>
                 </tr>`;
         } else {
-            const mergedSchedules = [...originalData, ...manualData];
-            scheduleContainer.innerHTML = mergedSchedules.map(schedule => {
-                const startTime = new Date(schedule.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-                const endTime = new Date(schedule.end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-                const date = new Date(schedule.date).toLocaleDateString();
-                return `
-                    <tr>
-                        <td class="px-4 py-2 border">${date}</td>
-                        <td class="px-4 py-2 border">${startTime} - ${endTime}</td>
-                        <td class="px-4 py-2 border">${schedule.subject}</td>
-                        <td class="px-4 py-2 border">${schedule.prof}</td>
-                        <td class="px-4 py-2 border">${schedule.section}</td>
-                    </tr>`;
-            }).join('');
+const mergedSchedules = [...originalData, ...manualData].sort((a, b) => {
+            // First sort by date
+            const dateA = new Date(a.date || a.created_at || 0);
+            const dateB = new Date(b.date || b.created_at || 0);
+            
+            // If dates are equal, sort by start time
+            if (dateA - dateB === 0) {
+                const timeA = new Date(a.start_time || a.time || 0);
+                const timeB = new Date(b.start_time || b.time || 0);
+                return timeA - timeB;
+            }
+            
+            return dateA - dateB;
+        });
+
+scheduleContainer.innerHTML = mergedSchedules.map(schedule => {
+    const startTime = new Date(schedule.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+    const endTime = new Date(schedule.end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+    const date = new Date(schedule.date).toLocaleDateString();
+    
+    const isManual = schedule.source === 'manual' || schedule?.id; // You can enhance detection logic here if needed
+
+    return `
+        <tr>
+            <td class="px-4 py-2 border">${date}</td>
+            <td class="px-4 py-2 border">${startTime} - ${endTime}</td>
+            <td class="px-4 py-2 border">${schedule.subject}</td>
+            <td class="px-4 py-2 border">${schedule.prof}</td>
+            <td class="px-4 py-2 border">${schedule.section}</td>
+            ${
+                isManual
+                    ? `<td class="px-4 py-2 border text-red-500">
+                        <button onclick="deleteSchedule(${schedule.id}, '${room}')" class="text-sm bg-red-500 text-white px-2 py-1 rounded">Delete</button>
+                       </td>`
+                    : `<td class="px-4 py-2 border text-gray-400 text-sm italic">System</td>`
+            }
+        </tr>`;
+}).join('');
+
         }
 
 // Get local time (Asia/Manila)
@@ -408,6 +156,7 @@ if (override === 'leave') {
                 : 'N/A';
             occupiedByElement.textContent = schedule?.section || 'N/A';
             instructorElement.textContent = schedule?.prof || 'N/A';
+            representativeElement.textContent = schedule?.representative || 'N/A';
         }
 
         // Reset scan indicator UI
@@ -415,7 +164,7 @@ if (override === 'leave') {
             scanIndicator.className = 'w-3 h-3 rounded-full bg-gray-400 inline-block';
             scanLabel.textContent = 'No scan';
         }
-    }
+    }//END of async update
 
     // Converts time string to 12-hour format
     function formatTimeTo12Hour(timeString) {
@@ -436,8 +185,8 @@ if (override === 'leave') {
         const nowMs = localNow.getTime();
 
         const [{ data: originalData, error: originalError }, { data: manualData, error: manualError }] = await Promise.all([
-            supabaseClient.from('schedules_original').select('*'),
-            supabaseClient.from('schedules_manual').select('*')
+            supabaseClient.from('schedules_originalv2').select('*'),
+            supabaseClient.from('schedules_manualv2').select('*')
         ]);
 
         if (originalError || manualError) {
@@ -507,6 +256,7 @@ if (override === 'leave') {
         return (
             s1.subject === s2.subject &&
             s1.prof === s2.prof &&
+            s1.representative === s2.representative &&
             s1.section === s2.section &&
             new Date(s1.start_time).getTime() === new Date(s2.start_time).getTime() &&
             new Date(s1.end_time).getTime() === new Date(s2.end_time).getTime()
@@ -538,7 +288,7 @@ if (override === 'leave') {
 //ADD Manual schedule in Room details
     const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
     const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NDM0NjY1NCwiZXhwIjoyMDU5OTIyNjU0fQ.c7xkLWthN-SHSjJjs22CDy45MvfEFGxH7A-JD4aOSxI';
-    const TABLE_NAME = 'schedules_manual';  // Updated to match table name
+    const TABLE_NAME = 'schedules_manualv2';  // Updated to match table name
 
     function openModal() {
       document.getElementById("modal").classList.remove("hidden");
@@ -566,9 +316,13 @@ function editSchedule(schedule) {
     document.getElementById("section").value = schedule.section;
     document.getElementById("subject").value = schedule.subject;
     document.getElementById("prof").value = schedule.prof;
+    document.getElementById("representative").value = schedule.representative;
     openModal('Edit'); // Open modal in Edit mode
 }
 
+// Save schedule (both for add and edit)
+
+// Save schedule (both for add and edit)
 // Save schedule (both for add and edit)
 async function saveSchedule(event) {
     event?.preventDefault?.();
@@ -590,15 +344,19 @@ async function saveSchedule(event) {
     let section = document.getElementById("section").value.trim();
     let combinedSection = `${yearLevel}-${section}`;
 
-
+//Form others
 let subject = document.getElementById("subject").value.trim();
 let prof = document.getElementById("prof").value.trim();
 if (prof === "Others") {
   prof = document.getElementById("customProf").value.trim();
 }
+let representative = document.getElementById("representative").value.trim();
+if (representative === "Others") {
+  representative = document.getElementById("customRepresentative").value.trim();
+}
 
     // Validation check
-    if (!room || !date || !academicYear || !startTime || !endTime || !semester || !combinedSection || !subject || !prof) {
+    if (!room || !date || !academicYear || !startTime || !endTime || !semester || !combinedSection || !subject || !prof || !representative) {
         alert("Please fill in all fields before saving.");
         return;
     }
@@ -623,7 +381,7 @@ if (prof === "Others") {
             },
             body: JSON.stringify({
                 room, date, academicYear, start_time: startDateTime, end_time: endDateTime,
-                section: combinedSection, subject, prof, semester
+                section: combinedSection, subject, prof, representative, semester
             })
         });
 
@@ -640,8 +398,7 @@ if (prof === "Others") {
         if (submitButton) submitButton.disabled = false;
     }
 }
-
-
+// End of SAVE V1
     // Delete schedule
     async function deleteSchedule(id, room) {
         const confirmed = confirm("Are you sure you want to delete this schedule?");
@@ -661,6 +418,7 @@ if (prof === "Others") {
             if (!response.ok) throw new Error(await response.text());
 
             alert("Schedule deleted.");
+            updateSchedule(room);
         } catch (err) {
             console.error("Delete error:", err.message);
             alert("Delete error: " + err.message);
@@ -681,9 +439,6 @@ if (prof === "Others") {
         // Enable the Add Schedule and Leave Room buttons
         document.getElementById("add-schedule-btn").disabled = false;
         document.getElementById("toggle-schedule-view").disabled = false;
-		document.getElementById('save-manual-schedule-btn').disabled = false;
-        document.getElementById('save-original-schedule-btn').disabled = false;
-
         // Update the room details panel with data
         await updateRoomStatus(room, event);
       }
@@ -701,8 +456,6 @@ if (prof === "Others") {
         currentRoom = null;
         document.getElementById("add-schedule-btn").disabled = true;
         document.getElementById("toggle-schedule-view").disabled = true;
-				document.getElementById('save-manual-schedule-btn').disabled = true;
-        document.getElementById('save-original-schedule-btn').disabled = true;
 
         // Unselect room button highlight
         document.querySelectorAll(".toggle-button").forEach((btn) => {
@@ -722,6 +475,7 @@ if (prof === "Others") {
         document.getElementById("room-type-details").textContent = "N/A";
         document.getElementById("room-schedule").textContent = "N/A";
         document.getElementById("instructor").textContent = "N/A";
+        document.getElementById("representative-details").textContent = "N/A";
         document.getElementById("scan-indicator").className =
           "w-3 h-3 rounded-full bg-gray-400 inline-block";
         document.getElementById("scan-label").textContent = "No scan";
@@ -758,6 +512,20 @@ if (prof === "Others") {
 }
 alert(isEditing ? "Schedule updated!" : "Schedule saved!");
 
+//Add other in form representative
+  function toggleCustomRepresentative() {
+  const representativeDropdown = document.getElementById("representative");
+  const customRepresentativeInput = document.getElementById("customRepresentative");
+  if (representativeDropdown.value === "Others") {
+    customRepresentativeInput.classList.remove("hidden");
+    customRepresentativeInput.required = true;
+  } else {
+    customRepresentativeInput.classList.add("hidden");
+    customRepresentativeInput.required = false;
+  }
+}
+alert(isEditing ? "Schedule updated!" : "Schedule saved!");
+
 //special characters
 function removeSpecialChars(input) {
   const original = input.value;
@@ -766,12 +534,6 @@ function removeSpecialChars(input) {
     .replace(/\.(?=.*\.)/g, '');    // Allow only one dot (remove all but the first)
   input.value = cleaned;
 }
-//Functions for lOGS SAVING
-
-
-		</script>
-	</body>
-</html>
 
 
 

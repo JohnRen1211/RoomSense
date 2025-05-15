@@ -10,7 +10,7 @@
 // ==================== Supabase Configuration ====================
 const String SUPABASE_URL = "https://vzubmycafgnjtwnjfpop.supabase.co";
 const String SUPABASE_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo";
-const String SUPABASE_TABLE_NAME = "fingerprint_logsv";
+const String SUPABASE_TABLE_NAME = "raw_logs";
 
 // ==================== Fingerprint Sensor Configuration ====================
 #define RX_PIN 16
@@ -56,7 +56,7 @@ void loop() {
       int id = finger.fingerID;
       if (id >= 1 && id <= MAX_USERS) {
         String name = names[id];
-        String status = isTimeIn[id] ? "entry" : "exit";
+        String status = isTimeIn[id] ? "out" : "in";
 
         Serial.println("👆 Finger detected!");
         Serial.println("✅ Match Found:");

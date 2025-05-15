@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance Logs</title>
+  <style>
+    table {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 style="text-align: center;">Attendance Logs</h2>
+  
+  <table id="attendanceTable">
+    <thead>
+      <tr>
+        <th>Finger ID</th>
+        <th>Name</th>
+        <th>Time In</th>
+        <th>Time Out</th>
+        <th>Log Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Data will be inserted here by JavaScript -->
+    </tbody>
+  </table>
+
+  <script>
+    // Supabase URL and API Key
+    const SUPABASE_URL = "https://vzubmycafgnjtwnjfpop.supabase.co";
+    const SUPABASE_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo";
+    const SUPABASE_TABLE_NAME = "attendance_logs";
+
+    // Fetch attendance data from Supabase
+    async function fetchAttendanceData() {
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_TABLE_NAME}?select=*`, {
+        headers: {
+          'Authorization': `Bearer ${SUPABASE_API_KEY}`,
+          'apikey': SUPABASE_API_KEY
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        displayAttendanceData(data);
+      } else {
+        console.error('Failed to fetch data:', response.status, response.statusText);
+      }
+    }
+
+    // Display the fetched data in the table
+    function displayAttendanceData(data) {
+      const tableBody = document.querySelector('#attendanceTable tbody');
+      tableBody.innerHTML = ''; // Clear existing data
+
+      data.forEach(record => {
+        const row = document.createElement('tr');
+        
+        row.innerHTML = `
+          <td>${record.finger_id}</td>
+          <td>${record.name}</td>
+          <td>${record.time_in ? new Date(record.time_in).toLocaleString() : 'N/A'}</td>
+          <td>${record.time_out ? new Date(record.time_out).toLocaleString() : 'N/A'}</td>
+          <td>${new Date(record.log_date).toLocaleDateString()}</td>
+        `;
+
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Call the function to fetch and display the data when the page loads
+    window.onload = fetchAttendanceData;
+  </script>
+
+</body>
+</html>
