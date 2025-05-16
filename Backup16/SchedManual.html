@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ORIGINAL TAGGING</title>
+    <title>MANUAL TAGGING</title>
     <link rel="icon" href="/images/favicon.ico" type="image/svg+xml">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -34,14 +34,14 @@
         <!-- Main Content -->
         <div class="flex-1 ml-16 p-6">
             <div class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-bold text-orange-600">Original Tagging of Schedule</h1>
+                <h1 class="text-2xl font-bold text-orange-600">Manual Tagging of Schedule</h1>
                 <div class="flex items-center space-x-4">
                     <!-- Day Filter and More Options - Flex Alignment -->
                     <div class="flex items-center space-x-4">
 <button 
   class="bg-orange-600 text-white px-5 py-1 whitespace-nowrap rounded focus:outline-none" 
-  onclick="window.location.href='schedManual.html'">
-  Open Manual Schedule
+  onclick="window.location.href='schedOriginal.html'">
+  Open Original Schedule
 </button>
                         <div class="relative">
                             <button class="bg-orange-600 text-white px-5 py-1 whitespace-nowrap rounded focus:outline-none" onclick="openModal('Add')">Add Schedule</button>
@@ -121,7 +121,7 @@
             </div>
           </div>
           <!-- Start and End Time Dropdowns -->
-          <div class="flex gap-4 mb-2">
+          <div class="flex gap-4 mb-2" id="timeDropdowns">
             <div class="w-1/2">
               <label class="font-semibold text-gray-700">Start Time:</label>
               <select id="startTime" class="w-full p-2 border rounded" required>
@@ -179,7 +179,7 @@
   
         <label class="font-semibold text-gray-700">Select Instructor:</label>
         <select id="prof" class="w-full mb-2 p-2 border rounded" onchange="toggleCustomProf()" required>
-            <option value="Engr. John">Engr. John</option>
+            <option value="John">Engr. John</option>
             <option value="Rolito">Rolito</option>
             <option value="Engr. Jorly">Engr. Jorly</option>
             <option value="Others">Others</option>
@@ -189,10 +189,9 @@
 
         <label class="font-semibold text-gray-700">Select Representative:</label>
         <select id="representative" class="w-full mb-2 p-2 border rounded" onchange="toggleCustomRepresentative()" required>
-            <option value="John">Admin. John</option>
-            <option value="Jay Amulong">Admin. Jay Andrey </option>
-            <option value="Ronan Valle">Admin Ronan Valle</option>
-            <option value="Reiven Cabate">Admin. Reiven Cabate</option>
+            <option value="John">Engr. John</option>
+            <option value="Rolito">Rolito</option>
+            <option value="Engr. Jorly">Engr. Jorly</option>
             <option value="Others">Others</option>
             <!-- Added option -->
         </select>
@@ -237,6 +236,20 @@
             currentSchedule = null;
             document.getElementById("scheduleForm").reset(); // Only reset on Add
         }
+        //Time disable click
+  document.getElementById('room').addEventListener('change', function () {
+    const isRoom315 = this.value === '315';
+    const startTime = document.getElementById('startTime');
+    const endTime = document.getElementById('endTime');
+
+    startTime.disabled = isRoom315;
+    endTime.disabled = isRoom315;
+
+    if (isRoom315) {
+      startTime.value = "";
+      endTime.value = "";
+    }
+  });
     }
 
     function closeModal() {
@@ -247,23 +260,30 @@
 
     const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
     const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NDM0NjY1NCwiZXhwIjoyMDU5OTIyNjU0fQ.c7xkLWthN-SHSjJjs22CDy45MvfEFGxH7A-JD4aOSxI';
-    const TABLE_NAME = 'schedules_originalv2';  // Updated to match table name
+    const TABLE_NAME = 'schedules_manualv2';  // Updated to match table name
 
     let currentSchedule = null;
 
-    // Format time into 12-hour format with AM/PM
-    function formatTimeTo12Hour(timeString) {
-        const date = new Date(timeString);
-        let hours = date.getHours();
-        let minutes = date.getMinutes();
-        const ampm = hours >= 12 ? 'pm' : 'am';
+// Format time into 12-hour format with AM/PM
+function formatTimeTo12Hour(timeString, adjustFor315 = false) {
+    const date = new Date(timeString);
 
-        hours = hours % 12;
-        hours = hours ? hours : 12;
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-
-        return `${hours}:${minutes} ${ampm}`;
+    if (adjustFor315) {
+        // Subtract 8 hours (UTC+8)
+        date.setHours(date.getHours() - 8);
     }
+
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'pm' : 'am';
+
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+
+    return `${hours}:${minutes} ${ampm}`;
+}
+
 
     // Update schedule and display it in the table
     async function updateSchedule(room) {
@@ -298,8 +318,31 @@
             if (scheduleData.length > 0) {
                 scheduleData.forEach((s) => {
                     // Format start and end times
-                    const startTimeFormatted = formatTimeTo12Hour(s.start_time);
-                    const endTimeFormatted = formatTimeTo12Hour(s.end_time);
+             let timeDisplay = "N/A";
+
+if (s.start_time && s.end_time) {
+    const isRoom315 = s.room === "315";
+
+const startDate = new Date(s.start_time);
+const endDate = new Date(s.end_time);
+
+// Adjust for Room 315 by subtracting 8 hours
+if (s.room === "315") {
+    startDate.setHours(startDate.getHours() - 8);
+    endDate.setHours(endDate.getHours() - 8);
+}
+
+// Sort so the earlier time comes first
+const first = startDate < endDate ? startDate : endDate;
+const second = startDate < endDate ? endDate : startDate;
+
+const start = formatTimeTo12Hour(first);
+const end = formatTimeTo12Hour(second);
+timeDisplay = `${start} - ${end}`;
+
+}
+
+
 
                     table += `<tr>
                         <td class='border border-gray-400 px-4 py-2'>${s.section}</td>
@@ -309,10 +352,11 @@
                         <td class='border border-gray-400 px-4 py-2'>${s.date}</td>
                         <td class='border border-gray-400 px-4 py-2'>${s.academicYear}</td>
                         <td class='border border-gray-400 px-4 py-2'>${s.semester}</td>
-                        <td class='border border-gray-400 px-4 py-2'>${startTimeFormatted} - ${endTimeFormatted}</td>
+                        <td class='border border-gray-400 px-4 py-2'>${timeDisplay}</td>
+
                         <td class='border border-gray-400 px-4 py-2'>
-                            <button onclick='editSchedule(${JSON.stringify(s)})' class='text-blue-600 underline mr-2'>Edit</button>
-                            <button onclick='deleteSchedule(${s.id}, "${room}")' class='text-red-600 underline'>Delete</button>
+                        <button onclick='editSchedule(${JSON.stringify(s)})' class='text-blue-600 underline mr-2'>Edit</button>
+                        <button onclick='deleteSchedule(${s.id}, "${room}")' class='text-red-600 underline'>Delete</button>
                         </td>
                     </tr>`;
                 });
@@ -332,7 +376,6 @@
         }
     }
 
-    // Edit schedule details
 // Edit schedule details
 function editSchedule(schedule) {
     currentSchedule = schedule; // Store the schedule to edit
@@ -359,12 +402,12 @@ async function saveSchedule(event) {
     let date = document.getElementById("date").value.trim(); // Accept date as-is (string)
     let academicYear = document.getElementById("academicYear").value.trim();
     let semester = document.getElementById("semester").value.trim();
-    let startTime = document.getElementById("startTime").value.trim();
-    let endTime = document.getElementById("endTime").value.trim();
+let startTimeValue = document.getElementById("startTime").disabled ? null : document.getElementById("startTime").value.trim();
+let endTimeValue = document.getElementById("endTime").disabled ? null : document.getElementById("endTime").value.trim();
 
-    // Convert times to ISO string format with time zone information
-    const startDateTime = new Date(`${date}T${startTime}`).toISOString();
-    const endDateTime = new Date(`${date}T${endTime}`).toISOString();
+let startDateTime = startTimeValue ? new Date(`${date}T${startTimeValue}`).toISOString() : null;
+let endDateTime = endTimeValue ? new Date(`${date}T${endTimeValue}`).toISOString() : null;
+
 
     // Combine Year Level and Section
     let yearLevel = document.getElementById("yearLevel").value.trim();
@@ -407,10 +450,19 @@ if (representative === "Others") {
                 'Authorization': `Bearer ${SUPABASE_API_KEY}`,
                 'Prefer': 'return=representation'
             },
-            body: JSON.stringify({
-                room, date, academicYear, start_time: startDateTime, end_time: endDateTime,
-                section: combinedSection, subject, prof, representative, semester
-            })
+body: JSON.stringify({
+    room,
+    date,
+    academicYear,
+    start_time: startDateTime,
+    end_time: endDateTime,
+    section: combinedSection,
+    subject,
+    prof,
+    representative,
+    semester
+})
+
         });
 
         if (!response.ok) throw new Error(await response.text());
@@ -491,6 +543,11 @@ function removeSpecialChars(input) {
     .replace(/\.(?=.*\.)/g, '');    // Allow only one dot (remove all but the first)
   input.value = cleaned;
 }
+
+
+
+
+//Functions for lOGS SAVING
 </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>ROOM Dashboard</title>
+		<title>ROOM DETAIL</title>
 		<link rel="icon" href="favicon.ico" type="image/x-icon" />
 		<script src="https://cdn.tailwindcss.com"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
@@ -22,8 +22,8 @@
                   </a>
                   <ul class="flex flex-col mt-4 space-y-2">
                     <li><a href="./index.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
-                    <li><a href="./rooms.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
-                    <li><a href="./original_scheduling.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
+                    <li><a href="./RoomManual.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
+                    <li><a href="./SchedOriginal.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
                     <li><a href="./logs.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
                 </ul>
               </div>
@@ -31,15 +31,15 @@
 
   <!--BOXES-->
   <div class="ml-16 p-6">
-    <h1 class="text-3xl font-bold text-orange-600 mb-4">Dashboard</h1>
+    <h1 class="text-3xl font-bold text-orange-600 mb-4">Room Details</h1>
 
     <!-- Flex container for all 4 boxes in one horizontal line -->
-    <div class="flex gap-6 items-start min-h-[400px]">
+    <div class="flex flex-col lg:flex-row gap-6 items-stretch min-h-[400px]">
 
       <!-- 1. Room Buttons -->
-      <div class="bg-white shadow-md rounded-lg p-4 w-48 flex-shrink-0">
+      <div class="bg-white shadow-md rounded-lg p-4 w-60 h-[35rem] flex-shrink-0">
         <h2 class="text-lg text-orange-500 font-bold mb-4">Rooms in CPE</h2>
-        <div class="space-y-2">
+        <div class="flex flex-col space-y-2 flex-grow">
           <button onclick="updateRoomStatus('300', event)" class="border px-3 py-2 w-full rounded">ROOM 300</button>
           <button onclick="updateRoomStatus('310', event)" class="border px-3 py-2 w-full rounded">ROOM 310</button>
           <button onclick="updateRoomStatus('311', event)" class="border px-3 py-2 w-full rounded">ROOM 311</button>
@@ -52,7 +52,7 @@
       </div>
 
       <!-- 2. Room Details -->
-      <div class="bg-white shadow-md rounded-lg p-6 flex-grow min-w-[300px]">
+      <div class="bg-white shadow-md rounded-lg p-6 flex-grow min-w-[300px] h-[35rem]">
         <h2 class="text-xl text-orange-500 font-bold mb-4">Room Details</h2>
         <div class="space-y-4">
           <div class="flex justify-between">
@@ -102,7 +102,8 @@
               <!-- Temperature -->
               <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
                 <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
-                  <div class="text-sm sm:text-base text-orange-500 font-bold" id="temperature">Temperature: -- °C</div>
+                  <div class="text-sm sm:text-base text-orange-500 font-bold" id="temperature-status">Temperature Status: --</div>
+                  <div class="text-sm sm:text-base text-orange-500 font-bold hidden" id="temperature">Temperature: -- °C</div>
                   <img src="/images/temp.png" alt="Temperature Icon" class="w-6 h-6 object-contain ml-auto">
                 </div>
                 <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Temperature</h2>
@@ -130,7 +131,7 @@
               <!-- Lights -->
               <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
                 <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
-                  <div class="text-sm sm:text-base text-orange-500 font-bold" id="light-status">Light Status: --</div>
+                  <div class="text-sm sm:text-base text-orange-500 font-bold " id="light-status">Light Status: --</div>
                   <div class="text-sm sm:text-base text-orange-500 font-bold hidden" id="light">Light: --</div>
                   <img src="/images/light.png" alt="Lights Icon" class="w-6 h-6 object-contain ml-auto">
                 </div>
@@ -140,18 +141,30 @@
             </div>
           </div>
 
-        <!-- 4. Physical Facilities -->
-        <div class="bg-white shadow-md rounded-lg p-3 w-full flex-grow">
-          <h2 class="text-lg text-orange-500 font-bold mb-3">Physical Facilities</h2>
-          <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full h-full">
-            <ul class="list-disc list-inside text-gray-700 text-sm space-y-1 flex-grow">
-              <h3 class="text-lg text-orange-500 font-bold mb-3">Room: </h3>
-              <li><span class="font-semibold">Number of chairs:</span> 40–50</li>
-              <li><span class="font-semibold">Number of personal computers:</span> 30</li>
-            </ul>
+          <!-- PHYSICAL FACILITIES CONTAINER -->
+          <div class="bg-white shadow-md rounded-lg p-3 flex-1">
+            <h2 class="text-lg text-orange-500 font-bold mb-3">Physical Facilities</h2>
+            
+            <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
+            <h3 class="text-lg text-orange-500 font-bold mb-3">Room:</h3> <!-- need to be changed -->
+            <table class="table-auto w-full text-sm sm:text-base text-gray-700 border border-gray-200">
+              <tbody>
+                <tr class="border-t">
+                  <td class="font-bold p-2 border border-gray-200">Type</td>
+                  <td class="font-bold p-2 border border-gray-200">Quantity</td>
+                </tr>
+                <tr class="border-t">
+                  <td class="p-2 border border-gray-200">Number of chairs</td>
+                  <td class="p-2 border border-gray-200">40–50</td>
+                </tr>
+                <tr class="border-t">
+                  <td class="p-2 border border-gray-200">Number of personal computers</td>
+                  <td class="p-2 border border-gray-200">30</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        </div>
-      </div>
+
 					<!-- BOTTOM SECTION -->
 					<!-- Left: Put schedules of room here depending which room is clicked -->
 					<div class="w-full bg-white p-6 rounded-lg shadow-lg flex-col hidden">
@@ -174,19 +187,12 @@
 							</tbody>
 						</table>
 					</div>
+        </div>
     </div>
   </div>
-
-</body>
-</html>
-
-
-
-
-		<script>
-			//VERSION 1
-//Script
-// Initialize Supabase client
+  <!--For rooms-->
+<script>
+  //Scripts for room
     const supabaseClient = supabase.createClient(
         'https://vzubmycafgnjtwnjfpop.supabase.co',
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo'
@@ -205,126 +211,155 @@
     }
 
     // Updates the room status display and schedule table
-    async function updateRoomStatus(room, event) {
-        currentRoom = room;
+async function updateRoomStatus(room, event) {
+    currentRoom = room;
 
-        // DOM elements
-        const roomStatusElement = document.getElementById("room-status");
-        const roomNoElement = document.getElementById("room-no");
-        const roomTypeElement = document.getElementById("room-type-details");
-        const roomScheduleElement = document.getElementById("room-schedule");
-        const occupiedByElement = document.getElementById("occupied-by");
-        const instructorElement = document.getElementById("instructor");
-        const scanIndicator = document.getElementById("scan-indicator");
-        const scanLabel = document.getElementById("scan-label");
+    // DOM elements
+    const roomStatusElement = document.getElementById("room-status");
+    const roomNoElement = document.getElementById("room-no");
+    const roomTypeElement = document.getElementById("room-type-details");
+    const roomScheduleElement = document.getElementById("room-schedule");
+    const occupiedByElement = document.getElementById("occupied-by");
+    const instructorElement = document.getElementById("instructor");
+    const scanIndicator = document.getElementById("scan-indicator");
+    const scanLabel = document.getElementById("scan-label");
 
-        resetScanIndicator();
+    resetScanIndicator();
 
-        // Highlight active room button
-        document.querySelectorAll("button").forEach(btn => {
-            btn.classList.remove("border-4", "border-black");
-        });
-        if (event) event.target.classList.add("border-4", "border-black");
+    // Highlight active room button
+    document.querySelectorAll("button").forEach(btn => {
+        btn.classList.remove("border-4", "border-black");
+    });
+    if (event) event.target.classList.add("border-4", "border-black");
 
-        roomStatusElement.textContent = 'LOADING...';
-        roomStatusElement.style.color = 'gray';
+    roomStatusElement.textContent = 'LOADING...';
+    roomStatusElement.style.color = 'gray';
 
-        // Fetch schedules from both sources
-        const [{ data: originalData, error: originalError }, { data: manualData, error: manualError }] = await Promise.all([
-            supabaseClient.from('schedules_original').select('*').eq('room', room).order('start_time', { ascending: true }),
-            supabaseClient.from('schedules_manual').select('*').eq('room', room).order('start_time', { ascending: true })
-        ]);
+    // Fetch schedules from both tables
+    const [{ data: originalData, error: originalError }, { data: manualData, error: manualError }] = await Promise.all([
+        supabaseClient.from('schedules_originalv2').select('*').eq('room', room).order('start_time', { ascending: true }),
+        supabaseClient.from('schedules_manualv2').select('*').eq('room', room).order('start_time', { ascending: true })
+    ]);
 
-        if (originalError || manualError) {
-            console.error('Error fetching schedules:', originalError || manualError);
-            roomStatusElement.textContent = 'Error loading schedule';
-            roomStatusElement.style.color = 'red';
-            return;
-        }
+    if (originalError || manualError) {
+        console.error('Error fetching schedules:', originalError || manualError);
+        roomStatusElement.textContent = 'Error loading schedule';
+        roomStatusElement.style.color = 'red';
+        return;
+    }
 
-        // Render schedule table
-        const scheduleContainer = document.getElementById("schedule-container");
-        if (originalData.length === 0 && manualData.length === 0) {
-            scheduleContainer.innerHTML = `
-                <tr>
-                    <td colspan="5" class="px-4 py-2 text-center text-gray-500">
-                        No schedule found for this room.
-                    </td>
-                </tr>`;
-        } else {
-            const mergedSchedules = [...originalData, ...manualData];
-            scheduleContainer.innerHTML = mergedSchedules.map(schedule => {
-                const startTime = new Date(schedule.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-                const endTime = new Date(schedule.end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-                const date = new Date(schedule.date).toLocaleDateString();
-                return `
-                    <tr>
-                        <td class="px-4 py-2 border">${date}</td>
-                        <td class="px-4 py-2 border">${startTime} - ${endTime}</td>
-                        <td class="px-4 py-2 border">${schedule.subject}</td>
-                        <td class="px-4 py-2 border">${schedule.prof}</td>
-                        <td class="px-4 py-2 border">${schedule.section}</td>
-                    </tr>`;
-            }).join('');
-        }
+    // Merge schedules
+    const mergedSchedules = [...originalData, ...manualData];
 
-// Get local time (Asia/Manila)
-const now = new Date();
-const localNow = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
-const nowMs = localNow.getTime();
+    // Show all schedules for room 315 regardless of times, else only valid times
+    const schedulesToShow = room === '315'
+        ? mergedSchedules
+        : mergedSchedules.filter(s => s.start_time && s.end_time);
 
-// Filter current active schedules
-const originalNow = findOverlappingNow(originalData, nowMs).filter(s => s.room === room);
-const manualNow = findOverlappingNow(manualData, nowMs).filter(s => s.room === room);
-const allCurrent = [...manualNow, ...originalNow,];
-
-const override = manualOverrides[room] || 'auto';
-
-if (override === 'leave') {
-    updateRoomDisplay('AVAILABLE 📘', 'green', room, null);
-} else if (override === 'enter') {
-    updateRoomDisplay('OCCUPIED', 'red', room, null);
-} else {
-    const originalConflict = checkConflictWithDetails(originalNow);
-    const manualConflict = checkConflictWithDetails(manualNow);
-    const bothHave = originalNow.length > 0 && manualNow.length > 0;
-    const bothMatch = allOverlappingSchedulesMatch(originalNow, manualNow);
-
-    if (originalConflict === 'yellow' || manualConflict === 'yellow') {
-        updateRoomDisplay('CONFLICT ⚠️', 'yellow', room, allCurrent[0]);
-    } else if (originalConflict === 'red' || manualConflict === 'red') {
-        updateRoomDisplay('OCCUPIED', 'red', room, allCurrent[0]);
-    } else if (bothHave && !bothMatch) {
-        updateRoomDisplay('CONFLICT ⚠️', 'yellow', room, allCurrent[0]);
-    } else if (bothHave && bothMatch) {
-        updateRoomDisplay('OCCUPIED', 'red', room, allCurrent[0]);
-    } else if (allCurrent.length > 0) {
-        updateRoomDisplay('OCCUPIED', 'red', room, allCurrent[0]);
+    // Render schedule table
+    const scheduleContainer = document.getElementById("schedule-container");
+    if (schedulesToShow.length === 0) {
+        scheduleContainer.innerHTML = `
+            <tr>
+                <td colspan="5" class="px-4 py-2 text-center text-gray-500">
+                    No schedule found for this room.
+                </td>
+            </tr>`;
     } else {
-        updateRoomDisplay('AVAILABLE', 'green', room, null);
+        scheduleContainer.innerHTML = schedulesToShow.map(schedule => {
+            const startTime = schedule.start_time
+                ? new Date(schedule.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })
+                : 'TBD';
+            const endTime = schedule.end_time
+                ? new Date(schedule.end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })
+                : 'TBD';
+            const date = new Date(schedule.date).toLocaleDateString();
+            return `
+                <tr>
+                    <td class="px-4 py-2 border">${date}</td>
+                    <td class="px-4 py-2 border">${startTime} - ${endTime}</td>
+                    <td class="px-4 py-2 border">${schedule.subject}</td>
+                    <td class="px-4 py-2 border">${schedule.prof}</td>
+                    <td class="px-4 py-2 border">${schedule.section}</td>
+                </tr>`;
+        }).join('');
+    }
+
+    // Current time in Manila timezone
+    const now = new Date();
+    const localNow = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
+    const nowMs = localNow.getTime();
+
+    // Filter active schedules — room 315 includes schedules missing times as active
+    const filterActiveSchedules = (schedules) => {
+        if (room === '315') {
+            return schedules.filter(s => {
+                if (!s.start_time || !s.end_time) return true; // treat as active
+                const start = new Date(s.start_time).getTime();
+                const end = new Date(s.end_time).getTime();
+                return start <= nowMs && nowMs <= end;
+            });
+        } else {
+            return schedules.filter(s => {
+                if (!s.start_time || !s.end_time) return false;
+                const start = new Date(s.start_time).getTime();
+                const end = new Date(s.end_time).getTime();
+                return start <= nowMs && nowMs <= end;
+            });
+        }
+    };
+
+    const originalNow = filterActiveSchedules(originalData).filter(s => s.room === room);
+    const manualNow = filterActiveSchedules(manualData).filter(s => s.room === room);
+    const allCurrent = [...manualNow, ...originalNow];
+
+    // Override and conflict logic (unchanged)
+    const override = manualOverrides[room] || 'auto';
+
+    if (override === 'leave') {
+        updateRoomDisplay('AVAILABLE 📘', 'green', room, null);
+    } else if (override === 'enter') {
+        updateRoomDisplay('OCCUPIED', 'red', room, null);
+    } else {
+        const originalConflict = checkConflictWithDetails(originalNow);
+        const manualConflict = checkConflictWithDetails(manualNow);
+        const bothHave = originalNow.length > 0 && manualNow.length > 0;
+        const bothMatch = allOverlappingSchedulesMatch(originalNow, manualNow);
+
+        if (originalConflict === 'yellow' || manualConflict === 'yellow') {
+            updateRoomDisplay('CONFLICT ⚠️', 'yellow', room, allCurrent[0]);
+        } else if (originalConflict === 'red' || manualConflict === 'red') {
+            updateRoomDisplay('OCCUPIED', 'red', room, allCurrent[0]);
+        } else if (bothHave && !bothMatch) {
+            updateRoomDisplay('CONFLICT ⚠️', 'yellow', room, allCurrent[0]);
+        } else if (bothHave && bothMatch) {
+            updateRoomDisplay('OCCUPIED', 'red', room, allCurrent[0]);
+        } else if (allCurrent.length > 0) {
+            updateRoomDisplay('OCCUPIED', 'red', room, allCurrent[0]);
+        } else {
+            updateRoomDisplay('AVAILABLE', 'green', room, null);
+        }
+    }
+
+    // Updates text fields in the UI for ROOM details
+    function updateRoomDisplay(status, color, room, schedule = null) {
+        roomStatusElement.textContent = status;
+        roomStatusElement.style.color = color;
+        roomNoElement.textContent = `ROOM ${room}`;
+        roomTypeElement.textContent = schedule?.subject || 'N/A';
+        roomScheduleElement.textContent = schedule
+            ? `${formatTimeTo12Hour(schedule.start_time)} - ${formatTimeTo12Hour(schedule.end_time)}, ${new Date(schedule.date).toLocaleDateString()}`
+            : 'N/A';
+        occupiedByElement.textContent = schedule?.section || 'N/A';
+        instructorElement.textContent = schedule?.prof || 'N/A';
+    }
+
+    // Reset scan indicator UI
+    function resetScanIndicator() {
+        scanIndicator.className = 'w-3 h-3 rounded-full bg-gray-400 inline-block';
+        scanLabel.textContent = 'No scan';
     }
 }
-
-
-        // Updates text fields in the UI for ROOM details
-        function updateRoomDisplay(status, color, room, schedule = null) {
-            roomStatusElement.textContent = status;
-            roomStatusElement.style.color = color;
-            roomNoElement.textContent = `ROOM ${room}`;
-            roomTypeElement.textContent = schedule?.subject || 'N/A';
-            roomScheduleElement.textContent = schedule
-                ? `${formatTimeTo12Hour(schedule.start_time)} - ${formatTimeTo12Hour(schedule.end_time)}, ${new Date(schedule.date).toLocaleDateString()}`
-                : 'N/A';
-            occupiedByElement.textContent = schedule?.section || 'N/A';
-            instructorElement.textContent = schedule?.prof || 'N/A';
-        }
-
-        // Reset scan indicator UI
-        function resetScanIndicator() {
-            scanIndicator.className = 'w-3 h-3 rounded-full bg-gray-400 inline-block';
-            scanLabel.textContent = 'No scan';
-        }
-    }
 
     // Converts time string to 12-hour format
     function formatTimeTo12Hour(timeString) {
@@ -345,8 +380,8 @@ if (override === 'leave') {
         const nowMs = localNow.getTime();
 
         const [{ data: originalData, error: originalError }, { data: manualData, error: manualError }] = await Promise.all([
-            supabaseClient.from('schedules_original').select('*'),
-            supabaseClient.from('schedules_manual').select('*')
+            supabaseClient.from('schedules_originalv2').select('*'),
+            supabaseClient.from('schedules_manualv2').select('*')
         ]);
 
         if (originalError || manualError) {
@@ -447,7 +482,7 @@ if (override === 'leave') {
 //ADD Manual schedule in Room details
     const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
     const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NDM0NjY1NCwiZXhwIjoyMDU5OTIyNjU0fQ.c7xkLWthN-SHSjJjs22CDy45MvfEFGxH7A-JD4aOSxI';
-    const TABLE_NAME = 'schedules_manual';  // Updated to match table name
+    const TABLE_NAME = 'schedules_manualv2';  // Updated to match table name
 
     function openModal() {
       document.getElementById("modal").classList.remove("hidden");
@@ -481,46 +516,60 @@ function editSchedule(schedule) {
 // Save schedule (both for add and edit)
 async function saveSchedule(event) {
     event?.preventDefault?.();
-    
-    // Get values from the form
+
     let room = document.getElementById("room").value.trim();
-    let date = document.getElementById("date").value.trim(); // Accept date as-is (string)
+    let date = document.getElementById("date").value.trim();
     let academicYear = document.getElementById("academicYear").value.trim();
     let semester = document.getElementById("semester").value.trim();
     let startTime = document.getElementById("startTime").value.trim();
     let endTime = document.getElementById("endTime").value.trim();
 
-    // Convert times to ISO string format with time zone information
-    const startDateTime = new Date(`${date}T${startTime}`).toISOString();
-    const endDateTime = new Date(`${date}T${endTime}`).toISOString();
-
-    // Combine Year Level and Section
     let yearLevel = document.getElementById("yearLevel").value.trim();
     let section = document.getElementById("section").value.trim();
     let combinedSection = `${yearLevel}-${section}`;
 
-
     let subject = document.getElementById("subject").value.trim();
-let prof = document.getElementById("prof").value.trim();
-if (prof === "Others") {
-  prof = document.getElementById("customProf").value.trim();
-}
+    let prof = document.getElementById("prof").value.trim();
+    if (prof === "Others") {
+        prof = document.getElementById("customProf").value.trim();
+    }
 
-    // Validation check
-    if (!room || !date || !academicYear || !startTime || !endTime || !semester || !combinedSection || !subject || !prof) {
-        alert("Please fill in all fields before saving.");
+    // Check required fields except start/end time can be empty
+    if (!room || !date || !academicYear || !semester || !combinedSection || !subject || !prof) {
+        alert("Please fill in all required fields before saving.");
         return;
     }
+
+    // Convert start and end time only if provided, else keep null
+    const startDateTime = startTime ? new Date(`${date}T${startTime}`).toISOString() : null;
+    const endDateTime = endTime ? new Date(`${date}T${endTime}`).toISOString() : null;
 
     const submitButton = document.getElementById("submitButton");
     if (submitButton) submitButton.disabled = true;
 
     try {
-        const isEditing = currentSchedule !== null; // Check if we're editing
-        const method = isEditing ? 'PATCH' : 'POST'; // Use PATCH for editing, POST for creating
+        const isEditing = currentSchedule !== null;
+        const method = isEditing ? 'PATCH' : 'POST';
         const url = isEditing
-            ? `${SUPABASE_URL}/rest/v1/${TABLE_NAME}?id=eq.${currentSchedule.id}` // Update existing schedule
-            : `${SUPABASE_URL}/rest/v1/${TABLE_NAME}`; // Create new schedule
+            ? `${SUPABASE_URL}/rest/v1/${TABLE_NAME}?id=eq.${currentSchedule.id}`
+            : `${SUPABASE_URL}/rest/v1/${TABLE_NAME}`;
+
+        // Build data object conditionally for start_time and end_time
+        const dataToSend = {
+            room,
+            date,
+            academicYear,
+            semester,
+            section: combinedSection,
+            subject,
+            prof
+        };
+
+        if (startDateTime) dataToSend.start_time = startDateTime;
+        else dataToSend.start_time = null;
+
+        if (endDateTime) dataToSend.end_time = endDateTime;
+        else dataToSend.end_time = null;
 
         const response = await fetch(url, {
             method,
@@ -530,17 +579,17 @@ if (prof === "Others") {
                 'Authorization': `Bearer ${SUPABASE_API_KEY}`,
                 'Prefer': 'return=representation'
             },
-            body: JSON.stringify({
-                room, date, academicYear, start_time: startDateTime, end_time: endDateTime,
-                section: combinedSection, subject, prof, semester
-            })
+            body: JSON.stringify(dataToSend)
         });
 
         if (!response.ok) throw new Error(await response.text());
 
         alert(isEditing ? "Schedule updated!" : "Schedule saved!");
         closeModal();
-        currentSchedule = null; // Reset currentSchedule after saving or updating
+        currentSchedule = null;
+
+        // Refresh UI after saving
+        if (currentRoom) await updateRoomStatus(currentRoom);
 
     } catch (err) {
         console.error("Save error:", err.message);
@@ -675,8 +724,12 @@ function removeSpecialChars(input) {
     .replace(/\.(?=.*\.)/g, '');    // Allow only one dot (remove all but the first)
   input.value = cleaned;
 }
-//Functions for lOGS SAVING
+</script>
+<!--For sensors-->
+</body>
+</html>
 
 
-		</script>
+
+
 
