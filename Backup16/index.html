@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>ROOM Dashboard</title>
+		<title>ROOM PAGE Dashboard</title>
 		<link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
 		<script src="https://cdn.tailwindcss.com"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
@@ -73,7 +73,7 @@
                         <div class="absolute inset-x-0 top-0 h-7 bg-white outline outline-2 outline-orange-400"></div>
                     </div>
 
-                    <div class="col-start-2 row-start-6 bg-white outline outline-2 outline-orange-400 mr-1 mt-1 p-2 px-5"></div>
+
                     <div class="col-start-3 row-start-6 bg-white outline outline-2 outline-orange-400 mr-1 mt-1 p-2 px-5"></div>
                     <div class="col-start-4 row-start-6 bg-white outline outline-2 outline-orange-400 mr-1 mt-1 p-2 px-5"></div>
                     <div class="col-start-5 row-start-6 bg-white outline outline-2 outline-orange-400 mr-1 mt-1 p-2 px-5"></div>
@@ -89,6 +89,7 @@
                     <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 hover:outline-amber-800  mr-1 text-white text-center p-2 px-5" onclick="roomClicked('312', event)" type="button" id="room-btn-312">312</button>
                     <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 hover:outline-amber-800  mr-1 text-white text-center p-2 px-5" onclick="roomClicked('311', event)" type="button" id="room-btn-311">311</button>
                     <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 hover:outline-amber-800  mr-1 text-white text-center p-2 px-5" onclick="roomClicked('310', event)" type="button" id="room-btn-310">310</button>
+                    <button class="toggle-button col-start-2 row-start-6 bg-green-500 outline outline-2 outline-orange-400 hover:outline-amber-800 mr-1 text-white text-center p-2 px-5" onclick="roomClicked('302', event)" type="button" id="room-btn-302">302</button>
                     <button class="toggle-button col-start-1 row-start-3 bg-green-500 outline outline-2 outline-orange-400  hover:outline-amber-800  mr-1 mt-1 text-white text-center p-2 px-5" onclick="roomClicked('300', event)" type="button" id="room-btn-300">300</button>
                 </div>
             </div>
@@ -169,7 +170,8 @@ onclick="leaveRoom()" disabled> Leave Room </button>
 					<!-- Left: Put schedules of room here depending which room is clicked -->
 					<div class="w-full bg-white p-6 rounded-lg shadow-lg flex-col">
 						<h2 class="text-2xl font-bold text-orange-600 mb-2">Room Schedule</h2>
-						<table id="schedule-table" class="min-w-full bg-white border border-gray-200">
+                        <div class="max-h-64 overflow-y-auto">
+                            <table id="schedule-table" class="min-w-full bg-white border border-gray-200">
 							<thead>
 								<tr>
 									<th class="px-4 py-2 border">Date</th>
@@ -177,6 +179,7 @@ onclick="leaveRoom()" disabled> Leave Room </button>
 									<th class="px-4 py-2 border">Subject</th>
 									<th class="px-4 py-2 border">Professor</th>
 									<th class="px-4 py-2 border">Section</th>
+                  <th class="px-4 py-2 border">Type</th>
 								</tr>
 							</thead>
 							<tbody id="schedule-container">
@@ -186,6 +189,7 @@ onclick="leaveRoom()" disabled> Leave Room </button>
 								</tr>
 							</tbody>
 						</table>
+                        </div>
 					</div>
 
 		  <!-- Right: Sensor Details -->
@@ -288,18 +292,6 @@ onclick="leaveRoom()" disabled> Leave Room </button>
 									<option value="16:30">4:30 PM</option>
 									<option value="19:30">7:30 PM</option>
 									<option value="21:00">9:00 PM</option>
-                  <option value="21:42">9:42 PM</option>
-                  <option value="21:46">9:46 PM</option>
-                  <option value="21:51">9:51 PM</option>
-                  <option value="21:53">9:53 PM</option>
-                  <option value="21:55">9:55 PM</option>
-                  <option value="21:57">9:57 PM</option>
-                  <option value="21:59">9:59 PM</option>
-                  <option value="22:01">10:01 PM</option>
-                  <option value="22:03">10:03 PM</option>
-                  <option value="22:05">10:05 PM</option>
-                  <option value="22:07">10:07 PM</option>
-                  <option value="22:09">10:09 PM</option>
 								</select>
 							</div>
 							<div class="w-1/2">
@@ -311,19 +303,7 @@ onclick="leaveRoom()" disabled> Leave Room </button>
 									<option value="16:30">4:30 PM</option>
 									<option value="19:30">7:30 PM</option>
 									<option value="21:00">9:00 PM</option>
-                  <option value="21:44">9:44 PM</option>
-                  <option value="21:49">9:49 PM</option>
-                  <option value="21:53">9:53 PM</option>
-                  <option value="21:55">9:55 PM</option>
-                  <option value="21:57">9:57 PM</option>
-                  <option value="21:59">9:59 PM</option>
-                  <option value="21:55">9:55 PM</option>
-                  <option value="22:01">10:01 PM</option>
-                  <option value="22:03">10:03 PM</option>
-                  <option value="22:05">10:05 PM</option>
-                  <option value="22:07">10:07 PM</option>
-                  <option value="22:09">10:09 PM</option>
-                  
+                  <option value="21:44">9:44 PM</option>                 
 									<option value="23:46">11:46 PM</option>
 								</select>
 							</div>
@@ -389,8 +369,12 @@ onclick="leaveRoom()" disabled> Leave Room </button>
 				</div>
 			</div>
 		</div>
-		<script>
-			//VERSION 1
+	</body>
+</html>
+
+
+<script>
+//VERSION 1
 //Script
 // Initialize Supabase client
     const supabaseClient = supabase.createClient(
@@ -429,9 +413,9 @@ onclick="leaveRoom()" disabled> Leave Room </button>
 
         // Highlight active room button
         document.querySelectorAll("button").forEach(btn => {
-            btn.classList.remove("border-4", "border-black");
+            btn.classList.remove("border-4", "border-orange-800");
         });
-        if (event) event.target.classList.add("border-4", "border-black");
+        if (event) event.target.classList.add("border-4", "border-orange-800");
 
         roomStatusElement.textContent = 'LOADING...';
         roomStatusElement.style.color = 'gray';
@@ -450,30 +434,44 @@ onclick="leaveRoom()" disabled> Leave Room </button>
         }
 
         // Render schedule table
-        const scheduleContainer = document.getElementById("schedule-container");
-        if (originalData.length === 0 && manualData.length === 0) {
-            scheduleContainer.innerHTML = `
-                <tr>
-                    <td colspan="5" class="px-4 py-2 text-center text-gray-500">
-                        No schedule found for this room.
-                    </td>
-                </tr>`;
-        } else {
-            const mergedSchedules = [...originalData, ...manualData];
-            scheduleContainer.innerHTML = mergedSchedules.map(schedule => {
-                const startTime = new Date(schedule.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-                const endTime = new Date(schedule.end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-                const date = new Date(schedule.date).toLocaleDateString();
-                return `
-                    <tr>
-                        <td class="px-4 py-2 border">${date}</td>
-                        <td class="px-4 py-2 border">${startTime} - ${endTime}</td>
-                        <td class="px-4 py-2 border">${schedule.subject}</td>
-                        <td class="px-4 py-2 border">${schedule.prof}</td>
-                        <td class="px-4 py-2 border">${schedule.section}</td>
-                    </tr>`;
-            }).join('');
-        }
+// Render schedule table
+const scheduleContainer = document.getElementById("schedule-container");
+
+if (originalData.length === 0 && manualData.length === 0) {
+    scheduleContainer.innerHTML = `
+        <tr>
+            <td colspan="7" class="px-4 py-2 text-center text-gray-500">
+                No schedule found for this room.
+            </td>
+        </tr>`;
+} else {
+    // Add source identifiers
+    const originalSchedules = originalData.map((s, i) => ({ ...s, source: 'Original', _index: i }));
+    const manualSchedules = manualData.map((s, i) => ({ ...s, source: 'Manual', _index: i }));
+    const mergedSchedules = [...originalSchedules, ...manualSchedules];
+
+    scheduleContainer.innerHTML = mergedSchedules.map(schedule => {
+        const startTime = schedule.start_time ? 
+            new Date(schedule.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }) : 'TBD';
+        const endTime = schedule.end_time ? 
+            new Date(schedule.end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }) : 'TBD';
+        const date = new Date(schedule.date).toLocaleDateString();
+
+        return `
+            <tr>
+                <td class="px-4 py-2 border">${date}</td>
+                <td class="px-4 py-2 border">${startTime} - ${endTime}</td>
+                <td class="px-4 py-2 border">${schedule.subject}</td>
+                <td class="px-4 py-2 border">${schedule.prof}</td>
+                <td class="px-4 py-2 border">${schedule.section}</td>
+                <td class="px-4 py-2 border text-center">
+                <span class="px-2 py-1 rounded ${schedule.source === 'Manual' ? 'bg-orange-100 text-orange-600' : 'bg-blue-100 text-blue-600'}"> ${schedule.source}</span>
+                ${schedule.source === 'Manual' ? `<button class="text-red-600 hover:underline ml-2" onclick="deleteSchedule('${schedule.source}', ${schedule._index})" title="Delete schedule">
+                     Delete </button>`: '' } </td>
+            </tr>`;
+    }).join('');
+}
+
 
 // Get local time (Asia/Manila)
 const now = new Date();
@@ -547,7 +545,7 @@ if (override === 'leave') {
 
     // Refreshes the status of all room buttons
     async function updateAllRoomButtons() {
-        const roomNumbers = ['300', '310', '311', '312', '313', '314', '315', '316'];
+        const roomNumbers = ['300', '302', '310', '311', '312', '313', '314', '315', '316'];
         const now = new Date();
         const localNow = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
         const nowMs = localNow.getTime();
@@ -632,13 +630,23 @@ if (override === 'leave') {
     }
 
     // Filters schedules overlapping with current time
-    function findOverlappingNow(schedules, nowMs) {
-        return schedules.filter(s => {
-            const start = new Date(s.start_time).getTime();
-            const end = new Date(s.end_time).getTime();
-            return start <= nowMs && nowMs <= end;
-        });
-    }
+function findOverlappingNow(schedules, nowMs) {
+    return schedules.filter(s => {
+        const hasTime = s.start_time && s.end_time;
+        const start = hasTime ? new Date(s.start_time).getTime() : null;
+        const end = hasTime ? new Date(s.end_time).getTime() : null;
+
+        const isToday = new Date(s.date).toDateString() === new Date(nowMs).toDateString();
+
+        if (!hasTime && isToday) {
+            // Treat as active all-day booking if time is missing
+            return true;
+        }
+
+        return start <= nowMs && nowMs <= end;
+    });
+}
+
 
     // Returns true if all overlapping schedules match exactly
     function allOverlappingSchedulesMatch(originalNow, manualNow) {
@@ -782,33 +790,55 @@ if (representative === "Others") {
     }
 }
 // End of SAVE V1
+// delete schedule
+    async function deleteSchedule(source, index) {
+        if (source !== 'Manual') {
+            alert("Only manually added schedules can be deleted.");
+            return;
+        }
 
+        const room = currentRoom;
+        if (!room) {
+            alert("No room selected.");
+            return;
+        }
 
+        // Fetch current manual schedules for the room
+        const { data: manualData, error } = await supabaseClient
+            .from('schedules_manualv2')
+            .select('*')
+            .eq('room', room)
+            .order('start_time', { ascending: true });
 
-    // Delete schedule
-    async function deleteSchedule(id, room) {
+        if (error) {
+            console.error("Error fetching manual data:", error);
+            alert("Could not fetch manual schedule.");
+            return;
+        }
+
+        const scheduleToDelete = manualData[index];
+        if (!scheduleToDelete) {
+            alert("Schedule not found.");
+            return;
+        }
+
         const confirmed = confirm("Are you sure you want to delete this schedule?");
         if (!confirmed) return;
 
-        try {
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?id=eq.${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'apikey': SUPABASE_API_KEY,
-                    'Authorization': `Bearer ${SUPABASE_API_KEY}`,
-                    'Prefer': 'return=representation'
-                }
-            });
+        // Perform deletion
+        const { error: deleteError } = await supabaseClient
+            .from('schedules_manualv2')
+            .delete()
+            .eq('id', scheduleToDelete.id);
 
-            if (!response.ok) throw new Error(await response.text());
-
-            alert("Schedule deleted.");
-            updateSchedule(room);
-        } catch (err) {
-            console.error("Delete error:", err.message);
-            alert("Delete error: " + err.message);
+        if (deleteError) {
+            console.error("Error deleting schedule:", deleteError);
+            alert("Failed to delete the schedule.");
+            return;
         }
+
+        // Refresh the room view
+        updateRoomStatus(room);
     }
       // Initialize Supabase client
 
@@ -818,9 +848,9 @@ if (representative === "Others") {
 
         // Highlight selected room button, clear others
         document.querySelectorAll(".toggle-button").forEach((btn) => {
-          btn.classList.remove("border-4", "border-black");
+          btn.classList.remove("border-4", "border-orange-800");
         });
-        if (event) event.target.classList.add("border-4", "border-black");
+        if (event) event.target.classList.add("border-4", "border-orange-800");
 
         // Enable the Add Schedule and Leave Room buttons
         document.getElementById("add-schedule-btn").disabled = false;
@@ -847,7 +877,7 @@ if (representative === "Others") {
 
         // Unselect room button highlight
         document.querySelectorAll(".toggle-button").forEach((btn) => {
-          btn.classList.remove("border-4", "border-black");
+          btn.classList.remove("border-4", "border-orange-800");
         });
 
         // Reset room details panel back to default
@@ -922,9 +952,6 @@ function removeSpecialChars(input) {
     .replace(/\.(?=.*\.)/g, '');    // Allow only one dot (remove all but the first)
   input.value = cleaned;
 }
-
-
-
 </script>
 <!--For sensors-->
     <script>
@@ -976,8 +1003,3 @@ function removeSpecialChars(input) {
       }); //Successfully fecthed data
       //Update
     </script>
-	</body>
-</html>
-
-
-

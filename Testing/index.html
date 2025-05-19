@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sensors</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <script src="https://kit.fontawesome.com/0d66da6825.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body>
+    <!-- Responsive Page Container -->
+<div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+  <!-- Flex wrapper for sensor cards -->
+  <div class="flex flex-col lg:flex-row gap-6">
+
+    <!-- Device #1 -->
+    <div class="w-full lg:w-1/2">
+                <div class="bg-white shadow-md rounded-lg p-3 w-full">
+            <h2 class="text-lg text-orange-500 font-bold mb-3">Sensor Details Device#1</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+              <!-- Temperature -->
+              <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
+                <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
+                  <div class="text-sm sm:text-base text-orange-500 font-bold" id="temperature-status">Temperature Status: --</div>
+                  <div class="text-sm sm:text-base text-orange-500 font-bold hidden" id="temperature">Temperature: -- °C</div>
+                  <img src="/images/temp.png" alt="Temperature Icon" class="w-6 h-6 object-contain ml-auto">
+                </div>
+                <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Temperature</h2>
+              </div>
+
+              <!-- Presence -->
+              <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
+                <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
+                  <div class="flex items-center justify-center bg-gray-100 text-orange-500 font-bold rounded-full text-xs px-2 py-0.5 whitespace-nowrap" id="motion-status">Motion Status: --
+                  </div>
+                  <img src="/images/presence.png" alt="Presence Icon" class="w-6 h-6 object-contain ml-auto">
+                </div>
+                <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Presence</h2>
+              </div>
+
+              <!-- Humidity -->
+              <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
+                <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
+                  <div class="text-sm sm:text-base text-blue-500 font-bold" id="humidity">Humidity: -- %</div>
+                  <img src="/images/humidity.png" alt="Humidity Icon" class="w-6 h-6 object-contain ml-auto">
+                </div>
+                <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Humidity</h2>
+              </div>
+
+              <!-- Lights -->
+              <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
+                <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
+                  <div class="text-sm sm:text-base text-orange-500 font-bold " id="light-status">Light Status: --</div>
+                  <div class="text-sm sm:text-base text-orange-500 font-bold hidden" id="light">Light: --</div>
+                  <img src="/images/light.png" alt="Lights Icon" class="w-6 h-6 object-contain ml-auto">
+                </div>
+                <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Lights</h2>
+              </div>
+              
+             <div class="text-sm text-gray-500 mt-2" id="timestamp">Timestamp: --</div>
+            </div>
+          </div>
+
+    </div>
+
+    <!-- Device #2 -->
+    <div class="w-full lg:w-1/2">
+           <!-- Sensor Details -->
+          <div class="bg-white shadow-md rounded-lg p-3 w-full">
+            <h2 class="text-lg text-orange-500 font-bold mb-3">Sensor Details Device#2</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+              <!-- Temperature -->
+              <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
+                <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
+                  <div class="text-sm sm:text-base text-orange-500 font-bold" id="temperature-status2">Temperature Status: --</div>
+                  <div class="text-sm sm:text-base text-orange-500 font-bold hidden" id="temperature2">Temperature: -- °C</div>
+                  <img src="/images/temp.png" alt="Temperature Icon" class="w-6 h-6 object-contain ml-auto">
+                </div>
+                <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Temperature</h2>
+              </div>
+
+              <!-- Presence -->
+              <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
+                <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
+                  <div class="flex items-center justify-center bg-gray-100 text-orange-500 font-bold rounded-full text-xs px-2 py-0.5 whitespace-nowrap" id="motion-status2">Motion Status: --
+                  </div>
+                  <img src="/images/presence.png" alt="Presence Icon" class="w-6 h-6 object-contain ml-auto">
+                </div>
+                <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Presence</h2>
+              </div>
+
+              <!-- Humidity -->
+              <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
+                <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
+                  <div class="text-sm sm:text-base text-blue-500 font-bold" id="humidity2">Humidity: -- %</div>
+                  <img src="/images/humidity.png" alt="Humidity Icon" class="w-6 h-6 object-contain ml-auto">
+                </div>
+                <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Humidity</h2>
+              </div>
+
+              <!-- Lights -->
+              <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
+                <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
+                  <div class="text-sm sm:text-base text-orange-500 font-bold " id="light-status2">Light Status: --</div>
+                  <div class="text-sm sm:text-base text-orange-500 font-bold hidden" id="light2">Light: --</div>
+                  <img src="/images/light.png" alt="Lights Icon" class="w-6 h-6 object-contain ml-auto">
+                </div>
+                <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Lights</h2>
+              </div>
+              
+             <div class="text-sm text-gray-500 mt-2" id="timestamp2">Timestamp: --</div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Status Box (spans full width below cards) -->
+  <div class="w-full">
+    <!-- Overall System Status Box -->
+    <div class="bg-white p-6 rounded-lg shadow-lg mt-6">
+      <h2 class="text-lg text-orange-500 font-bold mb-3">Overall System Status</h2>
+      <div class="text-2xl font-bold text-center" id="overall-status">Status: --</div>
+    </div>
+
+    <!-- Sensor Summary -->
+    <div id="sensor-summary" class="bg-white p-4 mt-6 rounded-lg shadow-md">
+      <h2 class="text-lg font-bold text-orange-500 mb-2">Device Status Summary</h2>
+      <ul id="status-list" class="list-disc pl-5 text-sm text-gray-700">
+        <li>Loading status...</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+        <!--For the firstd evice-->
+            <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
+        const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo';
+  
+        const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_API_KEY);
+  
+        async function fetchLatestSensorData() {
+          const { data, error } = await client
+            .from('comp_data')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(1);
+  
+          if (error) {
+            console.error('Error fetching latest data:', error);
+            return;
+          }
+  
+          if (data.length > 0) {
+            const latest = data[0];
+            document.getElementById('temperature').textContent = `Temperature: ${latest.temperature?.toFixed(1)} °C`;
+            document.getElementById('humidity').textContent = `Humidity: ${latest.humidity?.toFixed(1)} %`;
+            document.getElementById('light').textContent = `Light: ${latest.light}`;
+            document.getElementById('timestamp').textContent = `Timestamp: ${new Date(latest.created_at).toLocaleString()}`;
+  
+            
+            const temperatureStatus = latest.temperature < 33 ? 'On' : 'Off';
+            const temperatureStatusElement = document.getElementById('temperature-status');
+            temperatureStatusElement.textContent = `Aircon Status: ${temperatureStatus}`;
+            temperatureStatusElement.className = `text-2xl font-semibold ${temperatureStatus === 'On' ? 'text-green-600' : 'text-red-600'}`;
+
+
+            const lightStatus = latest.light > 50 ? 'On' : 'Off';
+            const lightStatusElement = document.getElementById('light-status');
+            lightStatusElement.textContent = `Light Status: ${lightStatus}`;
+            lightStatusElement.className = `text-2xl font-semibold ${lightStatus === 'On' ? 'text-green-600' : 'text-red-600'}`;
+  
+            const motionStatus = latest.motion === 1 ? 'Motion Detected' : 'No Motion';
+            const motionStatusElement = document.getElementById('motion-status');
+            motionStatusElement.textContent = `Motion Status: ${motionStatus}`;
+            motionStatusElement.className = `text-2xl font-semibold ${motionStatus === 'Motion Detected' ? 'text-green-600' : 'text-gray-500'}`;
+          }
+        }
+  
+        fetchLatestSensorData();
+      }); //Successfully fecthed data
+      //Update
+    </script>
+    <!--For the second device-->
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
+    const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo'; // Truncated for brevity
+
+    const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_API_KEY);
+
+    async function fetchLatestSensorData2() {
+      const { data, error } = await client
+        .from('comp_data2')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(1);
+
+      if (error) {
+        console.error('Error fetching comp_data2:', error);
+        return;
+      }
+
+      if (data.length > 0) {
+        const latest = data[0];
+        document.getElementById('temperature2').textContent = `Temperature: ${latest.temperature?.toFixed(1)} °C`;
+        document.getElementById('humidity2').textContent = `Humidity: ${latest.humidity?.toFixed(1)} %`;
+        document.getElementById('light2').textContent = `Light: ${latest.light}`;
+        document.getElementById('timestamp2').textContent = `Timestamp: ${new Date(latest.created_at).toLocaleString()}`;
+
+        const temperatureStatus = latest.temperature < 33 ? 'On' : 'Off';
+        const temperatureStatusElement = document.getElementById('temperature-status2');
+        temperatureStatusElement.textContent = `Aircon Status: ${temperatureStatus}`;
+        temperatureStatusElement.className = `text-2xl font-semibold ${temperatureStatus === 'On' ? 'text-green-600' : 'text-red-600'}`;
+
+        const lightStatus = latest.light > 50 ? 'On' : 'Off';
+        const lightStatusElement = document.getElementById('light-status2');
+        lightStatusElement.textContent = `Light Status: ${lightStatus}`;
+        lightStatusElement.className = `text-2xl font-semibold ${lightStatus === 'On' ? 'text-green-600' : 'text-red-600'}`;
+
+        const motionStatus = latest.motion === 1 ? 'Motion Detected' : 'No Motion';
+        const motionStatusElement = document.getElementById('motion-status2');
+        motionStatusElement.textContent = `Motion Status: ${motionStatus}`;
+        motionStatusElement.className = `text-2xl font-semibold ${motionStatus === 'Motion Detected' ? 'text-green-600' : 'text-gray-500'}`;
+      }
+    }
+
+    fetchLatestSensorData2();
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
+    const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo'; // Truncated for brevity
+    const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_API_KEY);
+
+    async function checkOverallStatus() {
+      const [res1, res2] = await Promise.all([
+        client.from('comp_data').select('*').order('created_at', { ascending: false }).limit(1),
+        client.from('comp_data2').select('*').order('created_at', { ascending: false }).limit(1),
+      ]);
+
+      const data1 = res1.data?.[0];
+      const data2 = res2.data?.[0];
+
+      const isTempOn = (data1?.temperature < 33 || data2?.temperature < 33);
+      const isLightOn = (data1?.light > 50 || data2?.light > 50);
+
+      const statusText = document.getElementById('overall-status');
+      const isOn = isTempOn || isLightOn;
+
+      statusText.textContent = `Status: ${isOn ? 'ON' : 'OFF'}`;
+      statusText.className = `text-2xl font-bold text-center ${isOn ? 'text-green-600' : 'text-red-600'}`;
+    }
+
+    checkOverallStatus();
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
+    const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo'; // Replace if needed
+    const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_API_KEY);
+
+    async function fetchDeviceStatus() {
+      const [res1, res2] = await Promise.all([
+        client.from('comp_data').select('*').order('created_at', { ascending: false }).limit(1),
+        client.from('comp_data2').select('*').order('created_at', { ascending: false }).limit(1)
+      ]);
+
+      const statusList = [];
+
+      function analyze(deviceName, data) {
+        if (!data || data.length === 0) return;
+
+        const record = data[0];
+
+        const tempStatus = record.temperature < 33 ? 'ON' : 'OFF';
+        const lightStatus = record.light > 50 ? 'ON' : 'OFF';
+
+        statusList.push(`${deviceName} Temperature: ${tempStatus}`);
+        statusList.push(`${deviceName} Light: ${lightStatus}`);
+      }
+
+      analyze('Device #1', res1.data);
+      analyze('Device #2', res2.data);
+
+      const listElement = document.getElementById('status-list');
+      listElement.innerHTML = '';
+      statusList.forEach((line) => {
+        const li = document.createElement('li');
+        li.textContent = line;
+        li.className = line.includes('ON') ? 'text-green-600 font-semibold' : 'text-gray-500';
+        listElement.appendChild(li);
+      });
+    }
+
+    fetchDeviceStatus();
+  });
+</script>
+
+
+
+    
+</body>
+</html>

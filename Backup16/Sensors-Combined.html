@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sensors</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <script src="https://kit.fontawesome.com/0d66da6825.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body class="bg-gray-50">
+
+<div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+  <!-- Combined Sensor Box -->
+  <div class="w-full">
+    <div class="bg-white shadow-md rounded-lg p-3 w-full">
+      <h2 class="text-lg text-orange-500 font-bold mb-3">Combined Sensor Details</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+        <!-- Temperature -->
+        <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
+          <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
+            <div class="text-sm sm:text-base text-orange-500 font-bold" id="temperature-combined">Aircon Status: --</div>
+            <div class="text-sm sm:text-base text-orange-500 font-bold hidden" id="temperatureCombined">Temperature: -- °C</div>
+            <img src="/images/temp.png" alt="Temperature Icon" class="w-6 h-6 object-contain ml-auto">
+          </div>
+          <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Temperature</h2>
+        </div>
+
+        <!-- Presence -->
+        <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
+          <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
+            <div class="flex items-center justify-center bg-gray-100 text-orange-500 font-bold rounded-full text-xs px-2 py-0.5 whitespace-nowrap" id="motion-combined-status">Motion Status: --</div>
+            <img src="/images/presence.png" alt="Presence Icon" class="w-6 h-6 object-contain ml-auto">
+          </div>
+          <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Presence</h2>
+        </div>
+
+        <!-- Humidity -->
+        <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
+          <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
+            <div class="text-sm sm:text-base text-blue-500 font-bold" id="humidity2">Humidity: -- %</div>
+            <img src="/images/humidity.png" alt="Humidity Icon" class="w-6 h-6 object-contain ml-auto">
+          </div>
+          <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Humidity</h2>
+        </div>
+
+        <!-- Lights -->
+        <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
+          <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
+            <div class="text-sm sm:text-base text-orange-500 font-bold" id="light-status-combined">Light Status: --</div>
+            <div class="text-sm sm:text-base text-orange-500 font-bold hidden" id="light2">Light: --</div>
+            <img src="/images/light.png" alt="Lights Icon" class="w-6 h-6 object-contain ml-auto">
+          </div>
+          <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Lights</h2>
+        </div>
+
+        <!-- Timestamp -->
+        <div class="text-sm text-gray-500 mt-2 col-span-full" id="timestampsCombined">Timestamp: --</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overall Status Box -->
+  <div class="w-full">
+    <div class="bg-white p-6 rounded-lg shadow-lg mt-6">
+      <h2 class="text-lg text-orange-500 font-bold mb-3">Overall System Status</h2>
+      <div class="text-2xl font-bold text-center" id="overall-status">Status: --</div>
+    </div>
+
+    <!-- Summary -->
+    <div id="sensor-summary" class="bg-white p-4 mt-6 rounded-lg shadow-md">
+      <h2 class="text-lg font-bold text-orange-500 mb-2">Device Status Summary</h2>
+      <ul id="status-list" class="list-disc pl-5 text-sm text-gray-700">
+        <li>Loading status...</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
+  const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo'; // shortened for safety
+  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_API_KEY);
+
+  async function fetchAndRenderCombinedData() {
+    const [res1, res2] = await Promise.all([
+      client.from('comp_data').select('*').order('created_at', { ascending: false }).limit(1),
+      client.from('comp_data2').select('*').order('created_at', { ascending: false }).limit(1),
+    ]);
+
+    if (!res1.data.length && !res2.data.length) return;
+
+    const d1 = res1.data[0] || {};
+    const d2 = res2.data[0] || {};
+
+    const combined = {
+      temperature: Math.min(d1.temperature ?? 100, d2.temperature ?? 100),
+      humidity: Math.max(d1.humidity ?? 0, d2.humidity ?? 0),
+      light: Math.max(d1.light ?? 0, d2.light ?? 0),
+      motion: (d1.motion === 1 || d2.motion === 1) ? 1 : 0,
+      created_at: new Date(Math.max(new Date(d1.created_at || 0), new Date(d2.created_at || 0)))
+    };
+
+    document.getElementById("temperatureCombined").textContent = `Temperature: ${combined.temperature.toFixed(1)} °C`;
+    document.getElementById("humidity2").textContent = `Humidity: ${combined.humidity.toFixed(1)} %`;
+    document.getElementById("light2").textContent = `Light: ${combined.light}`;
+    document.getElementById("timestampsCombined").textContent = `Timestamp: ${combined.created_at.toLocaleString()}`;
+
+    document.getElementById("temperature-combined").textContent = `Aircon Status: ${combined.temperature < 33 ? 'On' : 'Off'}`;
+    document.getElementById("light-status-combined").textContent = `Light Status: ${combined.light > 50 ? 'On' : 'Off'}`;
+    document.getElementById("motion-combined-status").textContent = `Motion Status: ${combined.motion === 1 ? 'Motion Detected' : 'No Motion'}`;
+
+    const isOn = combined.temperature < 33 || combined.light > 50 || combined.motion === 1;
+    const overallStatus = document.getElementById("overall-status");
+    overallStatus.textContent = `Status: ${isOn ? 'ON' : 'OFF'}`;
+    overallStatus.className = `text-2xl font-bold text-center ${isOn ? 'text-green-600' : 'text-red-600'}`;
+
+    const listElement = document.getElementById('status-list');
+    listElement.innerHTML = '';
+    const statusList = [
+      `Temperature: ${combined.temperature < 33 ? 'ON' : 'OFF'}`,
+      `Light: ${combined.light > 50 ? 'ON' : 'OFF'}`,
+      `Motion: ${combined.motion === 1 ? 'DETECTED' : 'NONE'}`
+    ];
+    statusList.forEach((line) => {
+      const li = document.createElement('li');
+      li.textContent = line;
+      li.className = line.includes('ON') || line.includes('DETECTED') ? 'text-green-600 font-semibold' : 'text-gray-500';
+      listElement.appendChild(li);
+    });
+  }
+
+  await fetchAndRenderCombinedData();
+});
+</script>
+
+</body>
+</html>

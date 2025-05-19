@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ROOM Dashboard</title>
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <script src="https://kit.fontawesome.com/0d66da6825.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body class="font-sans bg-gray-100 text-gray-700 overflow-auto">
+    <!-- Mobile Menu Button -->
+    <button id="mobile-menu-button" class="fixed top-4 right-4 z-50 p-2 bg-orange-600 text-white rounded-full shadow-lg hidden md:hidden">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+    </button>
+
+    <div class="flex flex-col md:flex-row h-screen">
+        <!-- Sidebar -->
+<div class="hidden md:block fixed md:relative h-full bg-orange-600 group transition-all duration-300 w-16 hover:w-48 z-40">
+    <div class="flex flex-col h-full">
+        <a href="#" class="flex items-center p-4 border-b border-b-white">
+            <img src="/images/CpELogo.jpg" alt="placeholder" class="w-8 h-8 rounded object-cover" />
+            <span class="ml-3 text-lg font-poppins text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">CpE Department</span>
+        </a>
+        <ul class="flex flex-col mt-4 space-y-2">
+            <li><a href="./index.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
+            <li><a href="./RoomManual.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
+            <li><a href="./SchedOriginal.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
+            <li><a href="./logs.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
+        </ul>
+    </div>
+</div>
+
+
+        <!-- Main Content -->
+        <div class="flex-1 md:ml-16 p-6 overflow-y-auto">
+            <!-- Mobile Menu Overlay -->
+            <div id="mobile-menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-30"></div>
+
+            <h1 class="text-3xl font-bold text-orange-600 mb-2">Dashboard</h1>
+            
+            <!-- Responsive Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <!-- Left: Room Layout -->
+                <div class="bg-white p-5 rounded-lg shadow-lg flex-col">
+                    <h2 class="text-2xl text-orange-600 font-bold mb-3 ml-2">
+                        CPE Room Layout
+                    </h2>
+                    <div class="flex justify-center mb-4">
+                        <div class="grid grid-cols-9 grid-rows-6 gap-0 bg-gray-100">
+                            <!-- Room Layout Content -->
+                            <!-- (Keep your existing room layout code here) -->
+                        </div>
+                    </div>
+                    <div class="text-center text-sm text-gray-400">
+                        Select area to view room details
+                    </div>
+                    <div class="flex justify-center mt-2">
+                        <div class="flex items-center space-x-2">
+                            <div class="bg-green-500 w-4 h-4 rounded"></div>
+                            <div class="text-sm text-gray-500">Vacant</div>
+                        </div>
+                        <div class="flex items-center space-x-2 ml-4">
+                            <div class="bg-red-500 w-4 h-4 rounded"></div>
+                            <div class="text-sm text-gray-500">Occupied</div>
+                        </div>
+                        <div class="flex items-center space-x-2 ml-4">
+                            <div class="bg-yellow-500 w-4 h-4 rounded"></div>
+                            <div class="text-sm text-gray-500">Unscheduled</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Room Description -->
+                <div class="bg-white shadow-md rounded-lg p-6 flex flex-col" id="room-details-panel">
+                    <h2 class="text-xl text-orange-500 font-bold mb-4">Room Details</h2>
+                    <div class="space-y-4 flex-grow">
+                        <!-- Room details content -->
+                        <!-- (Keep your existing room details code here) -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOTTOM SECTION -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Left: Room Schedule -->
+                <div class="w-full bg-white p-6 rounded-lg shadow-lg flex-col">
+                    <h2 class="text-2xl font-bold text-orange-600 mb-2">Room Schedule</h2>
+                    <div class="max-h-64 overflow-y-auto">
+                        <table id="schedule-table" class="min-w-full bg-white border border-gray-200">
+                            <!-- Table content -->
+                            <!-- (Keep your existing table code here) -->
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Right: Sensor Details -->
+                <div class="bg-white p-6 rounded-lg shadow-lg flex-col">
+                    <div class="bg-white shadow-md rounded-lg p-3 w-full">
+                        <h2 class="text-lg text-orange-500 font-bold mb-3">Sensor Details</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <!-- Sensor details content -->
+                            <!-- (Keep your existing sensor details code here) -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+        <!-- Modal content -->
+        <!-- (Keep your existing modal code here) -->
+    </div>
+
+    <script>
+        // Add mobile menu toggle functionality
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const sidebar = document.querySelector('div.fixed.md:static');
+        const overlay = document.getElementById('mobile-menu-overlay');
+
+        mobileMenuButton.addEventListener('click', () => {
+            sidebar.classList.toggle('translate-x-full');
+            overlay.classList.toggle('hidden');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('translate-x-full');
+            overlay.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>

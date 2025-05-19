@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ROOM Inventory</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="w-3/4 flex space-x-6">
+    <!-- Room buttons -->
+    <div class="w-1/4 flex flex-col space-y-4">
+      <h1 class="text-2xl font-bold mb-4 text-center">Rooms</h1>
+      <button class="room-btn bg-blue-500 text-white px-4 py-2 rounded" data-room="Room1">Room 1</button>
+      <button class="room-btn bg-blue-500 text-white px-4 py-2 rounded" data-room="Room2">Room 2</button>
+      <button class="room-btn bg-blue-500 text-white px-4 py-2 rounded" data-room="Room3">Room 3</button>
+    </div>
+
+    <!-- Inventory box -->
+    <div class="bg-white p-6 rounded shadow-lg w-3/4 max-w-4xl">
+      <h1 class="text-2xl font-bold mb-4 text-center" id="room-title">Inventory for Room 1</h1>
+      <div id="inventory" class="space-y-4">
+        <!-- Inventory items will appear here -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize Supabase
+    const supabaseClient = supabase.createClient(
+      'https://vzubmycafgnjtwnjfpop.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo'
+    );
+
+    const items = ['tv', 'fan', 'chair'];
+    let currentRoom = null;
+    let counts = {};
+
+function createInventoryItem(itemName, count) {
+  const container = document.createElement('div');
+  container.className = 'flex items-center justify-between';
+
+  const label = document.createElement('span');
+  label.textContent = `${itemName.toUpperCase()}:`;
+
+  const input = document.createElement('input');
+  input.type = 'number';
+  input.min = 0;
+  input.value = count;
+  input.className = 'border rounded w-16 text-center';
+
+  input.addEventListener('change', async () => {
+    const newCount = parseInt(input.value);
+    if (isNaN(newCount) || newCount < 0) {
+      input.value = counts[itemName];
+      return;
+    }
+    console.log(`Updating ${itemName} count to ${newCount} for room ${currentRoom}`);
+    await updateCount(itemName, newCount);
+  });
+
+  container.appendChild(label);
+  container.appendChild(input);
+
+  return container;
+}
+
+
+
+    function renderInventory() {
+      const container = document.getElementById('inventory');
+      container.innerHTML = '';
+      items.forEach(item => {
+        container.appendChild(createInventoryItem(item, counts[item] ?? 0));
+      });
+      document.getElementById('room-title').textContent = `Inventory for ${currentRoom}`;
+    }
+
+async function updateCount(item, newCount) {
+  if (newCount < 0) return;
+
+  counts[item] = newCount;
+
+  // Prepare the update object dynamically based on item
+  const updateData = {};
+  if (item === 'tv') updateData.tv_count = newCount;
+  else if (item === 'fan') updateData.fan_count = newCount;
+  else if (item === 'chair') updateData.chair_count = newCount;
+  else return; // unknown item
+
+  // Update the row for the current room
+  const { data, error } = await supabaseClient
+    .from('room_inventory')
+    .update(updateData)
+    .eq('room', currentRoom);
+
+  if (error) {
+    console.error('Error updating inventory:', error);
+  } else {
+    console.log(`Updated ${item} count to ${newCount} in ${currentRoom}`);
+  }
+}
+
+
+
+    async function loadRoom(room) {
+      currentRoom = room;
+      counts = {};
+
+      // Highlight active room button
+      document.querySelectorAll('.room-btn').forEach(btn => {
+        btn.classList.toggle('bg-blue-700', btn.dataset.room === room);
+        btn.classList.toggle('bg-blue-500', btn.dataset.room !== room);
+      });
+
+      // Fetch inventory for the room
+      const { data, error } = await supabaseClient
+        .from('room_inventory')
+        .select('*')
+        .eq('room', room)
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        console.error('Error loading room inventory:', error);
+        return;
+      }
+
+      if (data) {
+        counts.tv = data.tv_count ?? 0;
+        counts.fan = data.fan_count ?? 0;
+        counts.chair = data.chair_count ?? 0;
+      } else {
+        // No data yet, init counts to 0
+        counts.tv = 0;
+        counts.fan = 0;
+        counts.chair = 0;
+      }
+
+      renderInventory();
+    }
+
+    document.querySelectorAll('.room-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        loadRoom(btn.dataset.room);
+      });
+    });
+
+    // Load default room successfully data
+    loadRoom('Room1');
+  </script>
+</body>
+</html>

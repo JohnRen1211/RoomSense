@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>ROOM Dashboard</title>
-		<link rel="icon" href="favicon.ico" type="image/x-icon" />
+		<title>ROOM PAGE Dashboard</title>
+		<link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
 		<script src="https://cdn.tailwindcss.com"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 		<script src="https://kit.fontawesome.com/0d66da6825.js" crossorigin="anonymous"></script>
@@ -13,6 +13,20 @@
 	<body class="font-sans bg-gray-100 text-gray-700 overflow-auto">
 		<div class="flex h-screen">
 			<!-- Sidebar -->
+      <div class="fixed h-full bg-orange-600 group transition-all duration-300 w-16 hover:w-48">
+        <div class="flex flex-col h-full">
+          <a href="#" class="flex items-center p-4 border-b border-b-white">
+            <img src="/images/CpELogo.jpg" alt="placeholder" class="w-8 h-8 rounded object-cover"/>
+            <span class="ml-3 text-lg font-poppins text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" >CpE Department </span>
+          </a>
+                  <ul class="flex flex-col mt-4 space-y-2">
+                    <li><a href="./index.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-home text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Dashboard</span></a></li>
+                    <li><a href="./RoomManual.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-th-large text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Rooms</span></a></li>
+                    <li><a href="./SchedOriginal.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-calendar-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Schedule</span></a></li>
+                    <li><a href="./logs.html" class="flex items-center px-4 py-2 text-white rounded-md hover:bg-orange-500 transition-all duration-300"><i class="fas fa-file-alt text-2xl"></i><span class="ml-3 text-lg font-poppins opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Logs</span></a></li>
+                </ul>
+        </div>
+      </div>
 			<!--BOXES-->
 			<div class="flex-1 ml-16 p-6">
 				<h1 class="text-3xl font-bold text-orange-600 mb-2">Dashboard</h1>
@@ -22,24 +36,63 @@
 						<h2 class="text-2xl text-orange-600 font-bold mb-3 ml-2">
 							CPE Room Layout
 						</h2>
-						<div class="flex justify-center mb-4">
-							<div class="grid grid-cols-9 grid-rows-6 gap-0 bg-gray-100">
-								<div class="col-span-2 row-span-2 col-start-3 row-start-3 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-								<div class="col-span-2 row-span-2 col-start-6 row-start-3 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-								<div class="col-start-1 row-start-1 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
-								<!-- Room Buttons -->
-								<button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="roomClicked('316', event)" type="button" id="room-btn-316">316</button>
-								<button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="roomClicked('315', event)" type="button" id="room-btn-315">315</button>
-								<button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="roomClicked('314', event)" type="button" id="room-btn-314">314</button>
-								<button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="roomClicked('313', event)" type="button" id="room-btn-313">313</button>
-								<button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="roomClicked('312', event)" type="button" id="room-btn-312">312</button>
-								<button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="roomClicked('311', event)" type="button" id="room-btn-311">311</button>
-								<button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="roomClicked('310', event)" type="button" id="room-btn-310">310</button>
-								<button class="toggle-button col-start-1 row-start-2 bg-green-500 outline outline-2 outline-orange-400 text-white text-center p-2 px-5" onclick="roomClicked('300', event)" type="button" id="room-btn-300">
-									300
-								</button>
-							</div>
-						</div>
+            <div class="flex justify-center mb-4">
+                <div class="grid grid-cols-9 grid-rows-6 gap-0 bg-gray-100">
+                    <!-- Two big squares -->
+                    <div class="col-span-2 row-span-2 col-start-3 row-start-3 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+                    <div class="col-span-2 row-span-2 col-start-6 row-start-3 bg-white outline outline-2 outline-orange-400 p-2 px-5"></div>
+
+                    <!-- Non-CPE Rooms -->
+                    <div class="col-start-1 row-start-1 mr-1 p-2 px-5 relative">
+                        <div class="absolute inset-x-0 bottom-0 h-7 bg-white outline outline-2 outline-orange-400"></div>
+                    </div>
+                    
+                    <div class="col-start-1 row-start-2 mt-1 mr-1 p-2 px-5 relative">
+                        <div class="absolute inset-y-0 left-0 w-8 bg-white outline outline-2 outline-orange-400"></div>
+                    </div>
+                    <div class="col-start-1 row-start-4 bg-orange-200 outline outline-2 outline-orange-400 text-white text-center mr-1 mt-1 p-2 px-5"></div>
+                    <div class="col-start-1 row-start-5 mt-1 mr-1 p-2 px-5 relative">
+                        <div class="absolute inset-y-0 left-0 w-8 bg-white outline outline-2 outline-orange-400"></div>
+                    </div>
+                    <div class="col-start-1 row-start-6 mt-1 mr-1 p-2 px-5 relative">
+                        <div class="absolute inset-x-0 top-0 h-7 bg-white outline outline-2 outline-orange-400"></div>
+                    </div>
+
+                    <div class="col-start-9 row-start-1 p-2 px-5 relative">
+                        <div class="absolute inset-x-0 bottom-0 h-7 bg-white outline outline-2 outline-orange-400"></div>
+                    </div>
+                    <div class="col-start-9 row-start-2 mt-1 p-2 px-5 relative">
+                        <div class="absolute inset-y-0 right-0 w-8 bg-white outline outline-2 outline-orange-400"></div>
+                    </div>
+                    <div class="col-start-9 row-start-3 bg-white outline outline-2 outline-orange-400 mt-1 p-2 px-5"></div>
+                    <div class="col-start-9 row-start-4 bg-white outline outline-2 outline-orange-400 mt-1 p-2 px-5"></div>
+                    <div class="col-start-9 row-start-5 mt-1 p-2 px-5 relative">
+                        <div class="absolute inset-y-0 right-0 w-8 bg-white outline outline-2 outline-orange-400"></div>
+                    </div>
+                    <div class="col-start-9 row-start-6 mt-1 p-2 px-5 relative">
+                        <div class="absolute inset-x-0 top-0 h-7 bg-white outline outline-2 outline-orange-400"></div>
+                    </div>
+
+
+                    <div class="col-start-3 row-start-6 bg-white outline outline-2 outline-orange-400 mr-1 mt-1 p-2 px-5"></div>
+                    <div class="col-start-4 row-start-6 bg-white outline outline-2 outline-orange-400 mr-1 mt-1 p-2 px-5"></div>
+                    <div class="col-start-5 row-start-6 bg-white outline outline-2 outline-orange-400 mr-1 mt-1 p-2 px-5"></div>
+                    <div class="col-start-6 row-start-6 bg-white outline outline-2 outline-orange-400 mr-1 mt-1 p-2 px-5"></div>
+                    <div class="col-start-7 row-start-6 bg-white outline outline-2 outline-orange-400 mr-1 mt-1 p-2 px-5"></div>
+                    <div class="col-start-8 row-start-6 bg-white outline outline-2 outline-orange-400 mr-1 mt-1 p-2 px-5"></div>
+
+                    <!-- Room Buttons -->
+                    <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 hover:outline-amber-800 mr-1 text-white text-center p-2 px-5" onclick="roomClicked('316', event)" type="button" id="room-btn-316">316</button>
+                    <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 hover:outline-amber-800  mr-1 text-white text-center p-2 px-5" onclick="roomClicked('315', event)" type="button" id="room-btn-315">315</button>
+                    <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 hover:outline-amber-800  mr-1 text-white text-center p-2 px-5" onclick="roomClicked('314', event)" type="button" id="room-btn-314">314</button>
+                    <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 hover:outline-amber-800  mr-1 text-white text-center p-2 px-5" onclick="roomClicked('313', event)" type="button" id="room-btn-313">313</button>
+                    <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 hover:outline-amber-800  mr-1 text-white text-center p-2 px-5" onclick="roomClicked('312', event)" type="button" id="room-btn-312">312</button>
+                    <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 hover:outline-amber-800  mr-1 text-white text-center p-2 px-5" onclick="roomClicked('311', event)" type="button" id="room-btn-311">311</button>
+                    <button class="toggle-button bg-green-500 outline outline-2 outline-orange-400 hover:outline-amber-800  mr-1 text-white text-center p-2 px-5" onclick="roomClicked('310', event)" type="button" id="room-btn-310">310</button>
+                    <button class="toggle-button col-start-2 row-start-6 bg-green-500 outline outline-2 outline-orange-400 hover:outline-amber-800 mr-1 text-white text-center p-2 px-5" onclick="roomClicked('302', event)" type="button" id="room-btn-302">302</button>
+                    <button class="toggle-button col-start-1 row-start-3 bg-green-500 outline outline-2 outline-orange-400  hover:outline-amber-800  mr-1 mt-1 text-white text-center p-2 px-5" onclick="roomClicked('300', event)" type="button" id="room-btn-300">300</button>
+                </div>
+            </div>
 
 						<div class="text-center text-sm text-gray-400">
 							Select area to view room details
@@ -55,7 +108,7 @@
 							</div>
 							<div class="flex items-center space-x-2 ml-4">
 								<div class="bg-yellow-500 w-4 h-4 rounded"></div>
-								<div class="text-sm text-gray-500">Conflict</div>
+								<div class="text-sm text-gray-500">Unscheduled</div>
 							</div>
 						</div>
 					</div>
@@ -109,7 +162,7 @@
 <button class="bg-red-500 text-white w-40 py-2 rounded focus:outline-none hover:bg-red-800 transition disabled:opacity-50 disabled:cursor-not-allowed" 
 onclick="openModalForAddSchedule()" id="add-schedule-btn" disabled> Enter Room </button>
 <button id="toggle-schedule-view" class="bg-green-500 text-white w-40 py-2 rounded focus:outline-none hover:bg-green-800 transition disabled:opacity-50 disabled:cursor-not-allowed" 
-onclick="leaveRoom()" disabled> Leave Room </button>  
+onclick="leaveRoom()" disabled> Leave Room </button>
 </div>
 
 					</div>
@@ -117,7 +170,8 @@ onclick="leaveRoom()" disabled> Leave Room </button>
 					<!-- Left: Put schedules of room here depending which room is clicked -->
 					<div class="w-full bg-white p-6 rounded-lg shadow-lg flex-col">
 						<h2 class="text-2xl font-bold text-orange-600 mb-2">Room Schedule</h2>
-						<table id="schedule-table" class="min-w-full bg-white border border-gray-200">
+                        <div class="max-h-64 overflow-y-auto">
+                            <table id="schedule-table" class="min-w-full bg-white border border-gray-200">
 							<thead>
 								<tr>
 									<th class="px-4 py-2 border">Date</th>
@@ -125,7 +179,7 @@ onclick="leaveRoom()" disabled> Leave Room </button>
 									<th class="px-4 py-2 border">Subject</th>
 									<th class="px-4 py-2 border">Professor</th>
 									<th class="px-4 py-2 border">Section</th>
-                                    <th class="px-4 py-2 border">Action</th>
+                  <th class="px-4 py-2 border">Type</th>
 								</tr>
 							</thead>
 							<tbody id="schedule-container">
@@ -135,9 +189,59 @@ onclick="leaveRoom()" disabled> Leave Room </button>
 								</tr>
 							</tbody>
 						</table>
+                        </div>
 					</div>
 
 		  <!-- Right: Sensor Details -->
+		  <div class="bg-white p-6 rounded-lg shadow-lg flex-col">
+           <!-- Sensor Details -->
+          <div class="bg-white shadow-md rounded-lg p-3 w-full">
+            <h2 class="text-lg text-orange-500 font-bold mb-3">Sensor Details</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+              <!-- Temperature -->
+              <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
+                <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
+                  <div class="text-sm sm:text-base text-orange-500 font-bold" id="temperature-status">Temperature Status: --</div>
+                  <div class="text-sm sm:text-base text-orange-500 font-bold hidden" id="temperature">Temperature: -- °C</div>
+                  <img src="/images/temp.png" alt="Temperature Icon" class="w-6 h-6 object-contain ml-auto">
+                </div>
+                <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Temperature</h2>
+              </div>
+
+              <!-- Presence -->
+              <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
+                <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
+                  <div class="flex items-center justify-center bg-gray-100 text-orange-500 font-bold rounded-full text-xs px-2 py-0.5 whitespace-nowrap" id="motion-status">Motion Status: --
+                  </div>
+                  <img src="/images/presence.png" alt="Presence Icon" class="w-6 h-6 object-contain ml-auto">
+                </div>
+                <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Presence</h2>
+              </div>
+
+              <!-- Humidity -->
+              <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
+                <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
+                  <div class="text-sm sm:text-base text-blue-500 font-bold" id="humidity">Humidity: -- %</div>
+                  <img src="/images/humidity.png" alt="Humidity Icon" class="w-6 h-6 object-contain ml-auto">
+                </div>
+                <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Humidity</h2>
+              </div>
+
+              <!-- Lights -->
+              <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
+                <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
+                  <div class="text-sm sm:text-base text-orange-500 font-bold " id="light-status">Light Status: --</div>
+                  <div class="text-sm sm:text-base text-orange-500 font-bold hidden" id="light">Light: --</div>
+                  <img src="/images/light.png" alt="Lights Icon" class="w-6 h-6 object-contain ml-auto">
+                </div>
+                <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Lights</h2>
+              </div>
+              
+             <div class="text-sm text-gray-500 mt-2" id="timestamp">Timestamp: --</div>
+            </div>
+          </div>
+        </div>
 					</div>
 				</div>
 			</div>
@@ -199,6 +303,7 @@ onclick="leaveRoom()" disabled> Leave Room </button>
 									<option value="16:30">4:30 PM</option>
 									<option value="19:30">7:30 PM</option>
 									<option value="21:00">9:00 PM</option>
+                  <option value="21:44">9:44 PM</option>                 
 									<option value="23:46">11:46 PM</option>
 								</select>
 							</div>
@@ -209,7 +314,8 @@ onclick="leaveRoom()" disabled> Leave Room </button>
 								<select id="yearLevel" class="w-full mb-2 p-2 border rounded" required>
 									<option value="BSCOE 1">BSCOE 1</option>
 									<option value="BSCOE 2">BSCOE 2</option>
-
+									<option value="BSCOE 3">BSCOE 3</option>
+									<option value="BSCOE 4">BSCOE 4</option>
 								</select>
 							</div>
 
@@ -218,7 +324,10 @@ onclick="leaveRoom()" disabled> Leave Room </button>
 								<select id="section" class="w-full mb-2 p-2 border rounded" required>
 									<option value="1">1</option>
 									<option value="2">2</option>
-
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
 								</select>
 							</div>
 						</div>
@@ -260,14 +369,19 @@ onclick="leaveRoom()" disabled> Leave Room </button>
 				</div>
 			</div>
 		</div>
-        <script>
-			//SCRIPT for this page
+	</body>
+</html>
+
+
+		<script>
+			//VERSION 1
+//Script
 // Initialize Supabase client
     const supabaseClient = supabase.createClient(
         'https://vzubmycafgnjtwnjfpop.supabase.co',
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo'
     );
-    
+
     let manualOverrides = {}; // Tracks manual override state for each room
     let currentRoom = null;   // Currently selected room for UI
 
@@ -299,9 +413,9 @@ onclick="leaveRoom()" disabled> Leave Room </button>
 
         // Highlight active room button
         document.querySelectorAll("button").forEach(btn => {
-            btn.classList.remove("border-4", "border-red");
+            btn.classList.remove("border-4", "border-orange-800");
         });
-        if (event) event.target.classList.add("border-4", "border-red");
+        if (event) event.target.classList.add("border-4", "border-orange-800");
 
         roomStatusElement.textContent = 'LOADING...';
         roomStatusElement.style.color = 'gray';
@@ -320,55 +434,58 @@ onclick="leaveRoom()" disabled> Leave Room </button>
         }
 
         // Render schedule table
-        const scheduleContainer = document.getElementById("schedule-container");
-        if (originalData.length === 0 && manualData.length === 0) {
-            scheduleContainer.innerHTML = `
-                <tr>
-                    <td colspan="5" class="px-4 py-2 text-center text-gray-500">
-                        No schedule found for this room.
-                    </td>
-                </tr>`;
-        } else {
-const mergedSchedules = [...originalData, ...manualData].sort((a, b) => {
-            // First sort by date
-            const dateA = new Date(a.date || a.created_at || 0);
-            const dateB = new Date(b.date || b.created_at || 0);
-            
-            // If dates are equal, sort by start time
-            if (dateA - dateB === 0) {
-                const timeA = new Date(a.start_time || a.time || 0);
-                const timeB = new Date(b.start_time || b.time || 0);
-                return timeA - timeB;
-            }
-            
-            return dateA - dateB;
-        });
+// Render schedule table
+const scheduleContainer = document.getElementById("schedule-container");
 
-scheduleContainer.innerHTML = mergedSchedules.map(schedule => {
-    const startTime = new Date(schedule.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-    const endTime = new Date(schedule.end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-    const date = new Date(schedule.date).toLocaleDateString();
-    
-    const isManual = schedule.source === 'manual' || schedule?.id; // You can enhance detection logic here if needed
-
-    return `
+if (originalData.length === 0 && manualData.length === 0) {
+    scheduleContainer.innerHTML = `
         <tr>
-            <td class="px-4 py-2 border">${date}</td>
-            <td class="px-4 py-2 border">${startTime} - ${endTime}</td>
-            <td class="px-4 py-2 border">${schedule.subject}</td>
-            <td class="px-4 py-2 border">${schedule.prof}</td>
-            <td class="px-4 py-2 border">${schedule.section}</td>
-            ${
-                isManual
-                    ? `<td class="px-4 py-2 border text-red-500">
-                        <button onclick="deleteSchedule(${schedule.id}, '${room}')" class="text-sm bg-red-500 text-white px-2 py-1 rounded">Delete</button>
-                       </td>`
-                    : `<td class="px-4 py-2 border text-gray-400 text-sm italic">System</td>`
-            }
+            <td colspan="7" class="px-4 py-2 text-center text-gray-500">
+                No schedule found for this room.
+            </td>
         </tr>`;
-}).join('');
+} else {
+    // Add source identifiers
+    const originalSchedules = originalData.map((s, i) => ({ ...s, source: 'Original', _index: i }));
+    const manualSchedules = manualData.map((s, i) => ({ ...s, source: 'Manual', _index: i }));
+    const mergedSchedules = [...originalSchedules, ...manualSchedules];
 
-        }
+    scheduleContainer.innerHTML = mergedSchedules.map(schedule => {
+        const startTime = schedule.start_time ? 
+            new Date(schedule.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }) : 'TBD';
+        const endTime = schedule.end_time ? 
+            new Date(schedule.end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }) : 'TBD';
+        const date = new Date(schedule.date).toLocaleDateString();
+
+        return `
+            <tr>
+                <td class="px-4 py-2 border">${date}</td>
+                <td class="px-4 py-2 border">${startTime} - ${endTime}</td>
+                <td class="px-4 py-2 border">${schedule.subject}</td>
+                <td class="px-4 py-2 border">${schedule.prof}</td>
+                <td class="px-4 py-2 border">${schedule.section}</td>
+                <td class="px-4 py-2 border text-center">
+                    <span class="px-2 py-1 rounded ${
+                        schedule.source === 'Manual' ? 
+                        'bg-orange-100 text-orange-600' : 
+                        'bg-blue-100 text-blue-600'
+                    }">
+                        ${schedule.source}
+                    </span>
+                </td>
+                <td class="px-4 py-2 border text-center">
+                    <button 
+                        class="text-red-600 hover:underline"
+                        onclick="deleteSchedule('${schedule.source}', ${schedule._index})"
+                        title="Delete schedule"
+                    >
+                        Delete
+                    </button>
+                </td>
+            </tr>`;
+    }).join('');
+}
+
 
 // Get local time (Asia/Manila)
 const now = new Date();
@@ -393,11 +510,11 @@ if (override === 'leave') {
     const bothMatch = allOverlappingSchedulesMatch(originalNow, manualNow);
 
     if (originalConflict === 'yellow' || manualConflict === 'yellow') {
-        updateRoomDisplay('CONFLICT ⚠️', 'yellow', room, allCurrent[0]);
+        updateRoomDisplay('CONFLICT ⚠️', 'violet', room, allCurrent[0]);
     } else if (originalConflict === 'red' || manualConflict === 'red') {
         updateRoomDisplay('OCCUPIED', 'red', room, allCurrent[0]);
     } else if (bothHave && !bothMatch) {
-        updateRoomDisplay('CONFLICT ⚠️', 'yellow', room, allCurrent[0]);
+        updateRoomDisplay('CONFLICT ⚠️', 'violet', room, allCurrent[0]);
     } else if (bothHave && bothMatch) {
         updateRoomDisplay('OCCUPIED', 'red', room, allCurrent[0]);
     } else if (allCurrent.length > 0) {
@@ -427,7 +544,7 @@ if (override === 'leave') {
             scanIndicator.className = 'w-3 h-3 rounded-full bg-gray-400 inline-block';
             scanLabel.textContent = 'No scan';
         }
-    }//END of async update
+    }
 
     // Converts time string to 12-hour format
     function formatTimeTo12Hour(timeString) {
@@ -442,7 +559,7 @@ if (override === 'leave') {
 
     // Refreshes the status of all room buttons
     async function updateAllRoomButtons() {
-        const roomNumbers = ['300', '310', '311', '312', '313', '314', '315', '316'];
+        const roomNumbers = ['300', '302', '310', '311', '312', '313', '314', '315', '316'];
         const now = new Date();
         const localNow = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
         const nowMs = localNow.getTime();
@@ -584,6 +701,21 @@ function editSchedule(schedule) {
 }
 
 // Save schedule (both for add and edit)
+// Edit schedule details
+function editSchedule(schedule) {
+    currentSchedule = schedule; // Store the schedule to edit
+    document.getElementById("room").value = schedule.room;
+    document.getElementById("date").value = schedule.date;
+    document.getElementById("academicYear").value = schedule.academicYear || "";
+    document.getElementById("semester").value = schedule.semester || "";
+    document.getElementById("startTime").value = schedule.start_time ? new Date(schedule.start_time).toLocaleTimeString() : "";
+    document.getElementById("endTime").value = schedule.end_time ? new Date(schedule.end_time).toLocaleTimeString() : "";
+    document.getElementById("section").value = schedule.section;
+    document.getElementById("subject").value = schedule.subject;
+    document.getElementById("prof").value = schedule.prof;
+    document.getElementById("representative").value = schedule.representative;
+    openModal('Edit'); // Open modal in Edit mode
+}
 
 // Save schedule (both for add and edit)
 // Save schedule (both for add and edit)
@@ -662,30 +794,55 @@ if (representative === "Others") {
     }
 }
 // End of SAVE V1
-    // Delete schedule
-    async function deleteSchedule(id, room) {
+// delete schedule
+    async function deleteSchedule(source, index) {
+        if (source !== 'Manual') {
+            alert("Only manually added schedules can be deleted.");
+            return;
+        }
+
+        const room = currentRoom;
+        if (!room) {
+            alert("No room selected.");
+            return;
+        }
+
+        // Fetch current manual schedules for the room
+        const { data: manualData, error } = await supabaseClient
+            .from('schedules_manualv2')
+            .select('*')
+            .eq('room', room)
+            .order('start_time', { ascending: true });
+
+        if (error) {
+            console.error("Error fetching manual data:", error);
+            alert("Could not fetch manual schedule.");
+            return;
+        }
+
+        const scheduleToDelete = manualData[index];
+        if (!scheduleToDelete) {
+            alert("Schedule not found.");
+            return;
+        }
+
         const confirmed = confirm("Are you sure you want to delete this schedule?");
         if (!confirmed) return;
 
-        try {
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?id=eq.${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'apikey': SUPABASE_API_KEY,
-                    'Authorization': `Bearer ${SUPABASE_API_KEY}`,
-                    'Prefer': 'return=representation'
-                }
-            });
+        // Perform deletion
+        const { error: deleteError } = await supabaseClient
+            .from('schedules_manualv2')
+            .delete()
+            .eq('id', scheduleToDelete.id);
 
-            if (!response.ok) throw new Error(await response.text());
-
-            alert("Schedule deleted.");
-            updateSchedule(room);
-        } catch (err) {
-            console.error("Delete error:", err.message);
-            alert("Delete error: " + err.message);
+        if (deleteError) {
+            console.error("Error deleting schedule:", deleteError);
+            alert("Failed to delete the schedule.");
+            return;
         }
+
+        // Refresh the room view
+        updateRoomStatus(room);
     }
       // Initialize Supabase client
 
@@ -695,13 +852,15 @@ if (representative === "Others") {
 
         // Highlight selected room button, clear others
         document.querySelectorAll(".toggle-button").forEach((btn) => {
-          btn.classList.remove("border-4", "border-black");
+          btn.classList.remove("border-4", "border-orange-800");
         });
-        if (event) event.target.classList.add("border-4", "border-black");
+        if (event) event.target.classList.add("border-4", "border-orange-800");
 
         // Enable the Add Schedule and Leave Room buttons
         document.getElementById("add-schedule-btn").disabled = false;
         document.getElementById("toggle-schedule-view").disabled = false;
+
+
         // Update the room details panel with data
         await updateRoomStatus(room, event);
       }
@@ -722,7 +881,7 @@ if (representative === "Others") {
 
         // Unselect room button highlight
         document.querySelectorAll(".toggle-button").forEach((btn) => {
-          btn.classList.remove("border-4", "border-black");
+          btn.classList.remove("border-4", "border-orange-800");
         });
 
         // Reset room details panel back to default
@@ -800,9 +959,54 @@ function removeSpecialChars(input) {
 
 
 
-
+</script>
+<!--For sensors-->
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
+        const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo';
+  
+        const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_API_KEY);
+  
+        async function fetchLatestSensorData() {
+          const { data, error } = await client
+            .from('comp_data')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(1);
+  
+          if (error) {
+            console.error('Error fetching latest data:', error);
+            return;
+          }
+  
+          if (data.length > 0) {
+            const latest = data[0];
+            document.getElementById('temperature').textContent = `Temperature: ${latest.temperature?.toFixed(1)} °C`;
+            document.getElementById('humidity').textContent = `Humidity: ${latest.humidity?.toFixed(1)} %`;
+            document.getElementById('light').textContent = `Light: ${latest.light}`;
+            document.getElementById('timestamp').textContent = `Timestamp: ${new Date(latest.created_at).toLocaleString()}`;
+  
             
-        </script>
+            const temperatureStatus = latest.temperature < 33 ? 'On' : 'Off';
+            const temperatureStatusElement = document.getElementById('temperature-status');
+            temperatureStatusElement.textContent = `Aircon Status: ${temperatureStatus}`;
+            temperatureStatusElement.className = `text-2xl font-semibold ${temperatureStatus === 'On' ? 'text-green-600' : 'text-red-600'}`;
 
-	</body>
-</html>
+
+            const lightStatus = latest.light > 50 ? 'On' : 'Off';
+            const lightStatusElement = document.getElementById('light-status');
+            lightStatusElement.textContent = `Light Status: ${lightStatus}`;
+            lightStatusElement.className = `text-2xl font-semibold ${lightStatus === 'On' ? 'text-green-600' : 'text-red-600'}`;
+  
+            const motionStatus = latest.motion === 1 ? 'Motion Detected' : 'No Motion';
+            const motionStatusElement = document.getElementById('motion-status');
+            motionStatusElement.textContent = `Motion Status: ${motionStatus}`;
+            motionStatusElement.className = `text-2xl font-semibold ${motionStatus === 'Motion Detected' ? 'text-green-600' : 'text-gray-500'}`;
+          }
+        }
+  
+        fetchLatestSensorData();
+      }); //Successfully fecthed data
+      //Update
+    </script>

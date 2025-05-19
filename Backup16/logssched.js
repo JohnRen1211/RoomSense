@@ -52,10 +52,12 @@ renderSchedule(combinedSorted);
     const roomSet = new Set();
     const profSet = new Set();
     const timeSet = new Set();
+    const dateSet = new Set();
 
     allSchedules.forEach(s => {
       if (s.room) roomSet.add(s.room);
       if (s.prof) profSet.add(s.prof);
+      if (s.date) dateSet.add(s.date);
       if (s.start_time && s.end_time) {
         const time = `${new Date(s.start_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} - ${new Date(s.end_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
         timeSet.add(time);
@@ -67,12 +69,14 @@ renderSchedule(combinedSorted);
     const roomSelect = document.getElementById("filter-room");
     const profSelect = document.getElementById("filter-professor");
     const timeSelect = document.getElementById("filter-time");
+    const dateSelect = document.getElementById("filter-date");
 
     roomSet.forEach(room => roomSelect.innerHTML += `<option value="${room}">${room}</option>`);
     profSet.forEach(prof => profSelect.innerHTML += `<option value="${prof}">${prof}</option>`);
     timeSet.forEach(time => timeSelect.innerHTML += `<option value="${time}">${time}</option>`);
+    dateSet.forEach(date => dateSelect.innerHTML += `<option value="${date}">${date}</option>`);
 
-    [roomSelect, profSelect, timeSelect].forEach(select => {
+    [roomSelect, profSelect, timeSelect, dateSelect].forEach(select => {
       select.addEventListener("change", applyFilters);
     });
   }
@@ -81,18 +85,20 @@ renderSchedule(combinedSorted);
     const selectedRoom = document.getElementById("filter-room").value;
     const selectedProf = document.getElementById("filter-professor").value;
     const selectedTime = document.getElementById("filter-time").value;
+    const selectedDate = document.getElementById("filter-date").value;
 
     const combined = [...originalData, ...manualData];
 
     const filtered = combined.filter(s => {
       const matchRoom = !selectedRoom || s.room === selectedRoom;
       const matchProf = !selectedProf || s.prof === selectedProf;
+      const matchDate = !selectedDate || s.date === selectedDate;
       const scheduleTime = s.start_time && s.end_time
         ? `${new Date(s.start_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} - ${new Date(s.end_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`
         : s.time || '';
       const matchTime = !selectedTime || scheduleTime === selectedTime;
 
-      return matchRoom && matchProf && matchTime;
+      return matchRoom && matchProf && matchTime && matchDate;
     });
     document.getElementById("print-room-header").textContent =
   `Room: ${selectedRoom || 'ALL ROOMS'}`;
@@ -131,8 +137,6 @@ function renderSchedule(schedules) {
         <tr>
           <th class="px-4 py-2 border">Date</th>
           <th class="px-4 py-2 border">Time</th> <!-- Time column for start_time and end_time -->
-          <th class="px-4 py-2 border">Time In</th> <!-- New column for Time In -->
-          <th class="px-4 py-2 border">Time Out</th> <!-- New column for Time Out -->
           <th class="px-4 py-2 border">Subject</th>
           <th class="px-4 py-2 border">Instructor</th>
           <th class="px-4 py-2 border">Section</th>
@@ -153,8 +157,7 @@ function renderSchedule(schedules) {
             <tr class="border-t">
               <td class="px-4 py-2 border">${date}</td>
               <td class="px-4 py-2 border">${time}</td> <!-- Time column -->
-              <td class="px-4 py-2 border">${timeIn}</td> <!-- Time In column (null initially) -->
-              <td class="px-4 py-2 border">${timeOut}</td> <!-- Time Out column (null initially) -->
+
               <td class="px-4 py-2 border">${schedule.subject || '-'}</td>
               <td class="px-4 py-2 border">${schedule.prof || '-'}</td>
               <td class="px-4 py-2 border">${schedule.section || '-'}</td>
