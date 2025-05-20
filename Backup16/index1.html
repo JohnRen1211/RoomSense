@@ -390,7 +390,7 @@ onclick="leaveRoom()" disabled> Leave Room </button>
 </html>
 
 
-		<script>
+		<script>  
 //VERSION 1
 //Script
 // Initialize Supabase client
@@ -461,16 +461,32 @@ if (originalData.length === 0 && manualData.length === 0) {
     const mergedSchedules = [...originalSchedules, ...manualSchedules];
 
     scheduleContainer.innerHTML = mergedSchedules.map(schedule => {
-        const startTime = schedule.start_time ? 
-            new Date(schedule.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }) : 'TBD';
-        const endTime = schedule.end_time ? 
-            new Date(schedule.end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }) : 'TBD';
+const adjustTime = room === '315';
+
+let displayTime = 'TBD';
+
+if (schedule.start_time && schedule.end_time) {
+    const startDate = new Date(schedule.start_time);
+    const endDate = new Date(schedule.end_time);
+
+    const first = startDate < endDate ? startDate : endDate;
+    const second = startDate < endDate ? endDate : startDate;
+
+    const start = formatTimeTo12Hour(first, adjustTime);
+    const end = formatTimeTo12Hour(second, adjustTime);
+
+    displayTime = `${start} - ${end}`;
+}
+
+
+
         const date = new Date(schedule.date).toLocaleDateString();
 
         return `
 <tr>
     <td class="px-4 py-2 border">${date}</td>
-    <td class="px-4 py-2 border">${startTime} - ${endTime}</td>
+    <td class="px-4 py-2 border">${displayTime}</td>
+
     <td class="px-4 py-2 border">${schedule.subject}</td>
     <td class="px-4 py-2 border">${schedule.prof}</td>
     <td class="px-4 py-2 border">${schedule.section}</td>
@@ -495,6 +511,7 @@ if (originalData.length === 0 && manualData.length === 0) {
                 : ''
             }
         </div>
+        
     </td>
 </tr>
 `;
@@ -586,15 +603,24 @@ function updateRoomDisplay(status, color, room, schedule = null) {
   }
 
     // Converts time string to 12-hour format
-    function formatTimeTo12Hour(timeString) {
-        const date = new Date(timeString);
-        let hours = date.getHours();
-        let minutes = date.getMinutes();
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12 || 12;
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        return `${hours}:${minutes} ${ampm}`;
+function formatTimeTo12Hour(timeString, adjustFor315 = false) {
+    const date = new Date(timeString);
+
+    if (adjustFor315) {
+        // Subtract 8 hours (UTC+8)
+        date.setHours(date.getHours() - 8);
     }
+
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'pm' : 'am';
+
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+
+    return `${hours}:${minutes} ${ampm}`;
+}
 
    // Modified updateAllRoomButtons function
 async function updateAllRoomButtons() {
