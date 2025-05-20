@@ -13,8 +13,8 @@
 HardwareSerial mySerial(2);
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
 
-const int MAX_USERS = 12;
-String names[MAX_USERS + 1] = { "", "John", "Jay Andrey Amulong", "Reiven Cabate", "Ronan Valle", "Dr. Remedios G. Ado", "Engr. Rolito L. Mahaguay", "Engr. Joshua Benjamin B. Rodriguez", "Engr. Orlando V. Pajabera", "Engr. Marlon Jhon B. Bautista", "Engr. Julius S. Cansino", "Nicole Enriquez", "Hydee Palisoc" }; // IDs 1–12
+const int MAX_USERS = 13;
+String names[MAX_USERS + 1] = { "", "John", "Jay Andrey Amulong", "Reiven Cabate", "Ronan Valle", "Dr. Remedios G. Ado", "Engr. Rolito L. Mahaguay", "Engr. Joshua Benjamin B. Rodriguez", "Engr. Orlando V. Pajabera", "Engr. Marlon Jhon B. Bautista", "Engr. Julius S. Cansino", "Nicole Enriquez", "Hydee Palisoc", "Juan" }; // IDs 1–12
 
 void setup() {
   Serial.begin(115200);

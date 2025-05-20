@@ -6,8 +6,8 @@
 #include <Adafruit_SSD1306.h>
 
 // ==================== Wi-Fi Configuration ====================
-#define WIFI_SSID "OPPO A76"
-#define WIFI_PASSWORD "pOgi1234"
+#define WIFI_SSID "PLDTHOMEFIBR67508"
+#define WIFI_PASSWORD "PLDTWIFI7ghd3"
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 #define OLED_RESET -1
@@ -26,8 +26,9 @@ HardwareSerial mySerial(2);
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
 
 // ==================== User Data ====================
-const int MAX_USERS = 5;
-String names[MAX_USERS + 1] = { "", "John", "Rolito", "Jorly", "Diana", "Eve" };
+const int MAX_USERS = 13;
+String names[MAX_USERS + 1] = { "", "John", "Jay Andrey Amulong", "Reiven Cabate", "Ronan Valle", "Dr. Remedios G. Ado", "Engr. Rolito L. Mahaguay", "Engr. Joshua Benjamin B. Rodriguez", "Engr. Orlando V. Pajabera", "Engr. Marlon Jhon B. Bautista", "Engr. Julius S. Cansino", "Nicole Enriquez", "Hydee Palisoc", "Juan" }; // IDs 1–12
+
 bool isTimeIn[MAX_USERS + 1];  // false = next is Time In, true = next is Time Out
 
 void setup() {

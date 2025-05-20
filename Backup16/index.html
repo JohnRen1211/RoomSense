@@ -802,24 +802,8 @@ function editSchedule(schedule) {
 }
 
 // Save schedule (both for add and edit)
-// Edit schedule details
-function editSchedule(schedule) {
-    currentSchedule = schedule; // Store the schedule to edit
-    document.getElementById("room").value = schedule.room;
-    document.getElementById("date").value = schedule.date;
-    document.getElementById("academicYear").value = schedule.academicYear || "";
-    document.getElementById("semester").value = schedule.semester || "";
-    document.getElementById("startTime").value = schedule.start_time ? new Date(schedule.start_time).toLocaleTimeString() : "";
-    document.getElementById("endTime").value = schedule.end_time ? new Date(schedule.end_time).toLocaleTimeString() : "";
-    document.getElementById("section").value = schedule.section;
-    document.getElementById("subject").value = schedule.subject;
-    document.getElementById("prof").value = schedule.prof;
-    document.getElementById("representative").value = schedule.representative;
-    openModal('Edit'); // Open modal in Edit mode
-}
+// Edit schedule details section
 
-// Save schedule (both for add and edit)
-// Save schedule (both for add and edit)
 async function saveSchedule(event) {
     event?.preventDefault?.();
     
