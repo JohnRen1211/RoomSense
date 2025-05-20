@@ -113,52 +113,59 @@
 						</div>
 					</div>
 
-      <div class="bg-white shadow-md rounded-lg p-6 flex-grow min-w-[300px] h-[35rem]">
-        <h2 class="text-xl text-orange-500 font-bold mb-4">Room Details</h2>
-        <div class="space-y-4">
-          <div class="flex justify-between">
-            <span class="font-medium">Room Status</span>
-            <span id="room-status" class="font-bold text-gray-800">UNKNOWN</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="font-medium">Room Number</span>
-            <span id="room-no" class="font-semibold">N/A</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="font-medium">Section</span>
-            <span id="occupied-by" class="font-semibold">N/A</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="font-medium">Subject</span>
-            <span id="room-type-details" class="font-semibold">N/A</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="font-medium">Professor</span>
-            <span id="instructor" class="font-semibold">N/A</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="font-medium">Schedule</span>
-            <span id="room-schedule" class="font-semibold">N/A</span>
-          </div>
-          <div class="flex justify-between items-start">
-            <div class="font-medium flex flex-col">
-              <span>Scanned In</span>
-              <span class="text-xs text-gray-500">*Only available in Room 315</span>
-            </div>
-            <span id="scan-status" class="font-semibold flex items-center gap-2">
-              <span id="scan-indicator" class="w-3 h-3 rounded-full bg-gray-400 inline-block"></span>
-              <span id="scan-label">No scan</span>
-            </span>
-          </div>
-        </div>
-        						<!-- Buttons: Add Schedule and Leave Room -->
+					<!-- Right: Room Description -->
+					<div class="bg-white shadow-md rounded-lg p-6 flex flex-col" id="room-details-panel">
+						<h2 class="text-xl text-orange-500 font-bold mb-4">Room Details</h2>
+						<div class="space-y-4 flex-grow">
+							<div class="flex justify-between">
+								<span class="font-medium">Room Status</span>
+								<span id="room-status" class="font-bold text-gray-800">UNKNOWN</span>
+							</div>
+							<div class="flex justify-between">
+								<span class="font-medium">Room Number</span>
+								<span id="room-no" class="font-semibold">N/A</span>
+							</div>
+							<div class="flex justify-between">
+								<span class="font-medium">Section</span>
+								<span id="occupied-by" class="font-semibold">N/A</span>
+							</div>
+							<div class="flex justify-between">
+								<span class="font-medium">Subject</span>
+								<span id="room-type-details" class="font-semibold">N/A</span>
+							</div>
+							<div class="flex justify-between">
+								<span class="font-medium">Professor</span>
+								<span id="instructor" class="font-semibold">N/A</span>
+							</div>
+              	<div class="flex justify-between">
+								<span class="font-medium">Representative</span>
+								<span id="representative-details" class="font-semibold">N/A</span>
+							</div>
+							<div class="flex justify-between">
+								<span class="font-medium">Schedule</span>
+								<span id="room-schedule" class="font-semibold">N/A</span>
+							</div>
+							<div class="flex justify-between items-start">
+								<div class="font-medium flex flex-col">
+									<span>Scanned In</span>
+									<span class="text-xs text-gray-500">*Only available in Room 315</span>
+								</div>
+								<span id="scan-status" class="font-semibold flex items-center gap-2">
+									<span id="scan-indicator" class="w-3 h-3 rounded-full bg-gray-400 inline-block"></span>
+									<span id="scan-label">No scan</span>
+								</span>
+							</div>
+						</div>
+
+						<!-- Buttons: Add Schedule and Leave Room -->
 <div class="flex justify-center gap-x-4 mt-4"> 
 <button class="bg-red-500 text-white w-40 py-2 rounded focus:outline-none hover:bg-red-800 transition disabled:opacity-50 disabled:cursor-not-allowed" 
 onclick="openModalForAddSchedule()" id="add-schedule-btn" disabled> Enter Room </button>
 <button id="toggle-schedule-view" class="bg-green-500 text-white w-40 py-2 rounded focus:outline-none hover:bg-green-800 transition disabled:opacity-50 disabled:cursor-not-allowed" 
 onclick="leaveRoom()" disabled> Leave Room </button>
 </div>
-      </div>
+
+					</div>
 					<!-- BOTTOM SECTION -->
 					<!-- Left: Put schedules of room here depending which room is clicked -->
 					<div class="w-full bg-white p-6 rounded-lg shadow-lg flex-col">
@@ -188,52 +195,69 @@ onclick="leaveRoom()" disabled> Leave Room </button>
 		  <!-- Right: Sensor Details -->
 		  <div class="bg-white p-6 rounded-lg shadow-lg flex-col">
            <!-- Sensor Details -->
-          <div class="bg-white shadow-md rounded-lg p-3 w-full">
-            <h2 class="text-lg text-orange-500 font-bold mb-3">Sensor Details</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+  <!-- Combined Sensor Box -->
+  <div class="w-full">
+    <div class="bg-white shadow-md rounded-lg p-3 w-full">
+      <h2 class="text-lg text-orange-500 font-bold mb-3">Combined Sensor Details</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
 
-              <!-- Temperature -->
-              <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
-                <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
-                  <div class="text-sm sm:text-base text-orange-500 font-bold" id="temperature-status">Temperature Status: --</div>
-                  <div class="text-sm sm:text-base text-orange-500 font-bold hidden" id="temperature">Temperature: -- °C</div>
-                  <img src="/images/temp.png" alt="Temperature Icon" class="w-6 h-6 object-contain ml-auto">
-                </div>
-                <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Temperature</h2>
-              </div>
-
-              <!-- Presence -->
-              <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
-                <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
-                  <div class="flex items-center justify-center bg-gray-100 text-orange-500 font-bold rounded-full text-xs px-2 py-0.5 whitespace-nowrap" id="motion-status">Motion Status: --
-                  </div>
-                  <img src="/images/presence.png" alt="Presence Icon" class="w-6 h-6 object-contain ml-auto">
-                </div>
-                <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Presence</h2>
-              </div>
-
-              <!-- Humidity -->
-              <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
-                <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
-                  <div class="text-sm sm:text-base text-blue-500 font-bold" id="humidity">Humidity: -- %</div>
-                  <img src="/images/humidity.png" alt="Humidity Icon" class="w-6 h-6 object-contain ml-auto">
-                </div>
-                <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Humidity</h2>
-              </div>
-
-              <!-- Lights -->
-              <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
-                <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
-                  <div class="text-sm sm:text-base text-orange-500 font-bold " id="light-status">Light Status: --</div>
-                  <div class="text-sm sm:text-base text-orange-500 font-bold hidden" id="light">Light: --</div>
-                  <img src="/images/light.png" alt="Lights Icon" class="w-6 h-6 object-contain ml-auto">
-                </div>
-                <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Lights</h2>
-              </div>
-              
-             <div class="text-sm text-gray-500 mt-2" id="timestamp">Timestamp: --</div>
-            </div>
+        <!-- Temperature -->
+        <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
+          <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
+            <div class="text-sm sm:text-base text-orange-500 font-bold" id="temperature-combined">Aircon Status: --</div>
+            <div class="text-sm sm:text-base text-orange-500 font-bold hidden" id="temperatureCombined">Temperature: -- °C</div>
+            <img src="/images/temp.png" alt="Temperature Icon" class="w-6 h-6 object-contain ml-auto">
           </div>
+          <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Temperature</h2>
+        </div>
+
+        <!-- Presence -->
+        <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
+          <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
+            <div class="flex items-center justify-center bg-gray-100 text-orange-500 font-bold rounded-full text-xs px-2 py-0.5 whitespace-nowrap" id="motion-combined-status">Motion Status: --</div>
+            <img src="/images/presence.png" alt="Presence Icon" class="w-6 h-6 object-contain ml-auto">
+          </div>
+          <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Presence</h2>
+        </div>
+
+        <!-- Humidity -->
+        <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
+          <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
+            <div class="text-sm sm:text-base text-blue-500 font-bold" id="humidity2">Humidity: -- %</div>
+            <img src="/images/humidity.png" alt="Humidity Icon" class="w-6 h-6 object-contain ml-auto">
+          </div>
+          <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Humidity</h2>
+        </div>
+
+        <!-- Lights -->
+        <div class="bg-white p-3 rounded-lg shadow flex flex-col w-full">
+          <div class="flex items-center gap-2 mb-2 border-b border-gray-300 pb-1">
+            <div class="text-sm sm:text-base text-orange-500 font-bold" id="light-status-combined">Light Status: --</div>
+            <div class="text-sm sm:text-base text-orange-500 font-bold hidden" id="light2">Light: --</div>
+            <img src="/images/light.png" alt="Lights Icon" class="w-6 h-6 object-contain ml-auto">
+          </div>
+          <h2 class="text-sm sm:text-base font-bold text-orange-500 italic text-center mt-auto">Lights</h2>
+        </div>
+
+        <!-- Timestamp -->
+        <div class="text-sm text-gray-500 mt-2 col-span-full" id="timestampsCombined">Timestamp: --</div>
+      </div>
+    </div>
+      <div class="w-full">
+    <div class="bg-white p-6 rounded-lg shadow-lg mt-6">
+      <h2 class="text-lg text-orange-500 font-bold mb-3">Overall System Status</h2>
+      <div class="text-2xl font-bold text-center" id="overall-status">Status: --</div>
+    </div>
+
+    <!-- Summary -->
+    <div id="sensor-summary" class="bg-white p-4 mt-6 rounded-lg shadow-md">
+      <h2 class="text-lg font-bold text-orange-500 mb-2">Device Status Summary</h2>
+      <ul id="status-list" class="list-disc pl-5 text-sm text-gray-700">
+        <li>Loading status...</li>
+      </ul>
+    </div>
+  </div>
+  </div>
         </div>
 					</div>
 				</div>
@@ -366,7 +390,7 @@ onclick="leaveRoom()" disabled> Leave Room </button>
 </html>
 
 
-<script>
+		<script>
 //VERSION 1
 //Script
 // Initialize Supabase client
@@ -379,55 +403,48 @@ onclick="leaveRoom()" disabled> Leave Room </button>
     let currentRoom = null;   // Currently selected room for UI
 
     // Handle override dropdown change
-    function manualOverrideChanged() {
-        const value = document.getElementById("overrideStatus").value;
-        if (currentRoom) {
-            manualOverrides[currentRoom] = value;
-            updateRoomStatus(currentRoom);
-        }
+  function manualOverrideChanged() {
+    const value = document.getElementById("overrideStatus").value;
+    if (currentRoom) {
+      manualOverrides[currentRoom] = value;
+      updateRoomStatus(currentRoom);
     }
+  }
 
     // Updates the room status display and schedule table
-    async function updateRoomStatus(room, event) {
-        currentRoom = room;
+  async function updateRoomStatus(room, event) {
+    currentRoom = room;
+    const roomStatusElement = document.getElementById("room-status");
+    const roomNoElement = document.getElementById("room-no");
+    const roomTypeElement = document.getElementById("room-type-details");
+    const roomScheduleElement = document.getElementById("room-schedule");
+    const occupiedByElement = document.getElementById("occupied-by");
+    const instructorElement = document.getElementById("instructor");
+    const representativeElement = document.getElementById("representative-details");
+    const scanIndicator = document.getElementById("scan-indicator");
+    const scanLabel = document.getElementById("scan-label");
 
-        // DOM elements
-        const roomStatusElement = document.getElementById("room-status");
-        const roomNoElement = document.getElementById("room-no");
-        const roomTypeElement = document.getElementById("room-type-details");
-        const roomScheduleElement = document.getElementById("room-schedule");
-        const occupiedByElement = document.getElementById("occupied-by");
-        const instructorElement = document.getElementById("instructor");
-        const representativeElement = document.getElementById("representative-details");
-        const scanIndicator = document.getElementById("scan-indicator");
-        const scanLabel = document.getElementById("scan-label");
+    resetScanIndicator();
+    document.querySelectorAll("button").forEach(btn => {
+      btn.classList.remove("border-4", "border-black");
+    });
+    if (event) event.target.classList.add("border-4", "border-black");
 
-        resetScanIndicator();
+    roomStatusElement.textContent = 'LOADING...';
+    roomStatusElement.style.color = 'gray';
 
-        // Highlight active room button
-        document.querySelectorAll("button").forEach(btn => {
-            btn.classList.remove("border-4", "border-orange-800");
-        });
-        if (event) event.target.classList.add("border-4", "border-orange-800");
+    const [{ data: originalData, error: originalError }, { data: manualData, error: manualError }] = await Promise.all([
+      supabaseClient.from('schedules_originalv2').select('*').eq('room', room).order('start_time', { ascending: true }),
+      supabaseClient.from('schedules_manualv2').select('*').eq('room', room).order('start_time', { ascending: true })
+    ]);
 
-        roomStatusElement.textContent = 'LOADING...';
-        roomStatusElement.style.color = 'gray';
-
-        // Fetch schedules from both sources
-        const [{ data: originalData, error: originalError }, { data: manualData, error: manualError }] = await Promise.all([
-            supabaseClient.from('schedules_originalv2').select('*').eq('room', room).order('start_time', { ascending: true }),
-            supabaseClient.from('schedules_manualv2').select('*').eq('room', room).order('start_time', { ascending: true })
-        ]);
-
-        if (originalError || manualError) {
-            console.error('Error fetching schedules:', originalError || manualError);
-            roomStatusElement.textContent = 'Error loading schedule';
-            roomStatusElement.style.color = 'red';
-            return;
-        }
-
-        // Render schedule table
-// Render schedule table
+    if (originalError || manualError) {
+      console.error('Error fetching schedules:', originalError || manualError);
+      roomStatusElement.textContent = 'Error loading schedule';
+      roomStatusElement.style.color = 'red';
+      return;
+    }
+//Schedule table
 const scheduleContainer = document.getElementById("schedule-container");
 
 if (originalData.length === 0 && manualData.length === 0) {
@@ -451,98 +468,122 @@ if (originalData.length === 0 && manualData.length === 0) {
         const date = new Date(schedule.date).toLocaleDateString();
 
         return `
-            <tr>
-                <td class="px-4 py-2 border">${date}</td>
-                <td class="px-4 py-2 border">${startTime} - ${endTime}</td>
-                <td class="px-4 py-2 border">${schedule.subject}</td>
-                <td class="px-4 py-2 border">${schedule.prof}</td>
-                <td class="px-4 py-2 border">${schedule.section}</td>
-                <td class="px-4 py-2 border text-center">
-                    <span class="px-2 py-1 rounded ${
-                        schedule.source === 'Manual' ? 
-                        'bg-orange-100 text-orange-600' : 
-                        'bg-blue-100 text-blue-600'
-                    }">
-                        ${schedule.source}
-                    </span>
-                </td>
-<td class="px-4 py-2 border text-center">
-    ${
-        schedule.source === 'Manual'
-        ? `<button 
-            class="text-red-600 hover:underline"
-            onclick="deleteSchedule('${schedule.source}', ${schedule._index})"
-            title="Delete schedule"
-        >
-            Delete
-        </button>`
-        : ''
-    }
-</td>
-
-            </tr>`;
+<tr>
+    <td class="px-4 py-2 border">${date}</td>
+    <td class="px-4 py-2 border">${startTime} - ${endTime}</td>
+    <td class="px-4 py-2 border">${schedule.subject}</td>
+    <td class="px-4 py-2 border">${schedule.prof}</td>
+    <td class="px-4 py-2 border">${schedule.section}</td>
+    <td class="px-4 py-2 border text-center">
+        <div class="flex flex-col items-center gap-1">
+            <span class="px-2 py-1 rounded ${
+                schedule.source === 'Manual' 
+                ? 'bg-orange-100 text-orange-600' 
+                : 'bg-blue-100 text-blue-600'
+            }">
+                ${schedule.source}
+            </span>
+            ${
+                schedule.source === 'Manual'
+                ? `<button 
+                        class="text-red-600 hover:underline text-sm"
+                        onclick="deleteSchedule('${schedule.source}', ${schedule._index})"
+                        title="Delete schedule"
+                    >
+                        Delete
+                    </button>`
+                : ''
+            }
+        </div>
+    </td>
+</tr>
+`;
     }).join('');
 }
 
+    const now = new Date();
+    const localNow = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
+    const nowMs = localNow.getTime();
 
-// Get local time (Asia/Manila)
-const now = new Date();
-const localNow = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
-const nowMs = localNow.getTime();
+    const filterActiveSchedules = (schedules) => {
+      if (room === '315') {
+        return schedules.filter(s => {
+          if (!s.start_time || !s.end_time) return true;
+          const start = new Date(s.start_time).getTime();
+          const end = new Date(s.end_time).getTime();
+          return start <= nowMs && nowMs <= end;
+        });
+      } else {
+        return schedules.filter(s => {
+          if (!s.start_time || !s.end_time) return false;
+          const start = new Date(s.start_time).getTime();
+          const end = new Date(s.end_time).getTime();
+          return start <= nowMs && nowMs <= end;
+        });
+      }
+    };
 
-// Filter current active schedules
-const originalNow = findOverlappingNow(originalData, nowMs).filter(s => s.room === room);
-const manualNow = findOverlappingNow(manualData, nowMs).filter(s => s.room === room);
-const allCurrent = [...manualNow, ...originalNow,];
+    const originalNow = filterActiveSchedules(originalData).filter(s => s.room === room);
+    const manualNow = filterActiveSchedules(manualData).filter(s => s.room === room);
+    const allCurrent = [...manualNow, ...originalNow];
+    const override = manualOverrides[room] || 'auto';
 
-const override = manualOverrides[room] || 'auto';
-
-if (override === 'leave') {
-    updateRoomDisplay('AVAILABLE 📘', 'green', room, null);
-} else if (override === 'enter') {
-    updateRoomDisplay('OCCUPIED', 'red', room, null);
-} else {
-    const originalConflict = checkConflictWithDetails(originalNow);
-    const manualConflict = checkConflictWithDetails(manualNow);
-    const bothHave = originalNow.length > 0 && manualNow.length > 0;
-    const bothMatch = allOverlappingSchedulesMatch(originalNow, manualNow);
-
-    if (originalConflict === 'yellow' || manualConflict === 'yellow') {
-        updateRoomDisplay('CONFLICT ⚠️', 'violet', room, allCurrent[0]);
-    } else if (originalConflict === 'red' || manualConflict === 'red') {
-        updateRoomDisplay('OCCUPIED', 'red', room, allCurrent[0]);
-    } else if (bothHave && !bothMatch) {
-        updateRoomDisplay('CONFLICT ⚠️', 'violet', room, allCurrent[0]);
-    } else if (bothHave && bothMatch) {
-        updateRoomDisplay('OCCUPIED', 'red', room, allCurrent[0]);
-    } else if (allCurrent.length > 0) {
-        updateRoomDisplay('OCCUPIED', 'red', room, allCurrent[0]);
+    if (override === 'leave') {
+      updateRoomDisplay('AVAILABLE 📘', 'green', room, null);
+    } else if (override === 'enter') {
+      updateRoomDisplay('OCCUPIED', 'red', room, null);
     } else {
+      const originalConflict = checkConflictWithDetails(originalNow);
+      const manualConflict = checkConflictWithDetails(manualNow);
+      const bothHave = originalNow.length > 0 && manualNow.length > 0;
+      const bothMatch = allOverlappingSchedulesMatch(originalNow, manualNow);
+
+      if (originalConflict === 'yellow' || manualConflict === 'yellow') {
+        updateRoomDisplay('CONFLICT ⚠️', 'yellow', room, allCurrent[0]);
+      } else if (originalConflict === 'red' || manualConflict === 'red') {
+        updateRoomDisplay('OCCUPIED', 'red', room, allCurrent[0]);
+      } else if (bothHave && !bothMatch) {
+        updateRoomDisplay('CONFLICT ⚠️', 'yellow', room, allCurrent[0]);
+      } else if (bothHave && bothMatch) {
+        updateRoomDisplay('OCCUPIED', 'red', room, allCurrent[0]);
+      } else if (allCurrent.length > 0) {
+        updateRoomDisplay('OCCUPIED', 'red', room, allCurrent[0]);
+      } else {
         updateRoomDisplay('AVAILABLE', 'green', room, null);
+      }
     }
+
+function updateRoomDisplay(status, color, room, schedule = null) {
+  // Added sensor-based override for Room 315
+  if (room === '315') {
+    const systemStatus = document.getElementById("overall-status").textContent.trim().toUpperCase();
+    if (systemStatus.includes("ON")) {
+      status = 'OCCUPIED SENSOR READING';
+      color = 'red';
+    } else if (systemStatus.includes("OFF")) {
+      status = 'AVAILABLE';
+      color = 'green';
+    }
+  }
+
+  roomStatusElement.textContent = status;
+  roomStatusElement.style.color = color;
+  roomNoElement.textContent = `ROOM ${room}`;
+  roomTypeElement.textContent = schedule?.subject || 'N/A';
+  roomScheduleElement.textContent = schedule
+    ? `${formatTimeTo12Hour(schedule.start_time)} - ${formatTimeTo12Hour(schedule.end_time)}, ${new Date(schedule.date).toLocaleDateString()}`
+    : 'N/A';
+  occupiedByElement.textContent = schedule?.section || 'N/A';
+  instructorElement.textContent = schedule?.prof || 'N/A';
+  representativeElement.textContent = schedule?.representative || 'N/A';
 }
 
-
-        // Updates text fields in the UI for ROOM details
-        function updateRoomDisplay(status, color, room, schedule = null) {
-            roomStatusElement.textContent = status;
-            roomStatusElement.style.color = color;
-            roomNoElement.textContent = `ROOM ${room}`;
-            roomTypeElement.textContent = schedule?.subject || 'N/A';
-            roomScheduleElement.textContent = schedule
-                ? `${formatTimeTo12Hour(schedule.start_time)} - ${formatTimeTo12Hour(schedule.end_time)}, ${new Date(schedule.date).toLocaleDateString()}`
-                : 'N/A';
-            occupiedByElement.textContent = schedule?.section || 'N/A';
-            instructorElement.textContent = schedule?.prof || 'N/A';
-            representativeElement.textContent = schedule?.representative || 'N/A';
-        }
-
-        // Reset scan indicator UI
-        function resetScanIndicator() {
-            scanIndicator.className = 'w-3 h-3 rounded-full bg-gray-400 inline-block';
-            scanLabel.textContent = 'No scan';
-        }
+    function resetScanIndicator() {
+      scanIndicator.className = 'w-3 h-3 rounded-full bg-gray-400 inline-block';
+      scanLabel.textContent = 'No scan';
     }
+    
+  }
 
     // Converts time string to 12-hour format
     function formatTimeTo12Hour(timeString) {
@@ -555,57 +596,116 @@ if (override === 'leave') {
         return `${hours}:${minutes} ${ampm}`;
     }
 
-    // Refreshes the status of all room buttons
-    async function updateAllRoomButtons() {
-        const roomNumbers = ['300', '302', '310', '311', '312', '313', '314', '315', '316'];
-        const now = new Date();
-        const localNow = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
-        const nowMs = localNow.getTime();
+   // Modified updateAllRoomButtons function
+async function updateAllRoomButtons() {
+    const roomNumbers = ['300','302', '310', '311', '312', '313', '314', '315', '316'];
+    const now = new Date();
+    const localNow = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
+    const nowMs = localNow.getTime();
+    const today = new Date(localNow);
+    today.setHours(0,0,0,0); // Start of today
 
-        const [{ data: originalData, error: originalError }, { data: manualData, error: manualError }] = await Promise.all([
-            supabaseClient.from('schedules_originalv2').select('*'),
-            supabaseClient.from('schedules_manualv2').select('*')
-        ]);
+    const [{ data: originalData, error: originalError }, { data: manualData, error: manualError }] = await Promise.all([
+        supabaseClient.from('schedules_originalv2').select('*'),
+        supabaseClient.from('schedules_manualv2').select('*')
+    ]);
 
-        if (originalError || manualError) {
-            console.error('Failed to fetch schedule data:', originalError || manualError);
-            return;
-        }
-
-        roomNumbers.forEach(room => {
-            const button = document.querySelector(`button[onclick*="'${room}'"]`);
-            if (!button) return;
-
-            const originalSchedules = originalData.filter(s => s.room === room);
-            const manualSchedules = manualData.filter(s => s.room === room);
-
-            const currentOriginal = findOverlappingNow(originalSchedules, nowMs);
-            const currentManual = findOverlappingNow(manualSchedules, nowMs);
-            const totalCurrent = [...currentOriginal, ...currentManual];
-
-            button.classList.remove('bg-green-500', 'bg-red-500', 'bg-yellow-500');
-
-            const originalConflict = checkConflictWithDetails(currentOriginal);
-            const manualConflict = checkConflictWithDetails(currentManual);
-
-            const bothHave = currentOriginal.length > 0 && currentManual.length > 0;
-            const bothMatch = allOverlappingSchedulesMatch(currentOriginal, currentManual);
-
-            if (originalConflict === 'yellow' || manualConflict === 'yellow') {
-                button.classList.add('bg-yellow-500');
-            } else if (originalConflict === 'red' || manualConflict === 'red') {
-                button.classList.add('bg-red-500');
-            } else if (bothHave && !bothMatch) {
-                button.classList.add('bg-yellow-500');
-            } else if (bothHave && bothMatch) {
-                button.classList.add('bg-red-500');
-            } else if (totalCurrent.length > 0) {
-                button.classList.add('bg-red-500');
-            } else {
-                button.classList.add('bg-green-500');
-            }
-        });
+    if (originalError || manualError) {
+        console.error('Failed to fetch schedule data:', originalError || manualError);
+        return;
     }
+
+    roomNumbers.forEach(room => {
+        const button = document.querySelector(`button[onclick*="'${room}'"]`);
+        if (!button) return;
+
+        // Convert to string comparison to match TEXT column type
+        const originalSchedules = originalData.filter(s => String(s.room) === String(room));
+        const manualSchedules = manualData.filter(s => String(s.room) === String(room));
+
+        button.classList.remove('bg-green-500', 'bg-red-500', 'bg-yellow-500');
+
+        // Special handling for Room 315 (date-based only)
+function hasConflictingSchedules(original, manual) {
+  // Compare all relevant fields except time
+  return original.some(o => 
+    manual.some(m => 
+      o.room !== m.room ||
+      o.date !== m.date ||
+      o.section !== m.section ||
+      o.subject !== m.subject ||
+      o.prof !== m.prof ||
+      o.representative !== m.representative
+    )
+  );
+}
+
+// Modified Room 315 section in updateAllRoomButtons
+if (room === '315') {
+    // Filter schedules for today
+    const todayOriginal = originalSchedules.filter(s => 
+        new Date(s.date) >= today
+    );
+    const todayManual = manualSchedules.filter(s => 
+        new Date(s.date) >= today
+    );
+
+    const hasOriginal = todayOriginal.length > 0;
+    const hasManual = todayManual.length > 0;
+
+    console.log('Room 315 Schedules:', {
+        original: todayOriginal,
+        manual: todayManual
+    });
+
+    if (hasOriginal && hasManual) {
+        // Check if any schedule pair has conflicting details
+        const hasConflicts = hasConflictingSchedules(todayOriginal, todayManual);
+        
+        if (hasConflicts) {
+            button.classList.add('bg-yellow-500');
+            console.log('315: Conflicting schedules - YELLOW');
+        } else {
+            button.classList.add('bg-red-500');
+            console.log('315: Matching schedules - RED');
+        }
+    } else if (hasOriginal || hasManual) {
+        button.classList.add('bg-red-500');
+        console.log('315: Single schedule type - RED');
+    } else {
+        // Fallback to sensor status
+        const systemStatus = document.getElementById("overall-status").textContent.trim();
+        button.classList.add(systemStatus.includes("ON") ? 'bg-red-500' : 'bg-green-500');
+        console.log('315: No schedules - Sensor based');
+    }
+    return;
+}
+
+        // Existing logic for other rooms (time-based)
+        const currentOriginal = findOverlappingNow(originalSchedules, nowMs);
+        const currentManual = findOverlappingNow(manualSchedules, nowMs);
+        const totalCurrent = [...currentOriginal, ...currentManual];
+
+        const originalConflict = checkConflictWithDetails(currentOriginal);
+        const manualConflict = checkConflictWithDetails(currentManual);
+        const bothHave = currentOriginal.length > 0 && currentManual.length > 0;
+        const bothMatch = allOverlappingSchedulesMatch(currentOriginal, currentManual);
+
+        if (originalConflict === 'yellow' || manualConflict === 'yellow') {
+            button.classList.add('bg-yellow-500');
+        } else if (originalConflict === 'red' || manualConflict === 'red') {
+            button.classList.add('bg-red-500');
+        } else if (bothHave && !bothMatch) {
+            button.classList.add('bg-yellow-500');
+        } else if (bothHave && bothMatch) {
+            button.classList.add('bg-red-500');
+        } else if (totalCurrent.length > 0) {
+            button.classList.add('bg-red-500');
+        } else {
+            button.classList.add('bg-green-500');
+        }
+    });
+}
 
     // Detect internal conflicts with same or different details
     function checkConflictWithDetails(schedules) {
@@ -642,23 +742,13 @@ if (override === 'leave') {
     }
 
     // Filters schedules overlapping with current time
-function findOverlappingNow(schedules, nowMs) {
-    return schedules.filter(s => {
-        const hasTime = s.start_time && s.end_time;
-        const start = hasTime ? new Date(s.start_time).getTime() : null;
-        const end = hasTime ? new Date(s.end_time).getTime() : null;
-
-        const isToday = new Date(s.date).toDateString() === new Date(nowMs).toDateString();
-
-        if (!hasTime && isToday) {
-            // Treat as active all-day booking if time is missing
-            return true;
-        }
-
-        return start <= nowMs && nowMs <= end;
-    });
-}
-
+    function findOverlappingNow(schedules, nowMs) {
+        return schedules.filter(s => {
+            const start = new Date(s.start_time).getTime();
+            const end = new Date(s.end_time).getTime();
+            return start <= nowMs && nowMs <= end;
+        });
+    }
 
     // Returns true if all overlapping schedules match exactly
     function allOverlappingSchedulesMatch(originalNow, manualNow) {
@@ -670,8 +760,11 @@ function findOverlappingNow(schedules, nowMs) {
     //END of Buttons functions
 
     // Init auto refresh every minute
-    document.addEventListener("DOMContentLoaded", updateAllRoomButtons);
+  document.addEventListener("DOMContentLoaded", () => {
+    updateAllRoomButtons();
     setInterval(updateAllRoomButtons, 60000);
+    handleRoomClick('300');
+  });
 
 //ADD Manual schedule in Room details
     const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
@@ -964,54 +1057,88 @@ function removeSpecialChars(input) {
     .replace(/\.(?=.*\.)/g, '');    // Allow only one dot (remove all but the first)
   input.value = cleaned;
 }
+
+
+
 </script>
 <!--For sensors-->
-    <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
-        const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo';
-  
-        const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_API_KEY);
-  
-        async function fetchLatestSensorData() {
-          const { data, error } = await client
-            .from('comp_data')
-            .select('*')
-            .order('created_at', { ascending: false })
-            .limit(1);
-  
-          if (error) {
-            console.error('Error fetching latest data:', error);
-            return;
-          }
-  
-          if (data.length > 0) {
-            const latest = data[0];
-            document.getElementById('temperature').textContent = `Temperature: ${latest.temperature?.toFixed(1)} °C`;
-            document.getElementById('humidity').textContent = `Humidity: ${latest.humidity?.toFixed(1)} %`;
-            document.getElementById('light').textContent = `Light: ${latest.light}`;
-            document.getElementById('timestamp').textContent = `Timestamp: ${new Date(latest.created_at).toLocaleString()}`;
-  
-            
-            const temperatureStatus = latest.temperature < 33 ? 'On' : 'Off';
-            const temperatureStatusElement = document.getElementById('temperature-status');
-            temperatureStatusElement.textContent = `Aircon Status: ${temperatureStatus}`;
-            temperatureStatusElement.className = `text-2xl font-semibold ${temperatureStatus === 'On' ? 'text-green-600' : 'text-red-600'}`;
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const SUPABASE_URL = 'https://vzubmycafgnjtwnjfpop.supabase.co';
+  const SUPABASE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6dWJteWNhZmduanR3bmpmcG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzNDY2NTQsImV4cCI6MjA1OTkyMjY1NH0.fDzlvR0xT3Sm8BTlCnEbxC8WE8-H3ZBRxA9SeEViaeo'; // shortened for safety
+  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_API_KEY);
 
+  async function fetchAndRenderCombinedData() {
+    const [res1, res2] = await Promise.all([
+      client.from('comp_data').select('*').order('created_at', { ascending: false }).limit(1),
+      client.from('comp_data2').select('*').order('created_at', { ascending: false }).limit(1),
+    ]);
 
-            const lightStatus = latest.light > 50 ? 'On' : 'Off';
-            const lightStatusElement = document.getElementById('light-status');
-            lightStatusElement.textContent = `Light Status: ${lightStatus}`;
-            lightStatusElement.className = `text-2xl font-semibold ${lightStatus === 'On' ? 'text-green-600' : 'text-red-600'}`;
-  
-            const motionStatus = latest.motion === 1 ? 'Motion Detected' : 'No Motion';
-            const motionStatusElement = document.getElementById('motion-status');
-            motionStatusElement.textContent = `Motion Status: ${motionStatus}`;
-            motionStatusElement.className = `text-2xl font-semibold ${motionStatus === 'Motion Detected' ? 'text-green-600' : 'text-gray-500'}`;
-          }
-        }
-  
-        fetchLatestSensorData();
-      }); //Successfully fecthed data
-      //Update
-    </script>
+    if (!res1.data.length && !res2.data.length) return;
+
+    const d1 = res1.data[0] || {};
+    const d2 = res2.data[0] || {};
+
+    const combined = {
+      temperature: Math.min(d1.temperature ?? 100, d2.temperature ?? 100),
+      humidity: Math.max(d1.humidity ?? 0, d2.humidity ?? 0),
+      light: Math.max(d1.light ?? 0, d2.light ?? 0),
+      motion: (d1.motion === 1 || d2.motion === 1) ? 1 : 0,
+      created_at: new Date(Math.max(new Date(d1.created_at || 0), new Date(d2.created_at || 0)))
+    };
+
+    document.getElementById("temperatureCombined").textContent = `Temperature: ${combined.temperature.toFixed(1)} °C`;
+    document.getElementById("humidity2").textContent = `Humidity: ${combined.humidity.toFixed(1)} %`;
+    document.getElementById("light2").textContent = `Light: ${combined.light}`;
+    document.getElementById("timestampsCombined").textContent = `Timestamp: ${combined.created_at.toLocaleString()}`;
+
+    document.getElementById("temperature-combined").textContent = `Aircon Status: ${combined.temperature < 33 ? 'On' : 'Off'}`;
+    document.getElementById("light-status-combined").textContent = `Light Status: ${combined.light > 50 ? 'On' : 'Off'}`;
+    document.getElementById("motion-combined-status").textContent = `Motion Status: ${combined.motion === 1 ? 'Motion Detected' : 'No Motion'}`;
+
+    const isOn = combined.temperature < 33 || combined.light > 50 || combined.motion === 1;
+    const overallStatus = document.getElementById("overall-status");
+    overallStatus.textContent = `Status: ${isOn ? 'ON' : 'OFF'}`;
+    overallStatus.className = `text-2xl font-bold text-center ${isOn ? 'text-green-600' : 'text-red-600'}`;
+
+    const listElement = document.getElementById('status-list');
+    listElement.innerHTML = '';
+    const statusList = [
+      `Temperature: ${combined.temperature < 33 ? 'ON' : 'OFF'}`,
+      `Light: ${combined.light > 50 ? 'ON' : 'OFF'}`,
+      `Motion: ${combined.motion === 1 ? 'DETECTED' : 'NONE'}`
+    ];
+    statusList.forEach((line) => {
+      const li = document.createElement('li');
+      li.textContent = line;
+      li.className = line.includes('ON') || line.includes('DETECTED') ? 'text-green-600 font-semibold' : 'text-gray-500';
+      listElement.appendChild(li);
+    });
+  }
+
+  await fetchAndRenderCombinedData();
+});
+</script>
+<script>
+  const overallStatusElement = document.getElementById("overall-status");
+  const roomStatusElement = document.getElementById("room-status");
+
+  // Observer to watch for changes in overall system status
+  const observer = new MutationObserver(() => {
+    if (currentRoom === "315") {
+      const systemStatus = overallStatusElement.textContent.trim().toUpperCase();
+      if (systemStatus.includes("ON")) {
+        roomStatusElement.textContent = "Occupied";
+      } else if (systemStatus.includes("OFF")) {
+        roomStatusElement.textContent = "Available";
+      } else {
+        roomStatusElement.textContent = "Unknown";
+      }
+    }
+  });
+
+  // Start observing changes to the overall system status
+  if (overallStatusElement) {
+    observer.observe(overallStatusElement, { childList: true, subtree: true });
+  }
+</script>

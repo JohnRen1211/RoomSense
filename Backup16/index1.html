@@ -420,6 +420,7 @@ onclick="leaveRoom()" disabled> Leave Room </button>
     const roomScheduleElement = document.getElementById("room-schedule");
     const occupiedByElement = document.getElementById("occupied-by");
     const instructorElement = document.getElementById("instructor");
+    const representativeElement = document.getElementById("representative-details");
     const scanIndicator = document.getElementById("scan-indicator");
     const scanLabel = document.getElementById("scan-label");
 
@@ -443,37 +444,62 @@ onclick="leaveRoom()" disabled> Leave Room </button>
       roomStatusElement.style.color = 'red';
       return;
     }
+//Schedule table
+const scheduleContainer = document.getElementById("schedule-container");
 
-    const mergedSchedules = [...originalData, ...manualData];
-    const schedulesToShow = room === '315' ? mergedSchedules : mergedSchedules.filter(s => s.start_time && s.end_time);
-    const scheduleContainer = document.getElementById("schedule-container");
-
-    if (schedulesToShow.length === 0) {
-      scheduleContainer.innerHTML = `
+if (originalData.length === 0 && manualData.length === 0) {
+    scheduleContainer.innerHTML = `
         <tr>
-          <td colspan="5" class="px-4 py-2 text-center text-gray-500">
-            No schedule found for this room.
-          </td>
+            <td colspan="7" class="px-4 py-2 text-center text-gray-500">
+                No schedule found for this room.
+            </td>
         </tr>`;
-    } else {
-      scheduleContainer.innerHTML = schedulesToShow.map(schedule => {
-        const startTime = schedule.start_time
-          ? new Date(schedule.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })
-          : 'TBD';
-        const endTime = schedule.end_time
-          ? new Date(schedule.end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })
-          : 'TBD';
+} else {
+    // Add source identifiers
+    const originalSchedules = originalData.map((s, i) => ({ ...s, source: 'Original', _index: i }));
+    const manualSchedules = manualData.map((s, i) => ({ ...s, source: 'Manual', _index: i }));
+    const mergedSchedules = [...originalSchedules, ...manualSchedules];
+
+    scheduleContainer.innerHTML = mergedSchedules.map(schedule => {
+        const startTime = schedule.start_time ? 
+            new Date(schedule.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }) : 'TBD';
+        const endTime = schedule.end_time ? 
+            new Date(schedule.end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }) : 'TBD';
         const date = new Date(schedule.date).toLocaleDateString();
+
         return `
-          <tr>
-            <td class="px-4 py-2 border">${date}</td>
-            <td class="px-4 py-2 border">${startTime} - ${endTime}</td>
-            <td class="px-4 py-2 border">${schedule.subject}</td>
-            <td class="px-4 py-2 border">${schedule.prof}</td>
-            <td class="px-4 py-2 border">${schedule.section}</td>
-          </tr>`;
-      }).join('');
-    }
+<tr>
+    <td class="px-4 py-2 border">${date}</td>
+    <td class="px-4 py-2 border">${startTime} - ${endTime}</td>
+    <td class="px-4 py-2 border">${schedule.subject}</td>
+    <td class="px-4 py-2 border">${schedule.prof}</td>
+    <td class="px-4 py-2 border">${schedule.section}</td>
+    <td class="px-4 py-2 border text-center">
+        <div class="flex flex-col items-center gap-1">
+            <span class="px-2 py-1 rounded ${
+                schedule.source === 'Manual' 
+                ? 'bg-orange-100 text-orange-600' 
+                : 'bg-blue-100 text-blue-600'
+            }">
+                ${schedule.source}
+            </span>
+            ${
+                schedule.source === 'Manual'
+                ? `<button 
+                        class="text-red-600 hover:underline text-sm"
+                        onclick="deleteSchedule('${schedule.source}', ${schedule._index})"
+                        title="Delete schedule"
+                    >
+                        Delete
+                    </button>`
+                : ''
+            }
+        </div>
+    </td>
+</tr>
+`;
+    }).join('');
+}
 
     const now = new Date();
     const localNow = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
@@ -549,6 +575,7 @@ function updateRoomDisplay(status, color, room, schedule = null) {
     : 'N/A';
   occupiedByElement.textContent = schedule?.section || 'N/A';
   instructorElement.textContent = schedule?.prof || 'N/A';
+  representativeElement.textContent = schedule?.representative || 'N/A';
 }
 
     function resetScanIndicator() {
@@ -569,54 +596,116 @@ function updateRoomDisplay(status, color, room, schedule = null) {
         return `${hours}:${minutes} ${ampm}`;
     }
 
-    // Refreshes the status of all room buttons
-  async function updateAllRoomButtons() {
+   // Modified updateAllRoomButtons function
+async function updateAllRoomButtons() {
     const roomNumbers = ['300','302', '310', '311', '312', '313', '314', '315', '316'];
     const now = new Date();
     const localNow = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
     const nowMs = localNow.getTime();
+    const today = new Date(localNow);
+    today.setHours(0,0,0,0); // Start of today
 
     const [{ data: originalData, error: originalError }, { data: manualData, error: manualError }] = await Promise.all([
-      supabaseClient.from('schedules_originalv2').select('*'),
-      supabaseClient.from('schedules_manualv2').select('*')
+        supabaseClient.from('schedules_originalv2').select('*'),
+        supabaseClient.from('schedules_manualv2').select('*')
     ]);
 
     if (originalError || manualError) {
-      console.error('Failed to fetch schedule data:', originalError || manualError);
-      return;
+        console.error('Failed to fetch schedule data:', originalError || manualError);
+        return;
     }
 
     roomNumbers.forEach(room => {
-      const button = document.querySelector(`button[onclick*="'${room}'"]`);
-      if (!button) return;
+        const button = document.querySelector(`button[onclick*="'${room}'"]`);
+        if (!button) return;
 
-      const originalSchedules = originalData.filter(s => s.room === room);
-      const manualSchedules = manualData.filter(s => s.room === room);
-      const currentOriginal = findOverlappingNow(originalSchedules, nowMs);
-      const currentManual = findOverlappingNow(manualSchedules, nowMs);
-      const totalCurrent = [...currentOriginal, ...currentManual];
+        // Convert to string comparison to match TEXT column type
+        const originalSchedules = originalData.filter(s => String(s.room) === String(room));
+        const manualSchedules = manualData.filter(s => String(s.room) === String(room));
 
-      button.classList.remove('bg-green-500', 'bg-red-500', 'bg-yellow-500');
-      const originalConflict = checkConflictWithDetails(currentOriginal);
-      const manualConflict = checkConflictWithDetails(currentManual);
-      const bothHave = currentOriginal.length > 0 && currentManual.length > 0;
-      const bothMatch = allOverlappingSchedulesMatch(currentOriginal, currentManual);
+        button.classList.remove('bg-green-500', 'bg-red-500', 'bg-yellow-500');
 
-      if (originalConflict === 'yellow' || manualConflict === 'yellow') {
-        button.classList.add('bg-yellow-500');
-      } else if (originalConflict === 'red' || manualConflict === 'red') {
-        button.classList.add('bg-red-500');
-      } else if (bothHave && !bothMatch) {
-        button.classList.add('bg-yellow-500');
-      } else if (bothHave && bothMatch) {
-        button.classList.add('bg-red-500');
-      } else if (totalCurrent.length > 0) {
-        button.classList.add('bg-red-500');
-      } else {
-        button.classList.add('bg-green-500');
-      }
+        // Special handling for Room 315 (date-based only)
+function hasConflictingSchedules(original, manual) {
+  // Compare all relevant fields except time
+  return original.some(o => 
+    manual.some(m => 
+      o.room !== m.room ||
+      o.date !== m.date ||
+      o.section !== m.section ||
+      o.subject !== m.subject ||
+      o.prof !== m.prof ||
+      o.representative !== m.representative
+    )
+  );
+}
+
+// Modified Room 315 section in updateAllRoomButtons
+if (room === '315') {
+    // Filter schedules for today
+    const todayOriginal = originalSchedules.filter(s => 
+        new Date(s.date) >= today
+    );
+    const todayManual = manualSchedules.filter(s => 
+        new Date(s.date) >= today
+    );
+
+    const hasOriginal = todayOriginal.length > 0;
+    const hasManual = todayManual.length > 0;
+
+    console.log('Room 315 Schedules:', {
+        original: todayOriginal,
+        manual: todayManual
     });
-  }
+
+    if (hasOriginal && hasManual) {
+        // Check if any schedule pair has conflicting details
+        const hasConflicts = hasConflictingSchedules(todayOriginal, todayManual);
+        
+        if (hasConflicts) {
+            button.classList.add('bg-yellow-500');
+            console.log('315: Conflicting schedules - YELLOW');
+        } else {
+            button.classList.add('bg-red-500');
+            console.log('315: Matching schedules - RED');
+        }
+    } else if (hasOriginal || hasManual) {
+        button.classList.add('bg-red-500');
+        console.log('315: Single schedule type - RED');
+    } else {
+        // Fallback to sensor status
+        const systemStatus = document.getElementById("overall-status").textContent.trim();
+        button.classList.add(systemStatus.includes("ON") ? 'bg-red-500' : 'bg-green-500');
+        console.log('315: No schedules - Sensor based');
+    }
+    return;
+}
+
+        // Existing logic for other rooms (time-based)
+        const currentOriginal = findOverlappingNow(originalSchedules, nowMs);
+        const currentManual = findOverlappingNow(manualSchedules, nowMs);
+        const totalCurrent = [...currentOriginal, ...currentManual];
+
+        const originalConflict = checkConflictWithDetails(currentOriginal);
+        const manualConflict = checkConflictWithDetails(currentManual);
+        const bothHave = currentOriginal.length > 0 && currentManual.length > 0;
+        const bothMatch = allOverlappingSchedulesMatch(currentOriginal, currentManual);
+
+        if (originalConflict === 'yellow' || manualConflict === 'yellow') {
+            button.classList.add('bg-yellow-500');
+        } else if (originalConflict === 'red' || manualConflict === 'red') {
+            button.classList.add('bg-red-500');
+        } else if (bothHave && !bothMatch) {
+            button.classList.add('bg-yellow-500');
+        } else if (bothHave && bothMatch) {
+            button.classList.add('bg-red-500');
+        } else if (totalCurrent.length > 0) {
+            button.classList.add('bg-red-500');
+        } else {
+            button.classList.add('bg-green-500');
+        }
+    });
+}
 
     // Detect internal conflicts with same or different details
     function checkConflictWithDetails(schedules) {
@@ -713,24 +802,8 @@ function editSchedule(schedule) {
 }
 
 // Save schedule (both for add and edit)
-// Edit schedule details
-function editSchedule(schedule) {
-    currentSchedule = schedule; // Store the schedule to edit
-    document.getElementById("room").value = schedule.room;
-    document.getElementById("date").value = schedule.date;
-    document.getElementById("academicYear").value = schedule.academicYear || "";
-    document.getElementById("semester").value = schedule.semester || "";
-    document.getElementById("startTime").value = schedule.start_time ? new Date(schedule.start_time).toLocaleTimeString() : "";
-    document.getElementById("endTime").value = schedule.end_time ? new Date(schedule.end_time).toLocaleTimeString() : "";
-    document.getElementById("section").value = schedule.section;
-    document.getElementById("subject").value = schedule.subject;
-    document.getElementById("prof").value = schedule.prof;
-    document.getElementById("representative").value = schedule.representative;
-    openModal('Edit'); // Open modal in Edit mode
-}
+// Edit schedule details section
 
-// Save schedule (both for add and edit)
-// Save schedule (both for add and edit)
 async function saveSchedule(event) {
     event?.preventDefault?.();
     
